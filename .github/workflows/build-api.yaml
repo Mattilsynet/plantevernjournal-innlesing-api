@@ -1,0 +1,74 @@
+on:
+  workflow_call:
+    inputs:
+      sonar:
+        type: boolean
+        required: false
+        default: true
+      runtests:
+        type: boolean
+        required: false
+        default: true
+    secrets:
+      SONAR_TOKEN:
+        required: true
+      READ_SOURCE_AND_PACKAGES:
+        required: true
+
+jobs:
+  build_api:
+    name: gradle build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21.x'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: ${{ inputs.read-cache-only }}
+
+      - name: Cache SonarCloud packages
+        if: ${{ github.actor != 'dependabot[bot]' && inputs.sonar }}
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Build and run detekt
+        if: ${{ inputs.runtests }}
+        run: |
+          ./gradlew build
+        env:
+          READ_SOURCE_AND_PACKAGES: ${{ secrets.READ_SOURCE_AND_PACKAGES }}
+
+      - name: Build without detekt and tests
+        if: ${{ !inputs.runtests }}
+        run: |
+          ./gradlew assemble
+        env:
+          READ_SOURCE_AND_PACKAGES: ${{ secrets.READ_SOURCE_AND_PACKAGES }}
+
+      - name: Sonar
+        if: ${{ github.actor != 'dependabot[bot]' && inputs.sonar }}
+        timeout-minutes: 10
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew jacocoTestReport sonar --info
+
+      - name: Upload failure report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-report
+          path: /build/reports/tests/test/
+          retention-days: 3
