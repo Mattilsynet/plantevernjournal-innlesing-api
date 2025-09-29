@@ -16,7 +16,7 @@ jobs:
     name: Build Backend
     uses: ./.github/workflows/build-api.yaml
     with:
-      runtests: false
+      runtests: true
       sonar: false
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
