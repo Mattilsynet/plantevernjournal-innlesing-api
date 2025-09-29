@@ -5,6 +5,10 @@ on:
         type: boolean
         required: false
         default: true
+      read-cache-only:
+        type: boolean
+        required: false
+        default: true
       runtests:
         type: boolean
         required: false
