@@ -1,0 +1,41 @@
+name: Publish Project
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - master
+  workflow_call:
+
+jobs:
+
+  build:
+    name: Build Backend
+    uses: ./.github/workflows/build-api.yaml
+    with:
+      runtests: false
+      sonar: false
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      READ_SOURCE_AND_PACKAGES: ${{ secrets.READ_SOURCE_AND_PACKAGES }}
+
+  publish:
+    name: Publish
+    needs: [ build ]
+    uses: ./.github/workflows/publish-google-artifact-registry.yaml
+    secrets:
+      READ_SOURCE_AND_PACKAGES: ${{ secrets.READ_SOURCE_AND_PACKAGES }}
+
+  dev:
+    name: Deploy to dev
+    needs: publish
+    uses: ./.github/workflows/deploy-cloud-run.yaml
+    with:
+      project-id: plantevernjournal-dev-f405
+      project-number: 103781973549
+      name: "plvjournal-api"
+      service-account: "plvjournal-api-cr-svc-sa"
+      environment: dev

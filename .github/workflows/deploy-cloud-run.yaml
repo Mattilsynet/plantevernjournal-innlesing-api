@@ -1,0 +1,60 @@
+on:
+  workflow_call:
+    inputs:
+      name:
+        type: string
+        required: true
+      service-account:
+        type: string
+        required: true
+      project-id:
+        type: string
+        required: true
+      project-number:
+        type: number
+        required: true
+      region:
+        type: string
+        default: europe-north1
+      environment:
+        required: true
+        type: string
+      registry:
+        type: string
+        default: europe-north1-docker.pkg.dev/artifacts-352708
+
+jobs:
+  deploy:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    name: Deploy Cloud Run
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup image tag
+        id: setup_image
+        run: echo "tag=$(cut -c 1-7 <<< ${{ github.sha }})" >> $GITHUB_OUTPUT
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/${{ inputs.project-number }}/locations/global/workloadIdentityPools/gh-actions/providers/github
+          service_account: cloudrun-wi-sa-github-actions@${{ inputs.project-id }}.iam.gserviceaccount.com
+
+      - name: Setup google cloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ inputs.project-id }}
+
+      - name: Deploy Plantevernjournal API
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          project_id: ${{ inputs.project-id }}
+          region: ${{ inputs.region }}
+          service: ${{ inputs.name }}
+          image: ${{ inputs.registry }}/planter/plvjournal-api/${{ steps.setup_image.outputs.tag }}
+          flags: '--service-account=${{ inputs.service-account }}@${{ inputs.project-id }}.iam.gserviceaccount.com'
