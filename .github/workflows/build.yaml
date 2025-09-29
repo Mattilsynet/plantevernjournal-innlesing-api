@@ -1,0 +1,24 @@
+name: 'Build'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch: ~
+
+jobs:
+
+  build:
+    name: Build Backend
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    uses: ./.github/workflows/build-api.yaml
+    with:
+      runtests: true
+      sonar: true
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      READ_SOURCE_AND_PACKAGES: ${{ secrets.READ_SOURCE_AND_PACKAGES }}
