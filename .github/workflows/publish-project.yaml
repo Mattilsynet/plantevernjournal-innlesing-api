@@ -35,7 +35,7 @@ jobs:
     uses: ./.github/workflows/deploy-cloud-run.yaml
     with:
       project-id: plantevernjournal-dev-f405
-      project-number: 103781973549
+      project-number: 1057364572067
       name: "plvjournal-api"
       service-account: "plvjournal-api-cr-svc-sa"
       environment: dev
