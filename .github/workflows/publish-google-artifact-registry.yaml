@@ -1,0 +1,88 @@
+on:
+  workflow_call:
+    inputs:
+      registry:
+        type: string
+        default: europe-north1-docker.pkg.dev/artifacts-352708
+    secrets:
+      READ_SOURCE_AND_PACKAGES:
+        required: true
+
+jobs:
+  publish:
+    name: Publish to GAR
+    permissions:
+      contents: 'read'
+      packages: 'read'
+      id-token: 'write'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Docker metadata
+        id: metadata
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ inputs.registry }}/planter/plvjournal-api
+          tags: |
+            type=ref,event=branch
+            type=sha,format=short,prefix=
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: access_token
+          create_credentials_file: true
+          workload_identity_provider: projects/799884623953/locations/global/workloadIdentityPools/gh-actions/providers/github
+          service_account: artifacts-wi-sa-github-actions@artifacts-352708.iam.gserviceaccount.com
+
+      - name: Login to GAR
+        id: docker_login
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ inputs.registry }}
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.access_token }}' # resultat fra autentisering til google cloud
+
+      - name: Login to registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ inputs.registry }}
+          username: "oauth2accesstoken"
+          password: ${{ steps.auth.outputs.access_token }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21.x'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: true
+
+      - name: Assemble
+        run: |
+          ./gradlew assemble
+        env:
+          READ_SOURCE_AND_PACKAGES: ${{ secrets.READ_SOURCE_AND_PACKAGES }}
+
+      - name: Setup hash
+        id: setup_hash
+        run: echo "hash=$(cut -c 1-7 <<< ${{ github.sha }})" >> $GITHUB_OUTPUT
+
+      - name: Build and push to GAR
+        uses: docker/build-push-action@v5
+        with:
+          build-args: "COMMIT_HASH=${{ steps.setup_commit_hash.outputs.hash }}"
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
