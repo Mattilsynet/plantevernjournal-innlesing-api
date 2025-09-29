@@ -5,10 +5,6 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "no.mattilsynet"
-version = "0.0.1-SNAPSHOT"
-description = "Demo project for Spring Boot"
-
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
@@ -33,6 +29,13 @@ kotlin {
 	}
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+tasks {
+
+	bootJar {
+		archiveFileName.set("app.jar")
+	}
+
+	withType<Test> {
+		useJUnitPlatform()
+	}
 }
