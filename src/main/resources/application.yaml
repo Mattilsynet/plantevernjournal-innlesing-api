@@ -1,1 +1,26 @@
-spring.application.name=plantevernjournal-api
+# Use X-Forwarded-*-headers for absolute URL resolution
+server:
+  forward-headers-strategy: framework
+  shutdown: graceful
+  port: ${PORT:8080}
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: plantevernjournal-api
+
+  cloud:
+    gcp:
+      core:
+        enabled: true
+
+  profiles:
+    active: dev
+
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+    path: "/dokumentasjon"
+
