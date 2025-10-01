@@ -1,4 +1,4 @@
-package no.mattilsynet.plantevernjournal_api.shared
+package no.mattilsynet.plantevernjournal_api.domain
 
 import io.swagger.v3.oas.annotations.media.Schema
 
@@ -6,5 +6,5 @@ import io.swagger.v3.oas.annotations.media.Schema
     description = "Bruksområde for bruk av plantevernmidlers"
 )
 enum class Bruksomraade(description: String) {
-    JORDBRUK(description = "Jordbruk")
+    JORDBRUK(description = "Jordbruk"),
 }

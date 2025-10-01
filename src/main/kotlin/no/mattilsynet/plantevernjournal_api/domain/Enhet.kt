@@ -1,4 +1,4 @@
-package no.mattilsynet.plantevernjournal_api.shared
+package no.mattilsynet.plantevernjournal_api.domain
 
 import io.swagger.v3.oas.annotations.media.Schema
 
@@ -8,16 +8,18 @@ import io.swagger.v3.oas.annotations.media.Schema
 enum class Enhet(enhet:String) {
     Antall(enhet = "antall"),
     Hektar(enhet = "ha"),
-    KiloPerAntall(enhet = "kg/antall"),
     Kilo(enhet = "kg"),
-    KiloPerKilo(enhet = "kg/kg"),
+    KiloPerAntall(enhet = "kg/antall"),
     KiloPerHektar(enhet = "kg/ha"),
+    KiloPerKilo(enhet = "kg/kg"),
     KiloPerKvadratmeter(enhet = "kg/m2"),
     KiloPerKubikkmeter(enhet = "kg/m3"),
     KiloPerTonn(enhet = "kg/tonn"),
+    Kubikkmeter(enhet = "m3"),
+    Kvadratmeter(enhet = "m2"),
+    LiterPerAntall(enhet = "l/antall"),
     LiterPerKvadratmeter(enhet = "kg/m2"),
     LiterPerKubikkmeter(enhet = "kg/m3"),
-    LiterPerAntall(enhet = "l/antall"),
     LiterPerHektar(enhet = "l/ha"),
     LiterPerKilo(enhet = "l/kg"),
     LiterPerTonn(enhet = "l/tonn"),

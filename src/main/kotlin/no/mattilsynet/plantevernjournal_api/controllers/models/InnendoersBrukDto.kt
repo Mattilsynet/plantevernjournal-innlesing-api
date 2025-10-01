@@ -1,18 +1,18 @@
-package no.mattilsynet.plantevernjournal_api.domain
+package no.mattilsynet.plantevernjournal_api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
-import no.mattilsynet.plantevernjournal_api.shared.Bruksomraade
+import no.mattilsynet.plantevernjournal_api.domain.Bruksomraade
 import java.time.LocalDate
 
 
 @Schema(
     description = "Journalfelter for innendørs bruk av plantevernmidler"
 )
-data class InnendoersBruk(
+data class InnendoersBrukDto(
     @Schema(
         description = "Vekster som ble behandlet av plantevernmidler", required = true
     )
-    val behandledeVekster: BehandledeVekster,
+    val behandledeVekster: BehandledeVeksterDto,
 
     @Schema(
         description = "Datoen man behandlet vekster med plantevernmidler", required = true
@@ -22,7 +22,7 @@ data class InnendoersBruk(
     @Schema(
         description = "Geografiskområde man behandlet med plantevernmidler", required = true
     )
-    val behandletOmraade: BehandletOmraade,
+    val behandletOmraade: BehandletOmraadeDto,
 
     @Schema(
         description = "Hvilket bruksområde har behandlingen", required = true
@@ -37,7 +37,7 @@ data class InnendoersBruk(
     @Schema(
         description = "Størrelse på bygningen der det ble sprøytet", required = true
     )
-    val bygningsstoerrelse: Bygningsstoerrelse,
+    val bygningsstoerrelse: BygningsstoerrelseDto,
 
     @Schema(
         description = "Gårdsnummer til gården", required = false
@@ -47,7 +47,7 @@ data class InnendoersBruk(
     @Schema(
         description = "Liste av plantevernmiddel og mengde som ble brukt", required = true
     )
-    val plantevernmiddel: List<Plantevernmiddel>,
+    val plantevernmiddel: List<PlantevernmiddelDto>,
 ){
     init {
         if(bruksomraade == Bruksomraade.JORDBRUK){

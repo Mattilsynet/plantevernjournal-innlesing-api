@@ -1,17 +1,17 @@
-package no.mattilsynet.plantevernjournal_api.domain
+package no.mattilsynet.plantevernjournal_api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
-import no.mattilsynet.plantevernjournal_api.shared.Bruksomraade
+import no.mattilsynet.plantevernjournal_api.domain.Bruksomraade
 import java.time.LocalDate
 
 @Schema(
     description = "Journalfelter for bruk av plantevernmidler på frø eller formeringsmateriale"
 )
-data class FroeEllerFormeringsMatriale(
+data class FroeEllerFormeringsMatrialeDto(
     @Schema(
         description = "Frø eller formeringsmateriale som ble behandlet av plantevernmidler", required = true
     )
-    val behandledeVekster: BehandledeVekster,
+    val behandledeVekster: BehandledeVeksterDto,
 
     @Schema(
         description = "Datoen man behandlet frø eller formeringsmateriale med plantevernmidler", required = true
@@ -19,14 +19,14 @@ data class FroeEllerFormeringsMatriale(
     val behandletDato: LocalDate,
 
     @Schema(
-        description = "Geografiskområde man behandlet frø eller formeringsmateriale", required = true
-    )
-    val behandletOmraade: BehandletOmraade,
-
-    @Schema(
         description = "Mengde behandlede frø eller formeringsmateriale i kg, tonn eller antall frø", required = true
     )
-    val behandletMengde: BehandletMengde,
+    val behandletMengde: BehandletMengdeDto,
+
+    @Schema(
+        description = "Geografiskområde man behandlet frø eller formeringsmateriale", required = true
+    )
+    val behandletOmraade: BehandletOmraadeDto,
 
     @Schema(
         description = "Hvilket bruksområde har behandlingen", required = true
@@ -43,7 +43,7 @@ data class FroeEllerFormeringsMatriale(
         description = "Liste av plantevernmiddel og mengde som ble brukt",
         required = true
     )
-    val plantevernmiddel: List<Plantevernmiddel>,
+    val plantevernmiddel: List<PlantevernmiddelDto>,
 ) {
     init {
         if(bruksomraade == Bruksomraade.JORDBRUK){

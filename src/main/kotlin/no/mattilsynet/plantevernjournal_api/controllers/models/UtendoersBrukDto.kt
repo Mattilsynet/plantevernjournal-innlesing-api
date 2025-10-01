@@ -1,39 +1,35 @@
-package no.mattilsynet.plantevernjournal_api.domain
+package no.mattilsynet.plantevernjournal_api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
-import no.mattilsynet.plantevernjournal_api.shared.Bruksomraade
+import no.mattilsynet.plantevernjournal_api.domain.Bruksomraade
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 
 @Schema(
     description = "Journalfelter for utendørs bruk av plantevernmidler"
 )
-data class UtendoersBruk(
+data class UtendoersBrukDto(
     @Schema(
         description = "Arealet man behandlet med plantevernmidler i dekar", required = true
     )
-    val arealBehandletOmraade: ArealBehandletOmraade,
+    val arealBehandletOmraade: ArealBehandletOmraadeDto,
 
     @Schema(
         description = "Vekster som ble behandlet av plantevernmidler", required = true
     )
-    val behandledeVekster: BehandledeVekster,
+    val behandledeVekster: BehandledeVeksterDto,
 
     @Schema(
-        description = "Datoen man behandlet vekster med plantevernmidler", required = true
+        description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true
     )
-    val behandletDato: LocalDate,
+    val behandletDatoOgTid: LocalDateTime,
 
     @Schema(
         description = "Geografiskområde man behandlet med plantevernmidler", required = true
     )
-    val behandletOmraade: BehandletOmraade,
-
-    @Schema(
-        description = "Tidspunket man behandlet vekster med plantevernmidler", required = true
-    )
-    val behandletTid: LocalTime,
+    val behandletOmraade: BehandletOmraadeDto,
 
     @Schema(
         description = "Hvilket bruksområde har behandlingen", required = true
@@ -48,7 +44,7 @@ data class UtendoersBruk(
     @Schema(
         description = "Liste av plantevernmiddel og mengde som ble brukt", required = true
     )
-    val plantevernmiddel: Plantevernmiddel,
+    val plantevernmiddel: PlantevernmiddelDto,
 ){
     init {
         if(bruksomraade == Bruksomraade.JORDBRUK){
