@@ -18,9 +18,10 @@ spring:
   profiles:
     active: dev
 
-
 springdoc:
+  api-docs:
+    path: /v3/api-docs
   swagger-ui:
-    disable-swagger-default-url: true
-    path: "/dokumentasjon"
-
+    path: /swagger-ui.html
+    enable: true
+  show-actuator: true
