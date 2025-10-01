@@ -24,7 +24,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 
 	// Springdoc (Swagger)
-	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.13")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
 	implementation("io.swagger.core.v3:swagger-annotations:2.2.10")
 
 	// Testing:
