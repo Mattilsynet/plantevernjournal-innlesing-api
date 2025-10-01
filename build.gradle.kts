@@ -25,6 +25,7 @@ dependencies {
 
 	// Springdoc (Swagger)
 	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.13")
+	implementation("io.swagger.core.v3:swagger-annotations:2.2.10")
 
 	// Testing:
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
