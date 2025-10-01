@@ -3,7 +3,7 @@ package no.mattilsynet.plantevernjournal_api.controllers.models
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(
-    description = "Geografiskområde man behandlet med plantevernmidler"
+    description = "Geografisk område man behandlet med plantevernmidler"
 )
 data class BehandletOmraadeDto(
     @Schema(

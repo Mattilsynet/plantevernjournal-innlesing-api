@@ -1,7 +1,7 @@
 package no.mattilsynet.plantevernjournal_api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
-import no.mattilsynet.plantevernjournal_api.domain.Enhet
+import no.mattilsynet.plantevernjournal_api.shared.Enhet
 
 
 @Schema(
@@ -9,12 +9,12 @@ import no.mattilsynet.plantevernjournal_api.domain.Enhet
 )
 data class BehandletMengdeDto(
     @Schema(
-        description = "Enhet av behandlet mengde. Må være i kg, tonn eller antall frø", required = true
+        description = "Enhet av behandlet mengde. Må være i kg, tonn eller antall frø", required = true,
     )
     val enhet: Enhet,
 
     @Schema(
-        description = "Mengde behandlede frø eller formeringsmateriale", required = true
+        description = "Mengde behandlede frø eller formeringsmateriale", required = true,
     )
     val verdi: Double,
 )

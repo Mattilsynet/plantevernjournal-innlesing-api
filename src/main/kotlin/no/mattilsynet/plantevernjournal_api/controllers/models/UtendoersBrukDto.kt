@@ -1,7 +1,7 @@
 package no.mattilsynet.plantevernjournal_api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
-import no.mattilsynet.plantevernjournal_api.domain.Bruksomraade
+import no.mattilsynet.plantevernjournal_api.shared.Bruksomraade
 import java.time.LocalDateTime
 
 
@@ -10,42 +10,42 @@ import java.time.LocalDateTime
 )
 data class UtendoersBrukDto(
     @Schema(
-        description = "Arealet man behandlet med plantevernmidler i dekar", required = true
+        description = "Arealet man behandlet med plantevernmidler i dekar", required = true,
     )
     val arealBehandletOmraade: ArealBehandletOmraadeDto,
 
     @Schema(
-        description = "Vekster som ble behandlet av plantevernmidler", required = true
+        description = "Vekster som ble behandlet av plantevernmidler", required = true,
     )
     val behandledeVekster: BehandledeVeksterDto,
 
     @Schema(
-        description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true
+        description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true,
     )
     val startTid: LocalDateTime,
 
     @Schema(
-        description = "Geografiskområde man behandlet med plantevernmidler", required = true
+        description = "Geografisk område man behandlet med plantevernmidler", required = true,
     )
     val behandletOmraade: BehandletOmraadeDto,
 
     @Schema(
-        description = "Hvilket bruksområde har behandlingen", required = true
+        description = "Hvilket bruksområde har behandlingen", required = true,
     )
     val bruksomraade: Bruksomraade,
 
     @Schema(
-        description = "Gårdsnummer til gården", required = false
+        description = "Gårdsnummer til gården", required = false,
     )
     val gaardsnummer: String?,
 
     @Schema(
-        description = "Liste av plantevernmiddel og mengde som ble brukt", required = true
+        description = "Liste av plantevernmiddel og mengde som ble brukt", required = true,
     )
     val plantevernmiddel: PlantevernmiddelDto,
 ){
     init {
-        if(bruksomraade == Bruksomraade.JORDBRUK){
+        if (bruksomraade == Bruksomraade.JORDBRUK) {
             require(!gaardsnummer.isNullOrBlank()) { "Hvis bruksområde er jordbruk kan ikke gårdsnummer være tomt" }
         }
     }

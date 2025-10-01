@@ -8,17 +8,18 @@ import io.swagger.v3.oas.annotations.media.Schema
 )
 data class BehandledeVeksterDto(
     @Schema(
-        description = "Fra BBCH-skalaen til den behandlede veksten. To siffer.", required = false
+        description = "Fra BBCH-skalaen til den behandlede veksten. To siffer.", required = false,
     )
     val bbchFase: String?,
 
     @Schema(
-        description = "Eppokode av vekst som er behandlet", required = true
+        description = "Eppokode av vekst som er behandlet", required = true,
     )
     val eppoKode: String,
 
     @Schema(
-        description = "Partinummer, kun ved bruk av plantevernmidler på frø eller formeringsmateriale", required = false
+        description = "Partinummer, kun ved bruk av plantevernmidler på frø eller formeringsmateriale",
+        required = false,
     )
     val partinummer: Int?,
 )
