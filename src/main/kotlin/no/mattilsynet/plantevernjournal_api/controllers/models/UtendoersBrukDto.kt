@@ -2,9 +2,7 @@ package no.mattilsynet.plantevernjournal_api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.mattilsynet.plantevernjournal_api.domain.Bruksomraade
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 
 @Schema(
@@ -24,7 +22,7 @@ data class UtendoersBrukDto(
     @Schema(
         description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true
     )
-    val behandletDatoOgTid: LocalDateTime,
+    val startTid: LocalDateTime,
 
     @Schema(
         description = "Geografiskområde man behandlet med plantevernmidler", required = true
