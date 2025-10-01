@@ -16,5 +16,4 @@ data class Dosering(
         description = "Mengde av plantevernmiddelet som ble brukt", required = true
     )
     val verdi: Double,
-
 )
