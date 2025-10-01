@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 
 @Schema(
-    description = "Vekster som ble behandlet av plantevernmidler"
+    description = "Vekster som ble behandlet av plantevernmidler",
 )
 data class BehandledeVeksterDto(
     @Schema(

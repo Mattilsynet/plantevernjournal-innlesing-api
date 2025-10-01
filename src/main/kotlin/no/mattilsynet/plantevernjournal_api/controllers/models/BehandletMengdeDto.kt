@@ -5,7 +5,7 @@ import no.mattilsynet.plantevernjournal_api.shared.Enhet
 
 
 @Schema(
-    description = "Mengde behandlede frø eller formeringsmateriale i kg, tonn eller antall frø"
+    description = "Mengde behandlede frø eller formeringsmateriale i kg, tonn eller antall frø",
 )
 data class BehandletMengdeDto(
     @Schema(

@@ -3,7 +3,7 @@ package no.mattilsynet.plantevernjournal_api.shared
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(
-    description = "Enheter som blir brukt"
+    description = "Enheter som blir brukt",
 )
 enum class Enhet(enhet:String) {
     ANTALL(enhet = "antall"),

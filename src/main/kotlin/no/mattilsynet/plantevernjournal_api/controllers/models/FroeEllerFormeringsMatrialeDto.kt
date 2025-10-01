@@ -5,7 +5,7 @@ import no.mattilsynet.plantevernjournal_api.shared.Bruksomraade
 import java.time.LocalDate
 
 @Schema(
-    description = "Journalfelter for bruk av plantevernmidler på frø eller formeringsmateriale"
+    description = "Journalfelter for bruk av plantevernmidler på frø eller formeringsmateriale",
 )
 data class FroeEllerFormeringsMatrialeDto(
     @Schema(

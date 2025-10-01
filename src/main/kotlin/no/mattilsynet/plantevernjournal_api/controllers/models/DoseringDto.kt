@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.mattilsynet.plantevernjournal_api.shared.Enhet
 
 @Schema(
-    description = "Dosering av plantevernmiddelet som ble brukt"
+    description = "Dosering av plantevernmiddelet som ble brukt",
 )
 data class DoseringDto(
     @Schema(

@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 
 @Schema(
-    description = "Journalfelter for utendørs bruk av plantevernmidler"
+    description = "Journalfelter for utendørs bruk av plantevernmidler",
 )
 data class UtendoersBrukDto(
     @Schema(
@@ -18,11 +18,6 @@ data class UtendoersBrukDto(
         description = "Vekster som ble behandlet av plantevernmidler", required = true,
     )
     val behandledeVekster: BehandledeVeksterDto,
-
-    @Schema(
-        description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true,
-    )
-    val startTid: LocalDateTime,
 
     @Schema(
         description = "Geografisk område man behandlet med plantevernmidler", required = true,
@@ -43,6 +38,11 @@ data class UtendoersBrukDto(
         description = "Liste av plantevernmiddel og mengde som ble brukt", required = true,
     )
     val plantevernmiddel: PlantevernmiddelDto,
+
+    @Schema(
+        description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true,
+    )
+    val startTid: LocalDateTime,
 ){
     init {
         if (bruksomraade == Bruksomraade.JORDBRUK) {

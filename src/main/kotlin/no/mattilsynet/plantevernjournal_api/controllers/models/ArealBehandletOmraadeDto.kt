@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.mattilsynet.plantevernjournal_api.shared.Enhet
 
 @Schema(
-    description = "Arealet man behandlet med plantevernmidler i dekar"
+    description = "Arealet man behandlet med plantevernmidler i dekar",
 )
 data class ArealBehandletOmraadeDto (
     @Schema(

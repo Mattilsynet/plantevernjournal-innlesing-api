@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 
 @Schema(
-    description = "Journalfelter for innendørs bruk av plantevernmidler"
+    description = "Journalfelter for innendørs bruk av plantevernmidler",
 )
 data class InnendoersBrukDto(
     @Schema(
