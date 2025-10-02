@@ -1,5 +1,28 @@
-GET http://localhost:8080/plantevernjournal/innlesing/v1
-Authorization: Bearer {{$auth.token("GoogleToken")}}
+### Post plantevernjournal for frø og formeringsmateriale
+POST http://localhost:8080/plantevernjournal/innlesing/v1/formeringsmateriale
+Content-Type: application/json
 
-### Post journal
-POST http://localhost:8080/plantevernjournal/innlesing/v1
+{
+  "behandledeVekster": {
+    "bbchFase": "05",
+    "eppoKode": "1SOLTU",
+    "partinummer": 2
+  },
+  "behandletDato": "2024-10-18T12:00:00",
+  "behandletMengde": {
+    "enhet": "KILO_PER_HEKTAR",
+    "verdi": 55.6
+  },
+  "behandletOmraade": {
+    "omraade": "Her må vi legge inn noe"
+  },
+  "bruksomraade": "JORDBRUK",
+  "gaardsnummer": "0505-050-12",
+  "plantevernmiddel": [{
+    "autorisasjonsnummer": "12345",
+    "dosering": {
+      "enhet": "LITER_PER_KILO",
+      "verdi": 34
+    }
+  }]
+}
