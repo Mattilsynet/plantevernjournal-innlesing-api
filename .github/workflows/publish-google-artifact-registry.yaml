@@ -25,7 +25,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ inputs.registry }}/planter/plvjournal-api
+            ${{ inputs.registry }}/planter/plantevernjournal-api
           tags: |
             type=ref,event=branch
             type=sha,format=short,prefix=

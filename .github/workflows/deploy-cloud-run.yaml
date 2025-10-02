@@ -56,5 +56,5 @@ jobs:
           project_id: ${{ inputs.project-id }}
           region: ${{ inputs.region }}
           service: ${{ inputs.name }}
-          image: ${{ inputs.registry }}/planter/plvjournal-api:${{ steps.setup_image.outputs.tag }}
+          image: ${{ inputs.registry }}/planter/plantevernjournal-api:${{ steps.setup_image.outputs.tag }}
           flags: '--service-account=${{ inputs.service-account }}@${{ inputs.project-id }}.iam.gserviceaccount.com'
