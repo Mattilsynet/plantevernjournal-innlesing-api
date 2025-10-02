@@ -37,7 +37,7 @@ data class UtendoersBrukDto(
     @Schema(
         description = "Liste av plantevernmiddel og mengde som ble brukt", required = true,
     )
-    val plantevernmiddel: PlantevernmiddelDto,
+    val plantevernmiddel: List<PlantevernmiddelDto>,
 
     @Schema(
         description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true,
