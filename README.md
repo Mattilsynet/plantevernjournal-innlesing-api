@@ -6,6 +6,10 @@ EU-kravet som skal implementeres er beskrevet her: https://eur-lex.europa.eu/leg
 
 Dette er pågående arbeid, så det er fortsatt mye som ikke er avklart. Mer informasjon vil komme senere, som f.eks. identifisering av brukere, kartdata, hvordan og hvor ofte data skal rapporteres til Mattilsynet.
 
+Input til endepunktene vil ikke versjoneres i starten, og man må anta at det vil komme endringer som gjør at ting brekker.
+
+Link til api-dokumentasjon: https://plantevernjournal-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html
+
 ### Datamodeller
 Det er laget tre ulike datamodeller for bruk av plantevernmidler, en for innendørs bruk, en for utendørs bruk og en for bruk på frø eller annet formeringsmateriale. En del av dataene som skal samles inn er felles, men modellene har også noen egne egenskaper som gjør at det er valgt å dele de inn, i stedet for å ha en felles datamodell.
 
