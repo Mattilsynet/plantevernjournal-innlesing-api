@@ -1,4 +1,4 @@
-package no.mattilsynet.plantevernjournal_api.shared
+package no.mattilsynet.plantevernjournal.api.shared
 
 import io.swagger.v3.oas.annotations.media.Schema
 

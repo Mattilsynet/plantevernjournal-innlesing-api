@@ -1,12 +1,18 @@
-package no.mattilsynet.plantevernjournal_api.controllers.models
+package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
-import no.mattilsynet.plantevernjournal_api.shared.Bruksomraade
+import kotlinx.serialization.Serializable
+import no.mattilsynet.plantevernjournal.api.domain.FroeEllerFormeringsMatriale
+import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
+import no.mattilsynet.plantevernjournal.api.shared.LocalDateSerializer
 import java.time.LocalDate
+
 
 @Schema(
     description = "Journalfelter for bruk av plantevernmidler på frø eller formeringsmateriale",
 )
+@Serializable
+@kotlinx.serialization.ExperimentalSerializationApi
 data class FroeEllerFormeringsMatrialeDto(
     @Schema(
         description = "Frø eller formeringsmateriale som ble behandlet av plantevernmidler", required = true,
@@ -16,6 +22,7 @@ data class FroeEllerFormeringsMatrialeDto(
     @Schema(
         description = "Datoen man behandlet frø eller formeringsmateriale med plantevernmidler", required = true,
     )
+    @Serializable(with = LocalDateSerializer::class)
     val behandletDato: LocalDate,
 
     @Schema(
@@ -50,5 +57,18 @@ data class FroeEllerFormeringsMatrialeDto(
         require(!gaardsnummer.isNullOrBlank()) { "Hvis bruksområde er jordbruk kan ikke gårdsnummer være tomt" }
         }
     }
+
+    @kotlinx.serialization.ExperimentalSerializationApi
+    @kotlin.uuid.ExperimentalUuidApi
+    fun toFroeEllerFormeringsMatriale() =
+        FroeEllerFormeringsMatriale(
+            behandledeVekster = behandledeVekster.toBehandledeVekster(),
+            behandletDato = behandletDato,
+            behandletMengde = behandletMengde.toBehandletMengde(),
+            behandletOmraade = behandletOmraade.toBehandletOmraade(),
+            bruksomraade = bruksomraade,
+            gaardsnummer = gaardsnummer,
+            plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() }
+        )
 
 }

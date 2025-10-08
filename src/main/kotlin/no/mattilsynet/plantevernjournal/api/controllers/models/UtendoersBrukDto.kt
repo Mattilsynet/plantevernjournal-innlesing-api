@@ -1,23 +1,22 @@
-package no.mattilsynet.plantevernjournal_api.controllers.models
+package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
-import no.mattilsynet.plantevernjournal_api.shared.Bruksomraade
-import java.time.LocalDate
-
+import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
+import java.time.LocalDateTime
 
 @Schema(
-    description = "Journalfelter for innendørs bruk av plantevernmidler",
+    description = "Journalfelter for utendørs bruk av plantevernmidler",
 )
-data class InnendoersBrukDto(
+data class UtendoersBrukDto(
+    @Schema(
+        description = "Arealet man behandlet med plantevernmidler i dekar", required = true,
+    )
+    val arealBehandletOmraade: ArealBehandletOmraadeDto,
+
     @Schema(
         description = "Vekster som ble behandlet av plantevernmidler", required = true,
     )
     val behandledeVekster: BehandledeVeksterDto,
-
-    @Schema(
-        description = "Datoen man behandlet vekster med plantevernmidler", required = true,
-    )
-    val behandletDato: LocalDate,
 
     @Schema(
         description = "Geografisk område man behandlet med plantevernmidler", required = true,
@@ -30,16 +29,6 @@ data class InnendoersBrukDto(
     val bruksomraade: Bruksomraade,
 
     @Schema(
-        description = "Bygningsnummer der det ble sprøytet", required = true,
-    )
-    val bygningsnummer: String,
-
-    @Schema(
-        description = "Størrelse på bygningen der det ble sprøytet", required = true,
-    )
-    val bygningsstoerrelse: BygningsstoerrelseDto,
-
-    @Schema(
         description = "Gårdsnummer til gården", required = false,
     )
     val gaardsnummer: String?,
@@ -48,6 +37,11 @@ data class InnendoersBrukDto(
         description = "Liste av plantevernmiddel og mengde som ble brukt", required = true,
     )
     val plantevernmiddel: List<PlantevernmiddelDto>,
+
+    @Schema(
+        description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true,
+    )
+    val startTid: LocalDateTime,
 ){
     init {
         if (bruksomraade == Bruksomraade.JORDBRUK) {

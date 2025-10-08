@@ -1,11 +1,14 @@
-package no.mattilsynet.plantevernjournal_api.controllers.models
+package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
+import kotlinx.serialization.Serializable
+import no.mattilsynet.plantevernjournal.api.domain.BehandledeVekster
 
 
 @Schema(
     description = "Vekster som ble behandlet av plantevernmidler",
 )
+@Serializable
 data class BehandledeVeksterDto(
     @Schema(
         description = "Fra BBCH-skalaen til den behandlede veksten. To siffer.", required = false,
@@ -22,4 +25,11 @@ data class BehandledeVeksterDto(
         required = false,
     )
     val partinummer: Int?,
-)
+) {
+    fun toBehandledeVekster() =
+        BehandledeVekster(
+            bbchFase = bbchFase,
+            eppoKode = eppoKode,
+            partinummer = partinummer,
+        )
+}

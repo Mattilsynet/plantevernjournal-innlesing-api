@@ -1,4 +1,4 @@
-package no.mattilsynet.plantevernjournal_api
+package no.mattilsynet.plantevernjournal.api
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

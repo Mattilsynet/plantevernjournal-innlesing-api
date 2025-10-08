@@ -14,9 +14,21 @@ spring:
     gcp:
       core:
         enabled: true
+      secretmanager:
+        enabled: true
+      storage:
+        project-id: plantevernjournal-dev-f405
+        enabled: true
+
+  config:
+    import: "sm@"
 
   profiles:
     active: dev
+
+nats:
+  url: tls://connect.nats.mattilsynet.io:4222
+  creds: ${sm@nats-user-plantevernjournal-api-creds}
 
 springdoc:
   api-docs:

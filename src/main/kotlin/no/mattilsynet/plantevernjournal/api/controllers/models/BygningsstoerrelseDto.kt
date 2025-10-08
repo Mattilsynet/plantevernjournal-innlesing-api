@@ -1,7 +1,7 @@
-package no.mattilsynet.plantevernjournal_api.controllers.models
+package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
-import no.mattilsynet.plantevernjournal_api.shared.Enhet
+import no.mattilsynet.plantevernjournal.api.shared.Enhet
 
 @Schema(
     description = "Størrelse på bygningen der det ble sprøytet",
