@@ -5,7 +5,9 @@ import kotlinx.serialization.Serializable
 import no.mattilsynet.plantevernjournal.api.domain.FroeEllerFormeringsMatriale
 import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
 import no.mattilsynet.plantevernjournal.api.shared.LocalDateSerializer
+import no.mattilsynet.plantevernjournal.api.shared.UUIDSerializer
 import java.time.LocalDate
+import java.util.UUID
 
 
 @Schema(
@@ -13,6 +15,7 @@ import java.time.LocalDate
 )
 @Serializable
 @kotlinx.serialization.ExperimentalSerializationApi
+@kotlin.uuid.ExperimentalUuidApi
 data class FroeEllerFormeringsMatrialeDto(
     @Schema(
         description = "Frø eller formeringsmateriale som ble behandlet av plantevernmidler", required = true,
@@ -39,6 +42,9 @@ data class FroeEllerFormeringsMatrialeDto(
         description = "Hvilket bruksområde har behandlingen", required = true,
     )
     val bruksomraade: Bruksomraade,
+
+    @Serializable(with = UUIDSerializer::class)
+    val id: UUID? = null,
 
     @Schema(
         description = "Gårdsnummer til gården",

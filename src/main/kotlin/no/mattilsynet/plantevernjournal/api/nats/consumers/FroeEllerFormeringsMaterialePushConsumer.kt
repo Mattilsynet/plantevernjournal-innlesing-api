@@ -7,12 +7,14 @@ import no.mattilsynet.fisk.libs.virtualnats.extension.jetstream.StreamSubscripti
 import no.mattilsynet.fisk.libs.virtualnats.extension.jetstream.StreamSubscriptionConfig
 import no.mattilsynet.plantevernjournal.api.domain.FroeEllerFormeringsMatriale
 import no.mattilsynet.plantevernjournal.api.nats.jetstream.subjects.JetStreamSubjectBuilder
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.time.Duration
 
 @Component
 @kotlin.uuid.ExperimentalUuidApi
+@kotlinx.serialization.ExperimentalSerializationApi
 class FroeEllerFormeringsMaterialePushConsumer(
     @Value("\${spring.application.name}") private val appName: String,
     nats: VirtualNats,
@@ -26,13 +28,17 @@ class FroeEllerFormeringsMaterialePushConsumer(
     ),
 ) {
 
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     @PostConstruct
     override fun start() {
         super.start()
     }
 
     override fun consume(data: ByteArray) {
-        Json.decodeFromString<FroeEllerFormeringsMatriale>(String(data))
+        logger.info(
+            Json.decodeFromString<FroeEllerFormeringsMatriale>(String(data)).toString()
+        )
     }
 
     companion object {

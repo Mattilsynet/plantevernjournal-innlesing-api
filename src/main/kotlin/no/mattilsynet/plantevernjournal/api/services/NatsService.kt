@@ -8,9 +8,7 @@ import kotlinx.serialization.json.Json
 import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
 import no.mattilsynet.plantevernjournal.api.domain.FroeEllerFormeringsMatriale
 import no.mattilsynet.plantevernjournal.api.nats.jetstream.subjects.JetStreamSubjectBuilder
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import kotlin.random.Random.Default.nextInt
 
 @kotlin.uuid.ExperimentalUuidApi
 @Service
@@ -25,7 +23,7 @@ class NatsService(
     ) {
         jetStream.publish(
             subject = JetStreamSubjectBuilder
-                .plantevernjournalFroeV1(nextInt().toString()),
+                .plantevernjournalFroeV1(froeEllerFormeringsMatriale.id.toString()),
             body = Json.encodeToString(froeEllerFormeringsMatriale).toByteArray(),
         )
     }
