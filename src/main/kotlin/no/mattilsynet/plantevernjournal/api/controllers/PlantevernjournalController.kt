@@ -47,7 +47,11 @@ class PlantevernjournalController(
             description = "Data for å plantevernjournal for innendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody innendoersBrukDto: InnendoersBrukDto,
     ): ResponseEntity<Unit> {
-        return ResponseEntity.ok().build()
+        natsService.publishJournalForInnendoersBruk(
+            innendoersBrukDto.toInnendoersBruk(),
+        ).run {
+            return ResponseEntity.ok().build()
+        }
     }
 
     @PostMapping("/utendoersbruk")
@@ -57,6 +61,10 @@ class PlantevernjournalController(
             description = "Data for å plantevernjournal for utendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody utendoersBrukDto: UtendoersBrukDto,
     ): ResponseEntity<Unit> {
-        return ResponseEntity.ok().build()
+        natsService.publishJournalForUtendoersBruk(
+            utendoersBrukDto.toUtendoersBrukDto(),
+        ).run {
+            return ResponseEntity.ok().build()
+        }
     }
 }

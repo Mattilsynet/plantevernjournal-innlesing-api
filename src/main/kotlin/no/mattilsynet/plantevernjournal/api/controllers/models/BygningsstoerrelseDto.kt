@@ -1,6 +1,7 @@
 package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.mattilsynet.plantevernjournal.api.domain.Bygningsstoerrelse
 import no.mattilsynet.plantevernjournal.api.shared.Enhet
 
 @Schema(
@@ -18,4 +19,11 @@ data class BygningsstoerrelseDto(
     )
     val verdi: Double,
 
-)
+) {
+    fun toBygningsstoerrelse() =
+        Bygningsstoerrelse(
+            enhet = enhet,
+            verdi = verdi,
+        )
+
+}

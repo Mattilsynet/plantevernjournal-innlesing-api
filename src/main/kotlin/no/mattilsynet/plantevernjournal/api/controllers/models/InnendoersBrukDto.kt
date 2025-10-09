@@ -1,9 +1,9 @@
 package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.mattilsynet.plantevernjournal.api.domain.InnendoersBruk
 import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
 import java.time.LocalDate
-
 
 @Schema(
     description = "Journalfelter for innendørs bruk av plantevernmidler",
@@ -54,4 +54,19 @@ data class InnendoersBrukDto(
             require(!gaardsnummer.isNullOrBlank()) { "Hvis bruksområde er jordbruk kan ikke gårdsnummer være tomt" }
         }
     }
+
+    @kotlinx.serialization.ExperimentalSerializationApi
+    @kotlin.uuid.ExperimentalUuidApi
+    fun toInnendoersBruk() =
+        InnendoersBruk(
+            behandledeVekster = behandledeVekster.toBehandledeVekster(),
+            behandletDato = behandletDato,
+            behandletOmraade = behandletOmraade.toBehandletOmraade(),
+            bygningsnummer = bygningsnummer,
+            bygningsstoerrelse = bygningsstoerrelse.toBygningsstoerrelse(),
+            bruksomraade = bruksomraade,
+            gaardsnummer = gaardsnummer,
+            plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },
+        )
+
 }

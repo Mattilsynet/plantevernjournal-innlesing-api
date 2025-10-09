@@ -7,10 +7,10 @@ import io.swagger.v3.oas.annotations.media.Schema
 )
 enum class Enhet(enhet:String) {
     ANTALL(enhet = "antall"),
-    DEKTAR(enhet = "daa"),
+    DEKAR(enhet = "daa"),
     KILO(enhet = "kg"),
     KILO_PER_ANTALL(enhet = "kg/antall"),
-    KILO_PER_DEKTAR(enhet = "kg/daa"),
+    KILO_PER_DEKAR(enhet = "kg/daa"),
     KILO_PER_KILO(enhet = "kg/kg"),
     KILO_PER_KVADRATMETER(enhet = "kg/m2"),
     KILO_PER_KUBIKKMETER(enhet = "kg/m3"),

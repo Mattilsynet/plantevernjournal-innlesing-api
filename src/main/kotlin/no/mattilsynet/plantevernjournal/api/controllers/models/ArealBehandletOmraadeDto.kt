@@ -1,6 +1,7 @@
 package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.mattilsynet.plantevernjournal.api.domain.ArealBehandletOmraade
 import no.mattilsynet.plantevernjournal.api.shared.Enhet
 
 @Schema(
@@ -16,4 +17,11 @@ data class ArealBehandletOmraadeDto (
         description = "Hvor stort arealet er", required = true,
     )
     val verdi: Double,
-)
+) {
+    fun toArealBehandletOmraade() =
+        ArealBehandletOmraade(
+            enhet = enhet,
+            verdi = verdi,
+        )
+
+}

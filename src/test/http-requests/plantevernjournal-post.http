@@ -10,7 +10,7 @@ Content-Type: application/json
   },
   "behandletDato": "2024-10-18",
   "behandletMengde": {
-    "enhet": "KILO_PER_DEKTAR",
+    "enhet": "KILO_PER_DEKAR",
     "verdi": 55.6
   },
   "behandletOmraade": {

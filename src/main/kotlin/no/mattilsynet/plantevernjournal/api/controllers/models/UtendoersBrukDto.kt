@@ -1,6 +1,7 @@
 package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.mattilsynet.plantevernjournal.api.domain.UtendoersBruk
 import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
 import java.time.LocalDateTime
 
@@ -48,4 +49,18 @@ data class UtendoersBrukDto(
             require(!gaardsnummer.isNullOrBlank()) { "Hvis bruksområde er jordbruk kan ikke gårdsnummer være tomt" }
         }
     }
+
+    @kotlinx.serialization.ExperimentalSerializationApi
+    @kotlin.uuid.ExperimentalUuidApi
+    fun toUtendoersBrukDto() =
+        UtendoersBruk(
+            arealBehandletOmraade = arealBehandletOmraade.toArealBehandletOmraade(),
+            behandledeVekster = behandledeVekster.toBehandledeVekster(),
+            behandletOmraade = behandletOmraade.toBehandletOmraade(),
+            bruksomraade = bruksomraade,
+            gaardsnummer = gaardsnummer,
+            plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },
+            startTid = startTid,
+        )
+
 }
