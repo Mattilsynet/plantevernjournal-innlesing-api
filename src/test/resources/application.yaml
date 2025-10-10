@@ -1,0 +1,15 @@
+spring:
+  flyway:
+    enabled: true
+  profiles:
+    active: test
+  application:
+    name: digiplant-api
+
+nats:
+  url: test
+  creds: test
+
+server:
+  error:
+    include-message: always
