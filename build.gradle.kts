@@ -39,7 +39,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:7.3.2"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:7.4.0"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
 
     // nats og fisk
