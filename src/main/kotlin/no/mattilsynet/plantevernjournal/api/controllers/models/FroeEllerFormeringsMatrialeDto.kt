@@ -1,6 +1,7 @@
 package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
+import jakarta.validation.constraints.Pattern
 import kotlinx.serialization.Serializable
 import no.mattilsynet.plantevernjournal.api.domain.FroeEllerFormeringsMatriale
 import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
@@ -51,6 +52,7 @@ data class FroeEllerFormeringsMatrialeDto(
     val gaardsnummer: String?,
 
     @Schema(description = "Organisasjonsnummer til den som spørytet med plantevernmidler", required = true)
+    @Pattern(regexp = "^[89]\\d{8}", message = "Organisasjonsnummer må starte med 8 eller 9, og være 9 siffer")
     val organisasjonsnummer: String,
 
     @Schema(
