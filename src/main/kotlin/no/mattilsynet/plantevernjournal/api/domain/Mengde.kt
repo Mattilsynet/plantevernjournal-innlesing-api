@@ -4,7 +4,8 @@ import kotlinx.serialization.Serializable
 import no.mattilsynet.plantevernjournal.api.shared.Enhet
 
 @Serializable
-data class ArealBehandletOmraade (
+
+data class Mengde (
     val enhet: Enhet,
 
     val verdi: Double,
