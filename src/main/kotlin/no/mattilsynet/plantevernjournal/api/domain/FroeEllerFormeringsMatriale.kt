@@ -18,7 +18,9 @@ data class FroeEllerFormeringsMatriale(
     @Serializable(with = LocalDateSerializer::class)
     val behandletDato: LocalDate,
 
-    val behandletMengde: BehandletMengde,
+    val behandler: Person,
+
+    val behandletMengde: Mengde,
 
     val behandletOmraade: BehandletOmraade,
 
@@ -31,6 +33,8 @@ data class FroeEllerFormeringsMatriale(
 
     @Serializable(with = LocalDateTimeSerializer::class)
     val opprettet: LocalDateTime = LocalDateTime.now(),
+
+    val organisasjonsnummer: String,
 
     val plantevernmiddel: List<Plantevernmiddel>,
 )

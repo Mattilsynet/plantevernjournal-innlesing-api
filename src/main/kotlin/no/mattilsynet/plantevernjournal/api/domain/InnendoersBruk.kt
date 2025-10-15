@@ -14,6 +14,8 @@ import java.util.UUID
 data class InnendoersBruk(
     val behandledeVekster: BehandledeVekster,
 
+    val behandler: Person,
+
     @Serializable(with = LocalDateSerializer::class)
     val behandletDato: LocalDate,
 
@@ -23,7 +25,7 @@ data class InnendoersBruk(
 
     val bygningsnummer: String,
 
-    val bygningsstoerrelse: Bygningsstoerrelse,
+    val bygningsstoerrelse: Mengde,
 
     @Serializable(with = UUIDSerializer::class)
     val id: UUID = UUID.randomUUID(),
@@ -32,6 +34,8 @@ data class InnendoersBruk(
 
     @Serializable(with = LocalDateTimeSerializer::class)
     val opprettet: LocalDateTime = LocalDateTime.now(),
+
+    val organisasjonsnummer: String,
 
     val plantevernmiddel: List<Plantevernmiddel>,
 )

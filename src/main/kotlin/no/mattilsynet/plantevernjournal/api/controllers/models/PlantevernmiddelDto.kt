@@ -2,7 +2,6 @@ package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Serializable
-import no.mattilsynet.plantevernjournal.api.domain.Dosering
 import no.mattilsynet.plantevernjournal.api.domain.Plantevernmiddel
 
 @Schema(
@@ -18,11 +17,11 @@ data class PlantevernmiddelDto(
     @Schema(
         description = "Dosering av plantevernmiddelet som ble brukt", required = true,
     )
-    val dosering: DoseringDto,
+    val dosering: MengdeDto,
 ) {
     fun toPlantevernmiddel() =
         Plantevernmiddel(
             autorisasjonsnummer = autorisasjonsnummer,
-            dosering = dosering.toDosering(),
+            dosering = dosering.toMengde(),
         )
 }

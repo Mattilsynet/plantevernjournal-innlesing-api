@@ -3,8 +3,8 @@ package no.mattilsynet.plantevernjournal.api.domain
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Plantevernmiddel(
-    val autorisasjonsnummer: String,
+data class Person (
+    val fornavn: String,
 
-    val dosering: Mengde,
+    val etternavn: String,
 )

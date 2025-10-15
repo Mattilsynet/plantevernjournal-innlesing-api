@@ -11,9 +11,11 @@ import java.util.UUID
 @Serializable
 @Suppress("LongParameterList")
 data class UtendoersBruk(
-    val arealBehandletOmraade: ArealBehandletOmraade,
+    val arealBehandletOmraade: Mengde,
 
     val behandledeVekster: BehandledeVekster,
+
+    val behandler: Person,
 
     val behandletOmraade: BehandletOmraade,
 
@@ -26,6 +28,8 @@ data class UtendoersBruk(
 
     @Serializable(with = LocalDateTimeSerializer::class)
     val opprettet: LocalDateTime = LocalDateTime.now(),
+
+    val organisasjonsnummer: String,
 
     val plantevernmiddel: List<Plantevernmiddel>,
 

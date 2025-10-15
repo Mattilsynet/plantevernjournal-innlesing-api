@@ -14,6 +14,9 @@ data class InnendoersBrukDto(
     )
     val behandledeVekster: BehandledeVeksterDto,
 
+    @Schema(description = "Personen som har sprøytet med plantevernmiddler", required = true)
+    val behandler: PersonDto,
+
     @Schema(
         description = "Datoen man behandlet vekster med plantevernmidler", required = true,
     )
@@ -37,12 +40,15 @@ data class InnendoersBrukDto(
     @Schema(
         description = "Størrelse på bygningen der det ble sprøytet", required = true,
     )
-    val bygningsstoerrelse: BygningsstoerrelseDto,
+    val bygningsstoerrelse: MengdeDto,
 
     @Schema(
         description = "Gårdsnummer til gården", required = false,
     )
     val gaardsnummer: String?,
+
+    @Schema(description = "Organisasjonsnummer til den som spørytet med plantevernmidler", required = true)
+    val organisasjonsnummer: String,
 
     @Schema(
         description = "Liste av plantevernmiddel og mengde som ble brukt", required = true,
@@ -61,11 +67,13 @@ data class InnendoersBrukDto(
         InnendoersBruk(
             behandledeVekster = behandledeVekster.toBehandledeVekster(),
             behandletDato = behandletDato,
+            behandler = behandler.toPerson(),
             behandletOmraade = behandletOmraade.toBehandletOmraade(),
             bygningsnummer = bygningsnummer,
-            bygningsstoerrelse = bygningsstoerrelse.toBygningsstoerrelse(),
+            bygningsstoerrelse = bygningsstoerrelse.toMengde(),
             bruksomraade = bruksomraade,
             gaardsnummer = gaardsnummer,
+            organisasjonsnummer = organisasjonsnummer,
             plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },
         )
 

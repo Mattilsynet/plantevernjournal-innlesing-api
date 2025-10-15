@@ -20,6 +20,9 @@ data class FroeEllerFormeringsMatrialeDto(
     )
     val behandledeVekster: BehandledeVeksterDto,
 
+    @Schema(description = "Personen som har sprøytet med plantevernmiddler", required = true)
+    val behandler: PersonDto,
+
     @Schema(
         description = "Datoen man behandlet frø eller formeringsmateriale med plantevernmidler", required = true,
     )
@@ -29,7 +32,7 @@ data class FroeEllerFormeringsMatrialeDto(
     @Schema(
         description = "Mengde behandlede frø eller formeringsmateriale i kg, tonn eller antall frø", required = true,
     )
-    val behandletMengde: BehandletMengdeDto,
+    val behandletMengde: MengdeDto,
 
     @Schema(
         description = "Geografisk område man behandlet frø eller formeringsmateriale", required = true,
@@ -46,6 +49,9 @@ data class FroeEllerFormeringsMatrialeDto(
         required = false,
     )
     val gaardsnummer: String?,
+
+    @Schema(description = "Organisasjonsnummer til den som spørytet med plantevernmidler", required = true)
+    val organisasjonsnummer: String,
 
     @Schema(
         description = "Liste av plantevernmiddel og mengde som ble brukt",
@@ -64,11 +70,13 @@ data class FroeEllerFormeringsMatrialeDto(
     fun toFroeEllerFormeringsMatriale() =
         FroeEllerFormeringsMatriale(
             behandledeVekster = behandledeVekster.toBehandledeVekster(),
+            behandler = behandler.toPerson(),
             behandletDato = behandletDato,
-            behandletMengde = behandletMengde.toBehandletMengde(),
+            behandletMengde = behandletMengde.toMengde(),
             behandletOmraade = behandletOmraade.toBehandletOmraade(),
             bruksomraade = bruksomraade,
             gaardsnummer = gaardsnummer,
+            organisasjonsnummer = organisasjonsnummer,
             plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() }
         )
 
