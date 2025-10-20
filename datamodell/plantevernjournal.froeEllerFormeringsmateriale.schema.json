@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Plantevernjournal, bruk av plantevernmiddel på frø eller formeringsmateriale",
+  "description": "Journalfelter for bruk av plantevernmidler på frø eller formeringsmateriale.",
+  "type": "object",
+  "properties": {
+    "plantevernmiddel": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "autorisasjonsnummer": {
+            "type": "string"
+          },
+          "dosering": {
+            "type": "object",
+            "description": "kg eller l plantevernmiddel per kg, tonn eller antall frø",
+            "properties": {
+              "verdi": {
+                "type": "number"
+              },
+              "enhet": {
+                "type": "string",
+                "enum": [
+                  "kg/kg",
+                  "kg/tonn",
+                  "l/kg",
+                  "l/tonn",
+                  "kg/antall",
+                  "l/antall"
+                ]
+              }
+            },
+            "required": ["verdi", "enhet"]
+          }
+        },
+        "required": ["autorisasjonsnummer", "dosering"]
+      }
+    },
+    "bruksomraade": {
+      "type": "string",
+      "enum": ["JORDBRUK"]
+    },
+    "gaardsnummer": {
+      "type": "string"
+    },
+    "behandletDato": {
+      "type": "string",
+      "format": "date"
+    },
+    "behandletOmraade": {
+      "type": "object",
+      "$comment": "Kartdata på formatet som bestemmes"
+    },
+    "behandletMengde": {
+      "type": "object",
+      "description": "Mengde behandlede frø eller formeringsmateriale i kg, tonn eller antall frø",
+      "properties": {
+        "verdi": {
+          "type": "number"
+        },
+        "enhet": {
+          "type": "string",
+          "enum": ["kg", "tonn", "antall"]
+        }
+      },
+      "required": ["verdi", "enhet"]
+    },
+    "behandledeVekster": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "eppoKode": {
+            "type": "string"
+          },
+          "partinummer": {
+            "$comment": "Oversatt fra 'batch number' i 2023/564. Usikker på hva dette blir på norsk.",
+            "type": "number"
+          }
+        },
+        "required": ["eppoKode"]
+      }
+    }
+  },
+  "if": {
+    "properties": {
+      "bruksomraade": {
+        "const": "JORDBRUK"
+      }
+    }
+  },
+  "then": {
+    "required": ["gaardsnummer"]
+  },
+  "required": [
+    "behandledeVekster",
+    "behandletMengde",
+    "behandletOmraade",
+    "bruksomraade",
+    "behandletDato",
+    "dosering",
+    "plantevernmiddel"
+  ]
+}
