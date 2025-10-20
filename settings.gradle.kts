@@ -1,4 +1,4 @@
 
-rootProject.name = "plantevernjournal-api"
+rootProject.name = "plantevernjournal-innlesing-api"
 
 System.setProperty("sonar.gradle.skipCompile", "true")

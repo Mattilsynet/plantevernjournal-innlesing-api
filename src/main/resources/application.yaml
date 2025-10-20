@@ -8,7 +8,7 @@ server:
 
 spring:
   application:
-    name: plantevernjournal-api
+    name: plantevernjournal-innlesing-api
 
   cloud:
     gcp:
@@ -28,7 +28,7 @@ spring:
 
 nats:
   url: tls://connect.nats.mattilsynet.io:4222
-  creds: ${sm@nats-user-plantevernjournal-api-creds}
+  creds: ${sm@nats-user-plantevernjournal-innlesing-api-creds}
 
 springdoc:
   api-docs:

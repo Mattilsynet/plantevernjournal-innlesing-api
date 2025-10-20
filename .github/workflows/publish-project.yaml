@@ -36,6 +36,6 @@ jobs:
     with:
       project-id: plantevernjournal-dev-f405
       project-number: 1057364572067
-      name: "plantevernjournal-api"
-      service-account: "plvjournal-api-cr-svc-sa"
+      name: "plantevernjournal-innlesing-api"
+      service-account: "plvjournal-inn-api-cr-svc-sa"
       environment: dev
