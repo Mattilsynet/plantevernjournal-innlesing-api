@@ -2,19 +2,15 @@ package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Pattern
-import kotlinx.serialization.Serializable
 import no.mattilsynet.plantevernjournal.api.domain.FroeEllerFormeringsMatriale
 import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
-import no.mattilsynet.plantevernjournal.api.shared.LocalDateSerializer
+import org.geojson.FeatureCollection
 import java.time.LocalDate
 
 
 @Schema(
     description = "Journalfelter for bruk av plantevernmidler på frø eller formeringsmateriale",
 )
-@Serializable
-@kotlinx.serialization.ExperimentalSerializationApi
-@kotlin.uuid.ExperimentalUuidApi
 data class FroeEllerFormeringsMatrialeDto(
     @Schema(
         description = "Frø eller formeringsmateriale som ble behandlet av plantevernmidler", required = true,
@@ -27,7 +23,6 @@ data class FroeEllerFormeringsMatrialeDto(
     @Schema(
         description = "Datoen man behandlet frø eller formeringsmateriale med plantevernmidler", required = true,
     )
-    @Serializable(with = LocalDateSerializer::class)
     val behandletDato: LocalDate,
 
     @Schema(
@@ -36,9 +31,9 @@ data class FroeEllerFormeringsMatrialeDto(
     val behandletMengde: MengdeDto,
 
     @Schema(
-        description = "Geografisk område man behandlet frø eller formeringsmateriale", required = true,
+        description = "Geografiske områder hvor man har behandlet frø eller formeringsmateriale", required = true,
     )
-    val behandletOmraade: BehandletOmraadeDto,
+    val behandledeOmraader: FeatureCollection,
 
     @Schema(
         description = "Hvilket bruksområde har behandlingen", required = true,
@@ -75,7 +70,7 @@ data class FroeEllerFormeringsMatrialeDto(
             behandler = behandler.toPerson(),
             behandletDato = behandletDato,
             behandletMengde = behandletMengde.toMengde(),
-            behandletOmraade = behandletOmraade.toBehandletOmraade(),
+            behandledeOmraader = behandledeOmraader.toBehandledeOmraader(),
             bruksomraade = bruksomraade,
             gaardsnummer = gaardsnummer,
             organisasjonsnummer = organisasjonsnummer,

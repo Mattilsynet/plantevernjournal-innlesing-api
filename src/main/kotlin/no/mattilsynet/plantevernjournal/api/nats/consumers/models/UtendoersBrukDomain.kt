@@ -1,23 +1,25 @@
-package no.mattilsynet.plantevernjournal.api.domain
+package no.mattilsynet.plantevernjournal.api.nats.consumers.models
 
 import kotlinx.serialization.Serializable
+import no.mattilsynet.plantevernjournal.api.domain.BehandledeVekster
+import no.mattilsynet.plantevernjournal.api.domain.Mengde
+import no.mattilsynet.plantevernjournal.api.domain.Person
+import no.mattilsynet.plantevernjournal.api.domain.Plantevernmiddel
 import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
-import no.mattilsynet.plantevernjournal.api.shared.LocalDateTimeSerializer
 import no.mattilsynet.plantevernjournal.api.shared.UUIDSerializer
+import org.locationtech.jts.geom.Geometry
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
-@kotlinx.serialization.ExperimentalSerializationApi
-@Serializable
 @Suppress("LongParameterList")
-data class UtendoersBruk(
+data class UtendoersBrukDomain(
     val arealBehandletOmraade: Mengde,
 
     val behandledeVekster: BehandledeVekster,
 
     val behandler: Person,
 
-    val behandledeOmraader: List<String>,
+    val behandledeOmraader: List<Geometry>,
 
     val bruksomraade: Bruksomraade,
 
@@ -26,13 +28,11 @@ data class UtendoersBruk(
 
     val gaardsnummer: String?,
 
-    @Serializable(with = LocalDateTimeSerializer::class)
     val opprettet: LocalDateTime = LocalDateTime.now(),
 
     val organisasjonsnummer: String,
 
     val plantevernmiddel: List<Plantevernmiddel>,
 
-    @Serializable(with = LocalDateTimeSerializer::class)
     val startTid: LocalDateTime,
 )
