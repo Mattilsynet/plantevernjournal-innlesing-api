@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Pattern
 import no.mattilsynet.plantevernjournal.api.domain.InnendoersBruk
 import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
+import org.geojson.FeatureCollection
 import java.time.LocalDate
 
 @Schema(
@@ -24,9 +25,9 @@ data class InnendoersBrukDto(
     val behandletDato: LocalDate,
 
     @Schema(
-        description = "Geografisk område man behandlet med plantevernmidler", required = true,
+        description = "Geografiske områder hvor man har behandlet med plantevernmidler", required = true,
     )
-    val behandletOmraade: BehandletOmraadeDto,
+    val behandledeOmraader: FeatureCollection,
 
     @Schema(
         description = "Hvilket bruksområde har behandlingen", required = true,
@@ -67,13 +68,13 @@ data class InnendoersBrukDto(
     @kotlin.uuid.ExperimentalUuidApi
     fun toInnendoersBruk() =
         InnendoersBruk(
+            behandledeOmraader = behandledeOmraader.toBehandledeOmraader(),
             behandledeVekster = behandledeVekster.toBehandledeVekster(),
-            behandletDato = behandletDato,
             behandler = behandler.toPerson(),
-            behandletOmraade = behandletOmraade.toBehandletOmraade(),
+            behandletDato = behandletDato,
+            bruksomraade = bruksomraade,
             bygningsnummer = bygningsnummer,
             bygningsstoerrelse = bygningsstoerrelse.toMengde(),
-            bruksomraade = bruksomraade,
             gaardsnummer = gaardsnummer,
             organisasjonsnummer = organisasjonsnummer,
             plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },

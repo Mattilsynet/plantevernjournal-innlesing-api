@@ -8,16 +8,39 @@ Content-Type: application/json
     "eppoKode": "1SOLTU",
     "partinummer": 2
   },
+  "behandler": {
+    "etternavn": "Andersen",
+    "fornavn": "Grete"
+  },
   "behandletDato": "2024-10-18",
   "behandletMengde": {
     "enhet": "KILO_PER_DEKAR",
     "verdi": 55.6
   },
-  "behandletOmraade": {
-    "omraade": "Her må vi legge inn noe"
+  "behandledeOmraader": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              10.993992026,
+              60.72196783
+            ],
+            [
+              10.994093671,
+              60.722057656
+            ]
+          ]
+        }
+      }
+    ]
   },
   "bruksomraade": "JORDBRUK",
   "gaardsnummer": "0505-050-12",
+  "organisasjonsnummer": "987654321",
   "plantevernmiddel": [
     {
       "autorisasjonsnummer": "12345",
@@ -39,9 +62,31 @@ Content-Type: application/json
     "eppoKode": "1SOLTU",
     "partinummer": 2
   },
+  "behandler": {
+    "etternavn": "Olsen",
+    "fornavn": "Lars"
+  },
   "behandletDato": "2024-10-18T12:00:00",
-  "behandletOmraade": {
-    "omraade": "Her må vi legge inn noe"
+  "behandledeOmraader": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              10.993992026,
+              60.72196783
+            ],
+            [
+              10.994093671,
+              60.722057656
+            ]
+          ]
+        }
+      }
+    ]
   },
   "bruksomraade": "JORDBRUK",
   "bygningsnummer": "512",
@@ -50,6 +95,7 @@ Content-Type: application/json
     "verdi": 450
   },
   "gaardsnummer": "0505-067-11",
+  "organisasjonsnummer": "987654321",
   "plantevernmiddel": [
     {
       "autorisasjonsnummer": "12345",
@@ -75,11 +121,92 @@ Content-Type: application/json
     "eppoKode": "1SOLTU",
     "partinummer": 2
   },
-  "behandletOmraade": {
-    "omraade": "Her må vi legge inn noe"
+  "behandler": {
+    "etternavn": "Hansen",
+    "fornavn": "Tine"
+  },
+  "behandledeOmraader": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                10.993992026,
+                60.72196783
+              ],
+              [
+                10.994093671,
+                60.722057656
+              ],
+              [
+                10.994777701,
+                60.72187064
+              ],
+              [
+                10.995895613,
+                60.721563909
+              ],
+              [
+                10.995797879,
+                60.721475104
+              ],
+              [
+                10.995729609,
+                60.721414959
+              ],
+              [
+                10.9950005,
+                60.721613967
+              ],
+              [
+                10.994943302,
+                60.721563805
+              ],
+              [
+                10.994549717,
+                60.721671239
+              ],
+              [
+                10.99460847,
+                60.721722814
+              ],
+              [
+                10.993925502,
+                60.721909185
+              ],
+              [
+                10.993992026,
+                60.72196783
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              10.993992026,
+              60.72196783
+            ],
+            [
+              10.994093671,
+              60.722057656
+            ]
+          ]
+        }
+      }
+    ]
   },
   "bruksomraade": "JORDBRUK",
   "gaardsnummer": "0505-067-11",
+  "organisasjonsnummer": "987654123",
   "plantevernmiddel": [
     {
       "autorisasjonsnummer": "12345",
@@ -90,5 +217,4 @@ Content-Type: application/json
     }
   ],
   "startTid": "2024-10-18T12:00:00"
-
 }

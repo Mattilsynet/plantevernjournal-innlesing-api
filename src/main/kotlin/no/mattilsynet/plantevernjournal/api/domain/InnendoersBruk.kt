@@ -19,7 +19,7 @@ data class InnendoersBruk(
     @Serializable(with = LocalDateSerializer::class)
     val behandletDato: LocalDate,
 
-    val behandletOmraade: BehandletOmraade,
+    val behandledeOmraader: List<String>,
 
     val bruksomraade: Bruksomraade,
 

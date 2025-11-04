@@ -6,7 +6,7 @@ import kotlinx.serialization.json.Json
 import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
 import no.mattilsynet.fisk.libs.virtualnats.extension.jetstream.StreamSubscription
 import no.mattilsynet.fisk.libs.virtualnats.extension.jetstream.StreamSubscriptionConfig
-import no.mattilsynet.plantevernjournal.api.domain.UtendoersBruk
+import no.mattilsynet.plantevernjournal.api.nats.consumers.models.UtendoersBrukFraNats
 import no.mattilsynet.plantevernjournal.api.nats.jetstream.subjects.JetStreamSubjectBuilder
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -39,7 +39,9 @@ class UtendoersPushConsumer(
 
     override fun consume(data: ByteArray) {
         logger.info(
-            Json.decodeFromString<UtendoersBruk>(String(data)).toString()
+            Json.decodeFromString<UtendoersBrukFraNats>(
+                String(data)
+            ).toDomain().toString()
         )
     }
 

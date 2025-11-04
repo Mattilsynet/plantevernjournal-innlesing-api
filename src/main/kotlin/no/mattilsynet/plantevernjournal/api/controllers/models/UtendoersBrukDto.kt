@@ -2,9 +2,11 @@ package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Pattern
+import java.time.LocalDateTime
+import kotlinx.serialization.ExperimentalSerializationApi
 import no.mattilsynet.plantevernjournal.api.domain.UtendoersBruk
 import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
-import java.time.LocalDateTime
+import org.geojson.FeatureCollection
 
 @Schema(
     description = "Journalfelter for utendørs bruk av plantevernmidler",
@@ -24,9 +26,9 @@ data class UtendoersBrukDto(
     val behandler: PersonDto,
 
     @Schema(
-        description = "Geografisk område man behandlet med plantevernmidler", required = true,
+        description = "Geografiske områder hvor man har behandlet med plantevernmidler", required = true,
     )
-    val behandletOmraade: BehandletOmraadeDto,
+    val behandledeOmraader: FeatureCollection,
 
     @Schema(
         description = "Hvilket bruksområde har behandlingen", required = true,
@@ -58,18 +60,18 @@ data class UtendoersBrukDto(
         }
     }
 
-    @kotlinx.serialization.ExperimentalSerializationApi
+    @ExperimentalSerializationApi
     @kotlin.uuid.ExperimentalUuidApi
     fun toUtendoersBrukDto() =
         UtendoersBruk(
             arealBehandletOmraade = arealBehandletOmraade.toMengde(),
+            behandledeOmraader = behandledeOmraader.toBehandledeOmraader(),
             behandledeVekster = behandledeVekster.toBehandledeVekster(),
             behandler = behandler.toPerson(),
-            behandletOmraade = behandletOmraade.toBehandletOmraade(),
             bruksomraade = bruksomraade,
             gaardsnummer = gaardsnummer,
-            plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },
             organisasjonsnummer = organisasjonsnummer,
+            plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },
             startTid = startTid,
         )
 

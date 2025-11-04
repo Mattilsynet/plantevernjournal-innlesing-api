@@ -42,6 +42,14 @@ dependencies {
     implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:7.3.2"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
 
+    // Jackson:
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("de.grundid.opendatalab:geojson-jackson:1.8.1")
+
+    // GeoJson:
+    implementation("org.locationtech.jts:jts-core:1.19.0")
+    implementation("org.locationtech.jts.io:jts-io-common:1.19.0")
+
     // nats og fisk
     implementation(platform("no.mattilsynet.fisk.libs:virtual-nats-bom:2025.10.01-08.55-50408cd916c0"))
     implementation("no.mattilsynet.fisk.libs:nats")
