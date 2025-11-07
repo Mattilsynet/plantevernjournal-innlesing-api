@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Pattern
 import no.mattilsynet.plantevernjournal.api.domain.InnendoersBruk
 import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
-import org.geojson.FeatureCollection
+import org.wololo.geojson.FeatureCollection
 import java.time.LocalDate
 
 @Schema(

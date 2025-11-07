@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import kotlinx.serialization.ExperimentalSerializationApi
 import no.mattilsynet.plantevernjournal.api.domain.UtendoersBruk
 import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
-import org.geojson.FeatureCollection
+import org.wololo.geojson.FeatureCollection
 
 @Schema(
     description = "Journalfelter for utendørs bruk av plantevernmidler",
