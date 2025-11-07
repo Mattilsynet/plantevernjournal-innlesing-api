@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import no.mattilsynet.plantevernjournal.api.controllers.models.FeilmeldingModellDto
+import no.mattilsynet.plantevernjournal.api.shared.GeometriTyper
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -60,33 +61,33 @@ class FeilhaandteringControllerAdvice {
                 content = [Content(schema = Schema(implementation = FeilmeldingModellDto::class))],
             )]
     )
-    fun handleJsonMappingException(ex: JsonMappingException): ResponseEntity<FeilmeldingModellDto> {
-        val melding = sjekkUgyldigGeometriType(ex.message) ?: when {
-            ex.message?.contains("org.wololo.geojson.Feature", ignoreCase = true) == true ->
-            "Ugyldig GeoJSON Feature: Sjekk at strukturen følger GeoJSON-standarden."
+    fun handleJsonMappingException(jsonMappingException: JsonMappingException)
+            : ResponseEntity<FeilmeldingModellDto> {
+        with(jsonMappingException) {
+            val melding = message?.sjekkUgyldigGeometriType() ?: when {
+                message?.contains("org.wololo.geojson.Feature", ignoreCase = true) == true ->
+                    "Ugyldig GeoJSON Feature: Sjekk at strukturen følger GeoJSON-standarden."
 
-            ex.message?.contains("org.wololo.geojson.FeatureCollection", ignoreCase = true) == true ->
-            "Ugyldig GeoJSON FeatureCollection: Sjekk at 'features' er en array med gyldige Feature-objekter."
+                message?.contains("org.wololo.geojson.FeatureCollection", ignoreCase = true) == true ->
+                    "Ugyldig GeoJSON FeatureCollection: Sjekk at 'features' er en array med gyldige Feature-objekter."
 
-            else -> "Det skjedde en feil med deserialisering av json: ${ex.message}"
+                else -> "Det skjedde en feil med deserialisering av json: $message"
+            }
+
+            return ResponseEntity(
+                FeilmeldingModellDto(
+                    melding = melding,
+                    status = HttpStatus.BAD_REQUEST.value(),
+                ),
+                HttpStatus.BAD_REQUEST,
+            )
         }
-
-        return ResponseEntity(
-            FeilmeldingModellDto(
-                melding = melding,
-                status = HttpStatus.BAD_REQUEST.value(),
-            ),
-            HttpStatus.BAD_REQUEST,
-        )
     }
 
-    private fun sjekkUgyldigGeometriType(melding: String?): String? {
-        val geometriTyper = listOf("LineString", "MultiLineString", "MultiPoint", "MultiPolygon", "Point", "Polygon")
-
-        return geometriTyper.firstOrNull { type ->
-            melding?.contains("$type[\"coordinates\"]", ignoreCase = true) == true
+    private fun String.sjekkUgyldigGeometriType() =
+        GeometriTyper.entries.firstOrNull { type ->
+            contains("$type[\"coordinates\"]", ignoreCase = true)
         }?.let { type ->
             "Ugyldig GeoJSON: Geometritypen $type stemmer ikke overens med koordinatstrukturen"
         }
-    }
 }
