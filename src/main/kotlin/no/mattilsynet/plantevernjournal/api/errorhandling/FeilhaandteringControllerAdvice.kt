@@ -81,10 +81,7 @@ class FeilhaandteringControllerAdvice {
     }
 
     private fun sjekkUgyldigGeometriType(melding: String?): String? {
-        val geometriTyper = listOf(
-            "LineString", "Polygon", "Point",
-            "MultiLineString", "MultiPolygon", "MultiPoint"
-        )
+        val geometriTyper = listOf("LineString", "MultiLineString", "MultiPoint", "MultiPolygon", "Point", "Polygon")
 
         return geometriTyper.firstOrNull { type ->
             melding?.contains("$type[\"coordinates\"]", ignoreCase = true) == true
