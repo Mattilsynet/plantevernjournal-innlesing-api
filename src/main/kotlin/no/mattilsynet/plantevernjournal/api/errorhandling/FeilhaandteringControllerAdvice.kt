@@ -88,6 +88,6 @@ class FeilhaandteringControllerAdvice {
         GeometriTyper.entries.firstOrNull { type ->
             contains("$type[\"coordinates\"]", ignoreCase = true)
         }?.let { type ->
-            "Ugyldig GeoJSON: Geometritypen $type stemmer ikke overens med koordinatstrukturen"
+            "Ugyldig GeoJSON: Geometritypen ${type.name} stemmer ikke overens med koordinatstrukturen"
         }
 }
