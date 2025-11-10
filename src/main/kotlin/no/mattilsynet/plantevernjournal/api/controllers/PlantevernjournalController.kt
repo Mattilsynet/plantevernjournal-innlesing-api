@@ -32,13 +32,16 @@ class PlantevernjournalController(
             name = "froeEllerFormeringsMatrialeDto",
             description = "Data for å plantevernjournal for formeringsmateriale eller frø"
         ) @Valid @RequestBody froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
-    ): ResponseEntity<Unit> {
-        natsService.publishJournalForFroeEllerFormeringsmateriale(
-            froeEllerFormeringsMatrialeDto.toFroeEllerFormeringsMatriale(),
-            ).run {
+    ): ResponseEntity<Unit> =
+        runCatching {
+            natsService.publishJournalForFroeEllerFormeringsmateriale(
+                froeEllerFormeringsMatrialeDto.toFroeEllerFormeringsMatriale(),
+            ).let {
                 return ResponseEntity.ok().build()
             }
-    }
+        }.onFailure {
+            throw it
+        }.getOrDefault(ResponseEntity.noContent().build())
 
     @PostMapping("/innendoersbruk")
     fun postInnendoersBruk(
@@ -46,13 +49,15 @@ class PlantevernjournalController(
             name = "innendoersBrukDto",
             description = "Data for å plantevernjournal for innendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody innendoersBrukDto: InnendoersBrukDto,
-    ): ResponseEntity<Unit> {
+    ): ResponseEntity<Unit> = runCatching {
         natsService.publishJournalForInnendoersBruk(
             innendoersBrukDto.toInnendoersBruk(),
-        ).run {
+        ).let {
             return ResponseEntity.ok().build()
         }
-    }
+    }.onFailure {
+        throw it
+    }.getOrDefault(ResponseEntity.noContent().build())
 
     @PostMapping("/utendoersbruk")
     fun postUtendoersBruk(
@@ -60,11 +65,13 @@ class PlantevernjournalController(
             name = "utendoersBrukDto",
             description = "Data for å plantevernjournal for utendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody utendoersBrukDto: UtendoersBrukDto,
-    ): ResponseEntity<Unit> {
+    ): ResponseEntity<Unit> = runCatching {
         natsService.publishJournalForUtendoersBruk(
             utendoersBrukDto.toUtendoersBrukDto(),
-        ).run {
+        ).let{
             return ResponseEntity.ok().build()
         }
-    }
+    }.onFailure {
+        throw it
+    }.getOrDefault(ResponseEntity.noContent().build())
 }
