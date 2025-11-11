@@ -36,7 +36,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 
     // Springdoc (Swagger)
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.14")
 
     // gcp
     implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:7.4.1"))
@@ -46,8 +46,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // GeoJson:
-    implementation("org.locationtech.jts:jts-core:1.19.0")
-    implementation("org.locationtech.jts.io:jts-io-common:1.19.0")
+    implementation("org.locationtech.jts.io:jts-io-common:1.20.0")
     implementation("org.wololo:jts2geojson:0.18.1")
 
     // nats og fisk
