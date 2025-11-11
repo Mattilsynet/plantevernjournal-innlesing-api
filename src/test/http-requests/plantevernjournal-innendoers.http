@@ -1,0 +1,54 @@
+### Post plantevernjournal for innendørs bruk
+POST http://localhost:8080/plantevernjournal/innlesing/v1/innendoersbruk
+Content-Type: application/json
+
+{
+  "behandledeVekster": {
+    "bbchFase": "05",
+    "eppoKode": "1SOLTU",
+    "partinummer": 2
+  },
+  "behandler": {
+    "etternavn": "Olsen",
+    "fornavn": "Lars"
+  },
+  "behandletDato": "2024-10-18",
+  "behandledeOmraader": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              10.993992026,
+              60.72196783
+            ],
+            [
+              10.994093671,
+              60.722057656
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "bruksomraade": "JORDBRUK",
+  "bygningsnummer": "512",
+  "bygningsstoerrelse": {
+    "enhet": "KVADRATMETER",
+    "verdi": 450
+  },
+  "gaardsnummer": "0505-067-11",
+  "organisasjonsnummer": "987654321",
+  "plantevernmiddel": [
+    {
+      "autorisasjonsnummer": "12345",
+      "dosering": {
+        "enhet": "LITER_PER_KILO",
+        "verdi": 34
+      }
+    }
+  ]
+}
