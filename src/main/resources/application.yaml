@@ -29,11 +29,3 @@ spring:
 nats:
   url: tls://connect.nats.mattilsynet.io:4222
   creds: ${sm@nats-user-plantevernjournal-innlesing-api-creds}
-
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    enable: true
-  show-actuator: true
