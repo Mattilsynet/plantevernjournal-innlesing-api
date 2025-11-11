@@ -1,7 +1,7 @@
 package no.mattilsynet.plantevernjournal.api.controllers
 
+import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
-import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -28,7 +28,7 @@ class PlantevernjournalController(
 ) {
 
     @PostMapping("/formeringsmateriale")
-    @Schema(
+    @Operation(
         description = "Endepunkt for å sende inn informasjon om sprøyting på frø og formeringsmateriale",
     )
     fun postFroeEllerFormeringsmateriale(
@@ -47,7 +47,7 @@ class PlantevernjournalController(
             throw it
         }.getOrDefault(ResponseEntity.noContent().build())
 
-    @Schema(
+    @Operation(
         description = "Endepunkt for å sende inn informasjon om sprøyting som foregår innendørs, feks i et veksthus",
     )
     @PostMapping("/innendoersbruk")
@@ -66,7 +66,7 @@ class PlantevernjournalController(
         throw it
     }.getOrDefault(ResponseEntity.noContent().build())
 
-    @Schema(
+    @Operation(
         description = "Endepunkt for å sende inn informasjon om sprøyting som skjer utendørs, feks på et jorde",
     )
     @PostMapping("/utendoersbruk")

@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import no.mattilsynet.plantevernjournal.api.controllers.models.FeilmeldingModellDto
-import no.mattilsynet.plantevernjournal.api.shared.GeometriTyper
+import no.mattilsynet.plantevernjournal.api.shared.kodeverk.GeometriTyper
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice

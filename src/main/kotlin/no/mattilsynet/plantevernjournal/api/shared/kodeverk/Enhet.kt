@@ -1,11 +1,11 @@
-package no.mattilsynet.plantevernjournal.api.shared
+package no.mattilsynet.plantevernjournal.api.shared.kodeverk
 
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(
     description = "Enheter som blir brukt",
 )
-enum class Enhet(enhet:String) {
+enum class Enhet(val enhet: String) {
     ANTALL(enhet = "antall"),
     DEKAR(enhet = "daa"),
     KILO(enhet = "kg"),

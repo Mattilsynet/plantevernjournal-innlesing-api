@@ -1,0 +1,12 @@
+### kodeverk
+run kodeverk.http
+
+### frø og formeringsmateriale
+run plantevernjournal-froe-formering.http
+
+### innendørs
+run plantevernjournal-innendoers.http
+
+### utendørs
+run plantevernjournal-utendoers.http
+

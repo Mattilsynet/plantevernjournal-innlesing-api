@@ -5,8 +5,8 @@ import no.mattilsynet.plantevernjournal.api.domain.BehandledeVekster
 import no.mattilsynet.plantevernjournal.api.domain.Mengde
 import no.mattilsynet.plantevernjournal.api.domain.Person
 import no.mattilsynet.plantevernjournal.api.domain.Plantevernmiddel
-import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
-import no.mattilsynet.plantevernjournal.api.shared.UUIDSerializer
+import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
+import no.mattilsynet.plantevernjournal.api.shared.serializers.UUIDSerializer
 import org.locationtech.jts.geom.Geometry
 import java.time.LocalDateTime
 import java.util.*

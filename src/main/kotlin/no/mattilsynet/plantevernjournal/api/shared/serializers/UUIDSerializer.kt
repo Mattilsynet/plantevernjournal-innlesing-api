@@ -1,4 +1,4 @@
-package no.mattilsynet.plantevernjournal.api.shared
+package no.mattilsynet.plantevernjournal.api.shared.serializers
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

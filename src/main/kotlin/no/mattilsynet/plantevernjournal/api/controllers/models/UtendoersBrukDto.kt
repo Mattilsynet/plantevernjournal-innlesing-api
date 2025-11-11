@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Pattern
 import java.time.LocalDateTime
 import kotlinx.serialization.ExperimentalSerializationApi
 import no.mattilsynet.plantevernjournal.api.domain.UtendoersBruk
-import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
+import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
 import org.wololo.geojson.FeatureCollection
 
 @Schema(
