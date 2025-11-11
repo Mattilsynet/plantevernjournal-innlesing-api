@@ -48,7 +48,7 @@ data class UtendoersBrukDto(
         }
       }
     ]
-  },
+  }
         """,
         required = false,
     )
