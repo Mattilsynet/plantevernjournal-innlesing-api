@@ -3,7 +3,7 @@ package no.mattilsynet.plantevernjournal.api.controllers.models
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Pattern
 import no.mattilsynet.plantevernjournal.api.domain.FroeEllerFormeringsMatriale
-import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
+import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
 import org.wololo.geojson.FeatureCollection
 import java.time.LocalDate
 

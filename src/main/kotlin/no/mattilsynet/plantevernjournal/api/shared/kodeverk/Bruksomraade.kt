@@ -1,10 +1,10 @@
-package no.mattilsynet.plantevernjournal.api.shared
+package no.mattilsynet.plantevernjournal.api.shared.kodeverk
 
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(
     description = "Bruksområde for bruk av plantevernmidler",
 )
-enum class Bruksomraade(beskrivelse: String) {
+enum class Bruksomraade(val beskrivelse: String) {
     JORDBRUK(beskrivelse = "Jordbruk"),
 }

@@ -1,0 +1,9 @@
+### Hent bruksområder
+GET http://localhost:8080/plantevernjournal/kodeverk/v1/bruksomraade
+
+### Hent enheter
+GET http://localhost:8080/plantevernjournal/kodeverk/v1/enhet
+
+### Hent geometrityper
+GET http://localhost:8080/plantevernjournal/kodeverk/v1/geometritype
+

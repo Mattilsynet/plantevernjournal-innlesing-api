@@ -1,9 +1,9 @@
 package no.mattilsynet.plantevernjournal.api.domain
 
 import kotlinx.serialization.Serializable
-import no.mattilsynet.plantevernjournal.api.shared.Bruksomraade
-import no.mattilsynet.plantevernjournal.api.shared.LocalDateTimeSerializer
-import no.mattilsynet.plantevernjournal.api.shared.UUIDSerializer
+import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
+import no.mattilsynet.plantevernjournal.api.shared.serializers.LocalDateTimeSerializer
+import no.mattilsynet.plantevernjournal.api.shared.serializers.UUIDSerializer
 import java.time.LocalDateTime
 import java.util.UUID
 

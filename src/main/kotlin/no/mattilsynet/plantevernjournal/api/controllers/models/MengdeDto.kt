@@ -3,7 +3,7 @@ package no.mattilsynet.plantevernjournal.api.controllers.models
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Serializable
 import no.mattilsynet.plantevernjournal.api.domain.Mengde
-import no.mattilsynet.plantevernjournal.api.shared.Enhet
+import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Enhet
 
 @Schema(description = "Representasjon av mengde")
 @Serializable
