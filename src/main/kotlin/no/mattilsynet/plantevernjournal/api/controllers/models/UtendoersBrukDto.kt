@@ -26,9 +26,30 @@ data class UtendoersBrukDto(
     val behandler: PersonDto,
 
     @Schema(
-        description = "Geografiske områder hvor man har behandlet med plantevernmidler", required = true,
+        description = "Geografiske områder hvor man har behandlet med plantevernmidler",
+        example = """
+            [
+                  {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              10.993992026,
+              60.72196783
+            ],
+            [
+              10.994093671,
+              60.722057656
+            ]
+          ]
+        }
+      }
+    ]
+        """,
+        required = false,
     )
-    val behandledeOmraader: FeatureCollection,
+    val behandledeOmraader: FeatureCollection?,
 
     @Schema(
         description = "Hvilket bruksområde har behandlingen", required = true,
@@ -65,7 +86,7 @@ data class UtendoersBrukDto(
     fun toUtendoersBrukDto() =
         UtendoersBruk(
             arealBehandletOmraade = arealBehandletOmraade.toMengde(),
-            behandledeOmraader = behandledeOmraader.toBehandledeOmraader(),
+            behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),
             behandledeVekster = behandledeVekster.toBehandledeVekster(),
             behandler = behandler.toPerson(),
             bruksomraade = bruksomraade,

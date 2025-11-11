@@ -25,9 +25,9 @@ data class InnendoersBrukDto(
     val behandletDato: LocalDate,
 
     @Schema(
-        description = "Geografiske områder hvor man har behandlet med plantevernmidler", required = true,
+        description = "Geografiske områder hvor man har behandlet med plantevernmidler", required = false,
     )
-    val behandledeOmraader: FeatureCollection,
+    val behandledeOmraader: FeatureCollection?,
 
     @Schema(
         description = "Hvilket bruksområde har behandlingen", required = true,
@@ -68,7 +68,7 @@ data class InnendoersBrukDto(
     @kotlin.uuid.ExperimentalUuidApi
     fun toInnendoersBruk() =
         InnendoersBruk(
-            behandledeOmraader = behandledeOmraader.toBehandledeOmraader(),
+            behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),
             behandledeVekster = behandledeVekster.toBehandledeVekster(),
             behandler = behandler.toPerson(),
             behandletDato = behandletDato,

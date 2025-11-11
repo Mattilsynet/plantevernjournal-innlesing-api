@@ -22,7 +22,7 @@ data class FroeEllerFormeringsMatriale(
 
     val behandletMengde: Mengde,
 
-    val behandledeOmraader: List<String>,
+    val behandledeOmraader: List<String>?,
 
     val bruksomraade: Bruksomraade,
 

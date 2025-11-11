@@ -31,9 +31,9 @@ data class FroeEllerFormeringsMatrialeDto(
     val behandletMengde: MengdeDto,
 
     @Schema(
-        description = "Geografiske områder hvor man har behandlet frø eller formeringsmateriale", required = true,
+        description = "Geografiske områder hvor man har behandlet frø eller formeringsmateriale", required = false,
     )
-    val behandledeOmraader: FeatureCollection,
+    val behandledeOmraader: FeatureCollection?,
 
     @Schema(
         description = "Hvilket bruksområde har behandlingen", required = true,
@@ -70,7 +70,7 @@ data class FroeEllerFormeringsMatrialeDto(
             behandler = behandler.toPerson(),
             behandletDato = behandletDato,
             behandletMengde = behandletMengde.toMengde(),
-            behandledeOmraader = behandledeOmraader.toBehandledeOmraader(),
+            behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),
             bruksomraade = bruksomraade,
             gaardsnummer = gaardsnummer,
             organisasjonsnummer = organisasjonsnummer,

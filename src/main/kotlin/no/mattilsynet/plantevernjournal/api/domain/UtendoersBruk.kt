@@ -17,7 +17,7 @@ data class UtendoersBruk(
 
     val behandler: Person,
 
-    val behandledeOmraader: List<String>,
+    val behandledeOmraader: List<String>?,
 
     val bruksomraade: Bruksomraade,
 
