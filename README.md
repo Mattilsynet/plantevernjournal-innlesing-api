@@ -6,7 +6,7 @@ plantevernjournal-innlesing-api inneholder datamodellene som skal brukes når ma
 
 EU-kravet som skal implementeres er beskrevet her: https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R0564
 
-Dette er pågående arbeid, så det er fortsatt mye som ikke er avklart. Mer informasjon vil komme senere, som f.eks. identifisering av brukere, kartdata, hvordan og hvor ofte data skal rapporteres til Mattilsynet.
+Dette er pågående arbeid, så det er fortsatt mye som ikke er avklart. Mer informasjon vil komme senere, som f.eks. identifisering av brukere, hvordan og hvor ofte data skal rapporteres til Mattilsynet.
 
 Input til endepunktene vil ikke versjoneres i starten, og man må anta at det vil komme endringer som gjør at ting brekker.
 
@@ -15,8 +15,13 @@ Link til api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjo
 ### Datamodeller
 Det er laget tre ulike datamodeller for bruk av plantevernmidler, en for [innendørs bruk](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/InnendoersBrukDto.kt), en for [utendørs bruk](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/UtendoersBrukDto.kt) og en for bruk på [frø eller annet formeringsmateriale](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/FroeEllerFormeringsMatrialeDto.kt). En del av dataene som skal samles inn er felles, men modellene har også noen egne egenskaper som gjør at det er valgt å dele de inn, i stedet for å ha en felles datamodell.
 
+### Restendepunkter
+Det er laget tre ulike endepunkter for å sende inn data, ett for utendørsbruk, ett for innendørsbruk og ett for sprøyting på frø og formeringsmateriale. Det er valgt tre ulike endepunkter, sånn at vi kan ha en datamodell for hver type sprøyting.
+
+De ulike endepunktene finnes [her](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/PlantevernjournalController.kt) eller i [swagger](https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html).
+
 ### Kartdata
-Kartdata er sentralt i bruk av plantevermidler. Vi har valgt å bruke [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON)
+Kartdata er sentralt i bruk av plantevermidler. Vi har valgt å bruke [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) Nå er det frivillig å sende inn kartdata i feltene for _behandledeOmraader_, men det skal bli obligatorisk på sikt. Det er i dag frivillig, sånn at manglende kartdata ikke skal være et hinder for å teste ut løsningen.  
 
 Gyldige geometrityper er gitt [her](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/shared/GeometriTyper.kt)
 
