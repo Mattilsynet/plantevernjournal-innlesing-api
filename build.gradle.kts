@@ -1,8 +1,8 @@
 plugins {
-    kotlin("jvm") version "2.2.20"
-    kotlin("plugin.spring") version "2.2.20"
-    kotlin("plugin.serialization") version "2.2.20"
-    id("org.springframework.boot") version "3.5.6"
+    kotlin("jvm") version "2.2.21"
+    kotlin("plugin.spring") version "2.2.21"
+    kotlin("plugin.serialization") version "2.2.21"
+    id("org.springframework.boot") version "3.5.7"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -36,18 +36,17 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 
     // Springdoc (Swagger)
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.14")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:7.3.2"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:7.4.1"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
 
     // Jackson:
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // GeoJson:
-    implementation("org.locationtech.jts:jts-core:1.19.0")
-    implementation("org.locationtech.jts.io:jts-io-common:1.19.0")
+    implementation("org.locationtech.jts.io:jts-io-common:1.20.0")
     implementation("org.wololo:jts2geojson:0.18.1")
 
     // nats og fisk
