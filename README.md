@@ -1,6 +1,8 @@
 # Elektronisk journalføring av plantevernmidler
 
-Mattilsynet skal samle inn data om bruk av plantevernmidler i landbruket i Norge. plantevernjournal-innlesing-api inneholder datamodellene som skal brukes når man sender inn data til Mattilsynet. Dette er en veldig tidlig versjon av disse modellene, som er under utvikling, og det vil bli endringer.
+Mattilsynet skal samle inn data om bruk av plantevernmidler i landbruket i Norge. Team Planter er et eget utviklingsteam som driver utviklingen av dette. Vi nås på epost _plantevernjournal@mattilsynet.no_ hvis dere vil kontakte oss.
+
+plantevernjournal-innlesing-api inneholder datamodellene som skal brukes når man sender inn data til Mattilsynet. Dette er en veldig tidlig versjon av disse modellene, som er under utvikling, og det vil bli endringer.
 
 EU-kravet som skal implementeres er beskrevet her: https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R0564
 
@@ -11,10 +13,14 @@ Input til endepunktene vil ikke versjoneres i starten, og man må anta at det vi
 Link til api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html
 
 ### Datamodeller
-Det er laget tre ulike datamodeller for bruk av plantevernmidler, en for innendørs bruk, en for utendørs bruk og en for bruk på frø eller annet formeringsmateriale. En del av dataene som skal samles inn er felles, men modellene har også noen egne egenskaper som gjør at det er valgt å dele de inn, i stedet for å ha en felles datamodell.
+Det er laget tre ulike datamodeller for bruk av plantevernmidler, en for [innendørs bruk](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/InnendoersBrukDto.kt), en for [utendørs bruk](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/UtendoersBrukDto.kt) og en for bruk på [frø eller annet formeringsmateriale](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/FroeEllerFormeringsMatrialeDto.kt). En del av dataene som skal samles inn er felles, men modellene har også noen egne egenskaper som gjør at det er valgt å dele de inn, i stedet for å ha en felles datamodell.
 
 ### Kartdata
-Kartdata er sentralt i bruk av plantevermidler. Det er ikke tatt stilling til formatet på disse dataene, så det vil komme etter hvert.
+Kartdata er sentralt i bruk av plantevermidler. Vi har valgt å bruke [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON)
+
+Gyldige geometrityper er gitt [her](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/shared/GeometriTyper.kt)
+
+I GeoJSON er det mulig å sende inn properties, det bruker vi ikke per i dag.
 
 ### BBCH
 Det skal angis utviklingsstadium for vekstene som sprøytes. Vi kommer tilbake til akkurat hvordan dette skal angis.
@@ -28,3 +34,6 @@ I Eppodatabasen er det laget et kodeverk for klassifisering av planter, og det s
 
 Det finnes flere måter å hente eppokoder for planter på, dokumentasjon til rest-api'et til eppo finnes her: https://data.eppo.int/documentation/rest Det er også mulig å manuelt søke på planter på nettsiden: https://gd.eppo.int/
 
+### Testdata
+Det er laget filer med testdata som man kan bruke som utgangspunkt for egen testing, eller for å teste api-endepunktene i swaggerdokumentasjonen. Eksempelfilene ligger her: https://github.com/Mattilsynet/plantevernjournal-innlesing-api/tree/master/src/test/http-requests
+Dette er testfiler som vi bruker i utviklingen, så de vil oppdateres forløpende etter som datamodellene og restendepunktene endrer seg.

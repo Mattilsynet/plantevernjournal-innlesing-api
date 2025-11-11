@@ -1,0 +1,53 @@
+### Post plantevernjournal for frø og formeringsmateriale
+POST http://localhost:8080/plantevernjournal/innlesing/v1/formeringsmateriale
+Content-Type: application/json
+
+{
+  "behandledeVekster": {
+    "bbchFase": "05",
+    "eppoKode": "1SOLTU",
+    "partinummer": 2
+  },
+  "behandler": {
+    "etternavn": "Andersen",
+    "fornavn": "Grete"
+  },
+  "behandletDato": "2024-10-18",
+  "behandletMengde": {
+    "enhet": "KILO_PER_DEKAR",
+    "verdi": 55.6
+  },
+  "behandledeOmraader": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              10.993992026,
+              60.72196783
+            ],
+            [
+              10.994093671,
+              60.722057656
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "bruksomraade": "JORDBRUK",
+  "gaardsnummer": "0505-050-12",
+  "organisasjonsnummer": "987654321",
+  "plantevernmiddel": [
+    {
+      "autorisasjonsnummer": "12345",
+      "dosering": {
+        "enhet": "LITER_PER_KILO",
+        "verdi": 34
+      }
+    }
+  ]
+}
