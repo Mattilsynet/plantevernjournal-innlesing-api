@@ -12,9 +12,9 @@ import java.time.LocalDate
 )
 data class InnendoersBrukDto(
     @Schema(
-        description = "Vekster som ble behandlet av plantevernmidler", required = true,
+        description = "Liste med vekster som ble behandlet av plantevernmidler", required = true,
     )
-    val behandledeVekster: BehandledeVeksterDto,
+    val behandledeVekster: List<BehandletVekstDto>,
 
     @Schema(description = "Personen som har sprøytet med plantevernmiddler", required = true)
     val behandler: PersonDto,
@@ -69,7 +69,7 @@ data class InnendoersBrukDto(
     fun toInnendoersBruk() =
         InnendoersBruk(
             behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),
-            behandledeVekster = behandledeVekster.toBehandledeVekster(),
+            behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
             behandler = behandler.toPerson(),
             behandletDato = behandletDato,
             bruksomraade = bruksomraade,

@@ -84,9 +84,11 @@ class PlantevernjournalController(
         natsService.publishJournalForUtendoersBruk(
             utendoersBrukDto.toUtendoersBrukDto(),
         ).let {
-            logger.info(
-                eppoService.getNavnFraEppokode(utendoersBrukDto.behandledeVekster.eppoKode)
-            )
+            utendoersBrukDto.behandledeVekster.forEach { behandletVekstDto ->
+                logger.info(
+                    eppoService.getNavnFraEppokode(behandletVekstDto.eppoKode)
+                )
+            }
             return ResponseEntity.ok().build()
         }
     }.onFailure {

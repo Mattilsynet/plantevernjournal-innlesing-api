@@ -3,11 +3,18 @@ POST http://localhost:8080/plantevernjournal/innlesing/v1/formeringsmateriale
 Content-Type: application/json
 
 {
-  "behandledeVekster": {
-    "bbchFase": "05",
-    "eppoKode": "SOLTU",
-    "partinummer": 2
-  },
+  "behandledeVekster":  [
+    {
+      "bbchFase": "05",
+      "eppoKode": "SOLTU",
+      "partinummer": 2
+    },
+    {
+      "bbchFase": "01",
+      "eppoKode": "MMMMM",
+      "partinummer": 27
+    }
+  ],
   "behandler": {
     "etternavn": "Andersen",
     "fornavn": "Grete"

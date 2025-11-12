@@ -12,7 +12,7 @@ import java.util.UUID
 @kotlinx.serialization.ExperimentalSerializationApi
 @Serializable
 data class InnendoersBruk(
-    val behandledeVekster: BehandledeVekster,
+    val behandledeVekster: List<BehandletVekst>,
 
     val behandler: Person,
 

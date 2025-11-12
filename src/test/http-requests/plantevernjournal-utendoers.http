@@ -7,11 +7,18 @@ Content-Type: application/json
     "enhet": "DEKAR",
     "verdi": 65
   },
-  "behandledeVekster": {
-    "bbchFase": "05",
-    "eppoKode": "SOLTU",
-    "partinummer": 2
-  },
+  "behandledeVekster": [
+    {
+      "bbchFase": "05",
+      "eppoKode": "SOLTU",
+      "partinummer": 2
+    },
+    {
+      "bbchFase": "01",
+      "eppoKode": "MMMMM",
+      "partinummer": 27
+    }
+  ],
   "behandler": {
     "etternavn": "Hansen",
     "fornavn": "Tine"
