@@ -10,6 +10,10 @@ Dette er pågående arbeid, så det er fortsatt mye som ikke er avklart. Mer inf
 
 Input til rest-endepunktene vil ikke versjoneres i starten, og man må anta at det vil komme endringer som gjør at ting brekker.
 
+Mange datafelter er frivillige til å begynne med, men vil bli obligatoriske etter hvert. Det er noen av datafeltene vi er litt usikre på hva som kreves, og det blir endringer utover i utviklingsløpet. Det gjelder særlig det med definisjon av steder uten kart. Det er ikke avgjort hva som skal ha presedens dersom man sender inn kartdata som ikke stemmer overens med areal.
+
+Data som sendes inn er ikke tenkt som reelle data, de regnes kun som testdata. Dataene vil slettes med ujevne mellomrom. Miljøet er satt opp med testformål, for å se hvordan datamodellene virker og for å komme i gang så vi kan få tilbakemeldinger fra de som kobler seg på.
+
 Link til api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html
 
 ### Datamodeller
@@ -30,7 +34,9 @@ Gyldige geometrityper er gitt [her](https://github.com/Mattilsynet/plantevernjou
 I GeoJSON er det mulig å sende inn properties, det bruker vi ikke per i dag.
 
 ### BBCH/vekststadier
-Det skal angis utviklingsstadium for vekstene som sprøytes, og til det skal det brukes BBCH-skala. [Her](https://en.wikipedia.org/wiki/BBCH-scale) kan man lese litt om hva dette betyr. Vi kommer tilbake til akkurat hvordan dette skal angis.
+Det skal angis vekststadium for vekstene som sprøytes, og til det skal det brukes BBCH-skala. [Her](https://en.wikipedia.org/wiki/BBCH-scale) kan man lese litt om hva dette betyr. Vi kommer tilbake til akkurat hvordan dette skal angis.
+
+Det vil bli obligatorisk å sende inn vekststadium på sikt.
 
 Her er et eksempel på utviklingsstadier for [korn](https://www.felleskjopet.no/globalassets/planteproduksjon/plantekultur/plantevern/utviklingsstadier-for-korn.pdf) (fra Felleskjøpet), og for [potet](https://potet.no/kunnskap/fagartikler/potet/potet/bbch-skala-for-potet) (fra Fagforum Potet).
 
@@ -40,6 +46,8 @@ _Eppo Global Database_ er en internasjonal database som samler informasjon om pl
 I Eppodatabasen er det laget et kodeverk for klassifisering av planter, og det skal plantevernjournal-innlesing-api bruke for å angi behandlede vekster. Plantekodeverket kan man finne her: https://gd.eppo.int/taxon/1PLAK
 
 Det finnes flere måter å hente eppokoder for planter på, dokumentasjon til rest-api'et til eppo finnes her: https://data.eppo.int/documentation/rest Det er også mulig å manuelt søke på planter på nettsiden: https://gd.eppo.int/
+
+Det gjøre ikke validering av eppokodene mot eppodatabasen foreløpig. Det vil komme. 
 
 ### Testdata
 Det er laget filer med testdata som man kan bruke som utgangspunkt for egen testing, eller for å teste rest-endepunktene i swaggerdokumentasjonen. Eksempelfilene ligger [her](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/tree/master/src/test/http-requests).

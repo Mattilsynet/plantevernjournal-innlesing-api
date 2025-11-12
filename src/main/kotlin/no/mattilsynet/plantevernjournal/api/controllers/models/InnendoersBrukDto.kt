@@ -35,9 +35,11 @@ data class InnendoersBrukDto(
     val bruksomraade: Bruksomraade,
 
     @Schema(
-        description = "Bygningsnummer der det ble sprøytet", required = true,
+        description = "Bygningsnummer der det ble sprøytet. Usikkerhet rundt hvordan det blir, kanskje FKB_Bygning " +
+                " eller en intern beskrivelse for hver gård",
+        required = false,
     )
-    val bygningsnummer: String,
+    val bygningsnummer: String?,
 
     @Schema(
         description = "Størrelse på bygningen der det ble sprøytet", required = true,
@@ -45,7 +47,9 @@ data class InnendoersBrukDto(
     val bygningsstoerrelse: MengdeDto,
 
     @Schema(
-        description = "Gårdsnummer til gården", required = false,
+        description = "Her er det usikkerhet rundt hva som skal legges inn. Det kan hende det blir eiendom " +
+                "som kommunenummer/gårdsnummer/bruksnummer/festenummer/seksjonsnummer",
+        required = false,
     )
     val gaardsnummer: String?,
 
@@ -60,7 +64,8 @@ data class InnendoersBrukDto(
 ){
     init {
         if (bruksomraade == Bruksomraade.JORDBRUK) {
-            require(!gaardsnummer.isNullOrBlank()) { "Hvis bruksområde er jordbruk kan ikke gårdsnummer være tomt" }
+            require(!gaardsnummer.isNullOrBlank())
+            { "Hvis bruksområde er jordbruk kan ikke gårdsnummer være tomt" }
         }
     }
 

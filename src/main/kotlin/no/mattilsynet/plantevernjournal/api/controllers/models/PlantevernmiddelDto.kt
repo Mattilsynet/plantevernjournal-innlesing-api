@@ -10,7 +10,9 @@ import no.mattilsynet.plantevernjournal.api.domain.Plantevernmiddel
 @Serializable
 data class PlantevernmiddelDto(
     @Schema(
-        description = "Autorisasjonsnummer på plantevernmiddelet som ble brukt", required = true,
+        description = "Autorisasjonsnummer på plantevernmiddelet som ble brukt. Det er foreløpig ingen validering av " +
+                "at man legger til riktig. Inntil videre kan man sende inn en hvilken som helst streng",
+        required = true,
     )
     val autorisasjonsnummer: String,
 
