@@ -27,27 +27,6 @@ data class UtendoersBrukDto(
 
     @Schema(
         description = "Geografiske områder hvor man har behandlet med plantevernmidler",
-        example = """
-    "type": "FeatureCollection",
-    "features": [
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "LineString",
-          "coordinates": [
-            [
-              10.993992026,
-              60.72196783
-            ],
-            [
-              10.994093671,
-              60.722057656
-            ]
-          ]
-        }
-      }
-    ]
-        """,
         required = false,
     )
     val behandledeOmraader: FeatureCollection?,
