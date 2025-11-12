@@ -26,6 +26,10 @@ spring:
   profiles:
     active: dev
 
+eppo:
+  token: ${sm@eppo-token}
+  uri: "https://data.eppo.int/api/rest/1.0"
+
 nats:
   url: tls://connect.nats.mattilsynet.io:4222
   creds: ${sm@nats-user-plantevernjournal-innlesing-api-creds}

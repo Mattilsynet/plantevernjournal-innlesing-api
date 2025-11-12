@@ -13,9 +13,9 @@ import java.time.LocalDate
 )
 data class FroeEllerFormeringsMatrialeDto(
     @Schema(
-        description = "Frø eller formeringsmateriale som ble behandlet av plantevernmidler", required = true,
+        description = "Liste av frø eller formeringsmateriale som ble behandlet av plantevernmidler", required = true,
     )
-    val behandledeVekster: BehandledeVeksterDto,
+    val behandledeVekster: List<BehandletVekstDto>,
 
     @Schema(description = "Personen som har sprøytet med plantevernmiddler", required = true)
     val behandler: PersonDto,
@@ -59,7 +59,8 @@ data class FroeEllerFormeringsMatrialeDto(
 ) {
     init {
         if (bruksomraade == Bruksomraade.JORDBRUK) {
-        require(!gaardsnummer.isNullOrBlank()) { "Hvis bruksområde er jordbruk kan ikke gårdsnummer være tomt" }
+            require(!gaardsnummer.isNullOrBlank())
+            { "Hvis bruksområde er jordbruk kan ikke gårdsnummer være tomt" }
         }
     }
 
@@ -67,7 +68,7 @@ data class FroeEllerFormeringsMatrialeDto(
     @kotlin.uuid.ExperimentalUuidApi
     fun toFroeEllerFormeringsMatriale() =
         FroeEllerFormeringsMatriale(
-            behandledeVekster = behandledeVekster.toBehandledeVekster(),
+            behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
             behandler = behandler.toPerson(),
             behandletDato = behandletDato,
             behandletMengde = behandletMengde.toMengde(),

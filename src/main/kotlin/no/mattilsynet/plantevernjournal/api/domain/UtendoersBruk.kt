@@ -13,7 +13,7 @@ import java.util.UUID
 data class UtendoersBruk(
     val arealBehandletOmraade: Mengde,
 
-    val behandledeVekster: BehandledeVekster,
+    val behandledeVekster: List<BehandletVekst>,
 
     val behandler: Person,
 

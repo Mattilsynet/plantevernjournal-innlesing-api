@@ -13,7 +13,7 @@ import java.util.UUID
 @kotlin.uuid.ExperimentalUuidApi
 @Serializable
 data class FroeEllerFormeringsMatriale(
-    val behandledeVekster: BehandledeVekster,
+    val behandledeVekster: List<BehandletVekst>,
 
     @Serializable(with = LocalDateSerializer::class)
     val behandletDato: LocalDate,
