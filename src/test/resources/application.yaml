@@ -6,6 +6,10 @@ spring:
   application:
     name: digiplant-api
 
+eppo:
+  token: tulletoken
+  uri: "http://tulleuri.com"
+
 nats:
   url: test
   creds: test

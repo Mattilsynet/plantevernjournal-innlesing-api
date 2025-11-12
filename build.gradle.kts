@@ -29,6 +29,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    // Spring webflux. Brukes for kontakt med eppo:
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+
     // Jetbrains
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 

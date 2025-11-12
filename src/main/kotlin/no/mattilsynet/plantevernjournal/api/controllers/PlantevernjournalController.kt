@@ -8,7 +8,9 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import no.mattilsynet.plantevernjournal.api.controllers.models.FroeEllerFormeringsMatrialeDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.InnendoersBrukDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.UtendoersBrukDto
+import no.mattilsynet.plantevernjournal.api.services.EppoService
 import no.mattilsynet.plantevernjournal.api.services.NatsService
+import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -24,8 +26,11 @@ import org.springframework.web.bind.annotation.RestController
     name = "Innlesing plantevernjournal",
 )
 class PlantevernjournalController(
+    private val eppoService: EppoService,
     private val natsService: NatsService,
 ) {
+
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     @PostMapping("/formeringsmateriale")
     @Operation(
@@ -78,7 +83,10 @@ class PlantevernjournalController(
     ): ResponseEntity<Unit> = runCatching {
         natsService.publishJournalForUtendoersBruk(
             utendoersBrukDto.toUtendoersBrukDto(),
-        ).let{
+        ).let {
+            logger.info(
+                eppoService.getNavnFraEppokode(utendoersBrukDto.behandledeVekster.eppoKode)
+            )
             return ResponseEntity.ok().build()
         }
     }.onFailure {

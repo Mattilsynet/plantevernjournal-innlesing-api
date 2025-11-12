@@ -9,7 +9,7 @@ Content-Type: application/json
   },
   "behandledeVekster": {
     "bbchFase": "05",
-    "eppoKode": "1SOLTU",
+    "eppoKode": "SOLTU",
     "partinummer": 2
   },
   "behandler": {
