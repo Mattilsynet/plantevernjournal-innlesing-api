@@ -23,7 +23,7 @@ data class InnendoersBruk(
 
     val bruksomraade: Bruksomraade,
 
-    val bygningsnummer: String,
+    val bygningsnummer: String?,
 
     val bygningsstoerrelse: Mengde,
 

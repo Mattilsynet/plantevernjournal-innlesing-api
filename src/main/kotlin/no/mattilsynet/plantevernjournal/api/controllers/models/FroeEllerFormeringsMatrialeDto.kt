@@ -41,7 +41,8 @@ data class FroeEllerFormeringsMatrialeDto(
     val bruksomraade: Bruksomraade,
 
     @Schema(
-        description = "Gårdsnummer til gården",
+        description = "Her er det usikkerhet rundt hva som skal legges inn. Det kan hende det blir eiendom " +
+                "som kommunenummer/gårdsnummer/bruksnummer/festenummer/seksjonsnummer",
         required = false,
     )
     val gaardsnummer: String?,
