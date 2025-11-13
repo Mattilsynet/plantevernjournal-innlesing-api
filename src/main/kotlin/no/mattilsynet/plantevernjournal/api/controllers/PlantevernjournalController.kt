@@ -11,6 +11,7 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.UtendoersBrukDto
 import no.mattilsynet.plantevernjournal.api.services.EppoService
 import no.mattilsynet.plantevernjournal.api.services.NatsService
 import org.slf4j.LoggerFactory
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -32,7 +33,7 @@ class PlantevernjournalController(
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    @PostMapping("/formeringsmateriale")
+    @PostMapping("/formeringsmateriale", consumes = [MediaType.APPLICATION_JSON_VALUE])
     @Operation(
         description = "Endepunkt for å sende inn informasjon om sprøyting på frø og formeringsmateriale",
     )
@@ -55,7 +56,7 @@ class PlantevernjournalController(
     @Operation(
         description = "Endepunkt for å sende inn informasjon om sprøyting som foregår innendørs, feks i et veksthus",
     )
-    @PostMapping("/innendoersbruk")
+    @PostMapping("/innendoersbruk", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun postInnendoersBruk(
         @Parameter(
             name = "innendoersBrukDto",
@@ -74,7 +75,7 @@ class PlantevernjournalController(
     @Operation(
         description = "Endepunkt for å sende inn informasjon om sprøyting som skjer utendørs, feks på et jorde",
     )
-    @PostMapping("/utendoersbruk")
+    @PostMapping("/utendoersbruk", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun postUtendoersBruk(
         @Parameter(
             name = "utendoersBrukDto",
