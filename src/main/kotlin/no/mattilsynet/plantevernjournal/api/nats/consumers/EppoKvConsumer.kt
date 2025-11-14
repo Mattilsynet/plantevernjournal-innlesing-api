@@ -3,7 +3,7 @@ package no.mattilsynet.plantevernjournal.api.nats.consumers
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
-import no.mattilsynet.plantevernjournal.api.nats.consumers.models.EppoKodeNats
+import no.mattilsynet.plantevernjournal.api.nats.consumers.models.EppokodeNats
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
@@ -16,33 +16,33 @@ class EppoKvConsumer(
 
     /**
      * Putter eppokoder til nats
-     * @param eppoKodeNats som sendes inn sammen med journaldata
+     * @param eppokodeNats som sendes inn sammen med journaldata
      */
-    fun putEppoKode(eppoKodeNats: EppoKodeNats) =
+    fun putEppokode(eppokodeNats: EppokodeNats) =
         runCatching {
             nats.keyValue(
                 bucketName = "eppo_kode_v1",
             ).put(
-                key = eppoKodeNats.eppoKode,
-                value = Json.encodeToString(eppoKodeNats).toByteArray(),
+                key = eppokodeNats.eppokode,
+                value = Json.encodeToString(eppokodeNats).toByteArray(),
             )
         }.onFailure {
             logger.warn(
-                "putEppoKode feiler for eppokode: ${eppoKodeNats.eppoKode} og kodestring ${eppoKodeNats.eppoNavn}",
+                "putEppoKode feiler for eppokode: ${eppokodeNats.eppokode} og kodestring ${eppokodeNats.eppoNavn}",
                 it
             )
         }.getOrNull()
 
     /**
      * Henter eppokoder fra nats
-     * @param eppoKode som sendes inn sammen med journaldata
+     * @param eppokode som sendes inn sammen med journaldata
      * @return String
      */
-    fun getEppoKode(eppoKode: String): String? =
+    fun getEppokode(eppokode: String): String? =
         runCatching {
             nats.keyValue(
                 "eppo_kode_v1",
-            ).get(key = eppoKode)
+            ).get(key = eppokode)
                 ?.let { eppokode ->
                     runCatching {
                         eppokode.getValue()
@@ -55,7 +55,7 @@ class EppoKvConsumer(
                     }.getOrNull()
                 }
         }.onFailure {
-            logger.warn("getEppoKode feiler for eppokode: $eppoKode", it)
+            logger.warn("getEppoKode feiler for eppokode: $eppokode", it)
         }.getOrNull()
 
 }

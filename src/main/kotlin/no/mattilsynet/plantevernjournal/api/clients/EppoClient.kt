@@ -19,23 +19,23 @@ class EppoClient(
     @Suppress("MagicNumber")
     private val retrySpec = Retry.fixedDelay(3, Duration.ofSeconds(2))
 
-    suspend fun getNavnFraEppoKode(eppoKode: String) =
+    suspend fun getNavnFraEppokode(eppokode: String) =
         runCatching {
             WebClient.create()
                 .post()
                 .uri("$eppoUri/tools/codes2prefnames")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .bodyValue("authtoken=$eppoToken&intext=$eppoKode")
+                .bodyValue("authtoken=$eppoToken&intext=$eppokode")
                 .retrieve()
                 .bodyToMono(Code2PrefamesResponse::class.java)
                 .retryWhen(retrySpec)
                 .block()
                 ?.response
                 .also {
-                    logger.info("Henter koden $eppoKode fra eppo")
+                    logger.info("Henter koden $eppokode fra eppo")
                 }
         }.onFailure {
-            logger.warn("getNavnFraEppokode fikk feil for eppokode $eppoKode", it)
+            logger.warn("getNavnFraEppokode fikk feil for eppokode $eppokode", it)
             throw it
         }.getOrNull()
 }

@@ -87,7 +87,7 @@ class PlantevernjournalController(
         ).let {
             utendoersBrukDto.behandledeVekster.forEach { behandletVekstDto ->
                 logger.info(
-                    eppoService.getNavnFraEppokode(behandletVekstDto.eppoKode)!!.toString()
+                    eppoService.getNavnFraEppokode(behandletVekstDto.eppokode)!!.toString()
                 )
             }
             return ResponseEntity.ok().build()
