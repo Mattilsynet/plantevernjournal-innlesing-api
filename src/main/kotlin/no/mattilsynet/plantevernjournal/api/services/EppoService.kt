@@ -15,12 +15,25 @@ class EppoService(
         runBlocking {
             eppoKvConsumer.getEppokode(eppokode = eppokode)
                 ?: eppoClient.getNavnFraEppokode(eppokode = eppokode)
-                    ?.split(";")
-                    ?.let {
-                        EppokodeNats(it[0], it[1])
-                    }?.also {
-                        eppoKvConsumer.putEppokode(it)
-                    }
+                    ?.splitEppoString()
+                    ?.let { eppoPair ->
+                        EppokodeNats(
+                            eppokode = eppoPair[0],
+                            eppoNavn = eppoPair[1]
+                        ).also { eppokodeNats ->
+                            eppoKvConsumer.putEppokode( eppokodeNats = eppokodeNats)
+                        }
+                    }?.eppoNavn
+        }
+
+    private fun String.splitEppoString() =
+        split("|").firstNotNullOfOrNull { eppoString ->
+            if (eppoString.isNotBlank() &&
+                eppoString.contains(";") &&
+                !eppoString.contains("NOT FOUND")
+            ) {
+                eppoString.split(";")
+            } else null
         }
 
 }
