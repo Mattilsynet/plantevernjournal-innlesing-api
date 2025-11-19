@@ -3,7 +3,7 @@ package no.mattilsynet.plantevernjournal.api.services
 import kotlinx.coroutines.runBlocking
 import no.mattilsynet.plantevernjournal.api.clients.EppoClient
 import no.mattilsynet.plantevernjournal.api.nats.consumers.EppoKvConsumer
-import no.mattilsynet.plantevernjournal.api.nats.consumers.models.EppokodeNats
+import no.mattilsynet.plantevernjournal.api.nats.consumers.models.EppoNats
 import org.springframework.stereotype.Service
 
 @Service
@@ -11,17 +11,17 @@ class EppoService(
     private val eppoClient: EppoClient,
     private val eppoKvConsumer: EppoKvConsumer,
 ) {
-    fun getNavnFraEppokode(eppokode: String) =
+    fun getNavnFraEppoKode(eppoKode: String) =
         runBlocking {
-            eppoKvConsumer.getEppokode(eppokode = eppokode)
-                ?: eppoClient.getNavnFraEppokode(eppokode = eppokode)
+            eppoKvConsumer.getEppoFraNats(eppoKode = eppoKode)
+                ?: eppoClient.getNavnFraEppoKode(eppoKode = eppoKode)
                     ?.splitEppoString()
                     ?.let { eppoPair ->
-                        EppokodeNats(
-                            eppokode = eppoPair[0],
+                        EppoNats(
+                            eppoKode = eppoPair[0],
                             eppoNavn = eppoPair[1]
                         ).also { eppokodeNats ->
-                            eppoKvConsumer.putEppokode( eppokodeNats = eppokodeNats)
+                            eppoKvConsumer.putEppoTilNats( eppoNats = eppokodeNats)
                         }
                     }?.eppoNavn
         }

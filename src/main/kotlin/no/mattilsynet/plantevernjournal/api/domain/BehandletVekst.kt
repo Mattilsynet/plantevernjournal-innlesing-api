@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class BehandletVekst(
     val bbchFase: String?,
 
-    val eppokode: String,
+    val eppoKode: String,
 
     val partinummer: Int?,
 )

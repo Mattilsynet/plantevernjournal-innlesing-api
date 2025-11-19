@@ -10,12 +10,12 @@ Content-Type: application/json
   "behandledeVekster": [
     {
       "bbchFase": "05",
-      "eppokode": "SOLTU",
+      "eppoKode": "SOLTU",
       "partinummer": 2
     },
     {
       "bbchFase": "01",
-      "eppokode": "MMMMM",
+      "eppoKode": "MMMMM",
       "partinummer": 27
     }
   ],

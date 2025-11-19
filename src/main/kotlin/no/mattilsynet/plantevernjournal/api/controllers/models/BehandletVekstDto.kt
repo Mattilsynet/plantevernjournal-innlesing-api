@@ -18,7 +18,7 @@ data class BehandletVekstDto(
     @Schema(
         description = "Eppokode av vekst som er behandlet", required = true,
     )
-    val eppokode: String,
+    val eppoKode: String,
 
     @Schema(
         description = "Partinummer, kun ved bruk av plantevernmidler på frø eller formeringsmateriale",
@@ -29,7 +29,7 @@ data class BehandletVekstDto(
     fun toBehandletVekst() =
         BehandletVekst(
             bbchFase = bbchFase,
-            eppokode = eppokode,
+            eppoKode = eppoKode,
             partinummer = partinummer,
         )
 }

@@ -37,13 +37,13 @@ class InnlesingService(
     }
 
     private fun List<BehandletVekstDto>.validateEppokoder() =
-        map { it.eppokode }
-            .filter { eppokode ->
-                eppoService.getNavnFraEppokode(eppokode = eppokode) == null
+        map { it.eppoKode }
+            .filter { eppoKode ->
+                eppoService.getNavnFraEppoKode(eppoKode = eppoKode) == null
             }.takeIf { it.isNotEmpty() }
-            ?.let { eppokoder ->
+            ?.let { eppoKoder ->
                 throw NoSuchElementException(
-                    eppokoder.joinToString(", ") + " finnes ikke i eppodatabasen. " +
+                    eppoKoder.joinToString(", ") + " finnes ikke i eppodatabasen. " +
                             "Innsendte data er lagret, selv om validering feilet"
                 )
             }
