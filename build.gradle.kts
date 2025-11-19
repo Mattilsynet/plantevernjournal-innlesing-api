@@ -54,8 +54,7 @@ dependencies {
     implementation("org.wololo:jts2geojson:0.18.1")
 
     // nats og fisk
-    implementation(platform("no.mattilsynet.fisk.libs:virtual-nats-bom:2025.10.01-08.55-50408cd916c0"))
-    implementation("no.mattilsynet.fisk.libs:nats")
+    implementation(platform("no.mattilsynet.fisk.libs:virtual-nats-bom:2025.11.07-10.45-faf515ae8bca"))
     implementation("no.mattilsynet.fisk.libs:spring")
     implementation("no.mattilsynet.fisk.libs:virtual-nats")
 
