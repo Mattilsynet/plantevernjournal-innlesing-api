@@ -47,7 +47,7 @@ I Eppodatabasen er det laget et kodeverk for klassifisering av planter, og det s
 
 Det finnes flere måter å hente eppokoder for planter på, dokumentasjon til rest-api'et til eppo finnes her: https://data.eppo.int/documentation/rest Det er også mulig å manuelt søke på planter på nettsiden: https://gd.eppo.int/
 
-Det gjøre ikke validering av eppokodene mot eppodatabasen foreløpig. Det vil komme. 
+Det valideres om det er gyldige eppokoder som sende inn, men det stopper ikke innlesingen av dataene. Det vil det gjøre på sikt, men foreløpig ønsker vi å få data inn. 
 
 ### Testdata
 Det er laget filer med testdata som man kan bruke som utgangspunkt for egen testing, eller for å teste rest-endepunktene i swaggerdokumentasjonen. Eksempelfilene ligger [her](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/tree/master/src/test/http-requests).

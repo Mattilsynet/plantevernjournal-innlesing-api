@@ -8,9 +8,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import no.mattilsynet.plantevernjournal.api.controllers.models.FroeEllerFormeringsMatrialeDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.InnendoersBrukDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.UtendoersBrukDto
-import no.mattilsynet.plantevernjournal.api.services.EppoService
-import no.mattilsynet.plantevernjournal.api.services.NatsService
-import org.slf4j.LoggerFactory
+import no.mattilsynet.plantevernjournal.api.services.InnlesingService
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -26,12 +24,9 @@ import org.springframework.web.bind.annotation.RestController
     description = "Endepunkter for å lese inn plantevernjournaler",
     name = "Innlesing plantevernjournal",
 )
-class PlantevernjournalController(
-    private val eppoService: EppoService,
-    private val natsService: NatsService,
+class PlantevernjournalInnlesingController(
+    private val innlesingService: InnlesingService,
 ) {
-
-    private val logger = LoggerFactory.getLogger(javaClass)
 
     @PostMapping("/formeringsmateriale", consumes = [MediaType.APPLICATION_JSON_VALUE])
     @Operation(
@@ -44,11 +39,8 @@ class PlantevernjournalController(
         ) @Valid @RequestBody froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
     ): ResponseEntity<Unit> =
         runCatching {
-            natsService.publishJournalForFroeEllerFormeringsmateriale(
-                froeEllerFormeringsMatrialeDto.toFroeEllerFormeringsMatriale(),
-            ).let {
-                return ResponseEntity.ok().build()
-            }
+            innlesingService.froeEllerFormeringsMatriale(froeEllerFormeringsMatrialeDto)
+            return ResponseEntity.ok().build()
         }.onFailure {
             throw it
         }.getOrDefault(ResponseEntity.noContent().build())
@@ -63,11 +55,8 @@ class PlantevernjournalController(
             description = "Data for å plantevernjournal for innendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody innendoersBrukDto: InnendoersBrukDto,
     ): ResponseEntity<Unit> = runCatching {
-        natsService.publishJournalForInnendoersBruk(
-            innendoersBrukDto.toInnendoersBruk(),
-        ).let {
-            return ResponseEntity.ok().build()
-        }
+        innlesingService.innendoersBruk(innendoersBrukDto)
+        return ResponseEntity.ok().build()
     }.onFailure {
         throw it
     }.getOrDefault(ResponseEntity.noContent().build())
@@ -82,16 +71,8 @@ class PlantevernjournalController(
             description = "Data for å plantevernjournal for utendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody utendoersBrukDto: UtendoersBrukDto,
     ): ResponseEntity<Unit> = runCatching {
-        natsService.publishJournalForUtendoersBruk(
-            utendoersBrukDto.toUtendoersBrukDto(),
-        ).let {
-            utendoersBrukDto.behandledeVekster.forEach { behandletVekstDto ->
-                logger.info(
-                    eppoService.getNavnFraEppokode(behandletVekstDto.eppoKode)!!.toString()
-                )
-            }
-            return ResponseEntity.ok().build()
-        }
+        innlesingService.utendoersBruk(utendoersBrukDto)
+        return ResponseEntity.ok().build()
     }.onFailure {
         throw it
     }.getOrDefault(ResponseEntity.noContent().build())
