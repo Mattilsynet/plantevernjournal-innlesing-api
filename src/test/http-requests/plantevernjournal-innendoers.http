@@ -6,13 +6,15 @@ Content-Type: application/json
   "behandledeVekster":  [
     {
       "bbchFase": "05",
-      "eppoKode": "SOLTU",
-      "partinummer": 2
+      "eppoKode": "ORSAN",
+      "partinummer": 2,
+      "sort": "Orchis anatolica"
     },
     {
       "bbchFase": "01",
-      "eppoKode": "MMMMM",
-      "partinummer": 27
+      "eppoKode": "KRCSS",
+      "partinummer": 27,
+      "sort": "Chrysactinium sp."
     }
   ],
   "behandler": {
@@ -51,11 +53,11 @@ Content-Type: application/json
   "organisasjonsnummer": "987654321",
   "plantevernmiddel": [
     {
-      "autorisasjonsnummer": "12345",
       "dosering": {
         "enhet": "LITER_PER_KILO",
         "verdi": 34
-      }
+      },
+      "registreringsnummer": "12345"
     }
   ]
 }

@@ -40,6 +40,9 @@ data class FroeEllerFormeringsMatrialeDto(
     )
     val bruksomraade: Bruksomraade,
 
+    @Schema(description = "Fritekstfelt hvor man kan legge inn informasjon for egen nytte", required = false)
+    val egenReferanse: String?,
+
     @Schema(
         description = "Her er det usikkerhet rundt hva som skal legges inn. Det kan hende det blir eiendom " +
                 "som kommunenummer/gårdsnummer/bruksnummer/festenummer/seksjonsnummer",
@@ -74,6 +77,7 @@ data class FroeEllerFormeringsMatrialeDto(
             behandletMengde = behandletMengde.toMengde(),
             behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),
             bruksomraade = bruksomraade,
+            egenReferanse = egenReferanse,
             gaardsnummer = gaardsnummer,
             organisasjonsnummer = organisasjonsnummer,
             plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() }

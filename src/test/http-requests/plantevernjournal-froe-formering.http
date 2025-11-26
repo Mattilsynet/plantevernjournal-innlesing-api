@@ -50,11 +50,11 @@ Content-Type: application/json
   "organisasjonsnummer": "987654321",
   "plantevernmiddel": [
     {
-      "autorisasjonsnummer": "12345",
       "dosering": {
         "enhet": "LITER_PER_KILO",
         "verdi": 34
-      }
+      },
+      "registreringsnummer": "12345"
     }
   ]
 }

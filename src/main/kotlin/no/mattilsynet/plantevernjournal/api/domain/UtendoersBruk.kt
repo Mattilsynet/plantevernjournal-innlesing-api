@@ -21,6 +21,8 @@ data class UtendoersBruk(
 
     val bruksomraade: Bruksomraade,
 
+    val egenReferanse: String?,
+
     @Serializable(with = UUIDSerializer::class)
     val id: UUID = UUID.randomUUID(),
 

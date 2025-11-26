@@ -26,6 +26,8 @@ data class FroeEllerFormeringsMatriale(
 
     val bruksomraade: Bruksomraade,
 
+    val egenReferanse: String?,
+
     @Serializable(with = UUIDSerializer::class)
     val id: UUID = UUID.randomUUID(),
 

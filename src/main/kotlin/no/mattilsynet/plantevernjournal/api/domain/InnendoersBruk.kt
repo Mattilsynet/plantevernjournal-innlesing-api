@@ -27,6 +27,8 @@ data class InnendoersBruk(
 
     val bygningsstoerrelse: Mengde,
 
+    val egenReferanse: String?,
+
     @Serializable(with = UUIDSerializer::class)
     val id: UUID = UUID.randomUUID(),
 

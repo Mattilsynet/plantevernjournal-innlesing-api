@@ -16,7 +16,9 @@ data class BehandletVekstDto(
     val bbchFase: String?,
 
     @Schema(
-        description = "Eppokode av vekst som er behandlet", required = true,
+        description = "Eppokode av vekst som er behandlet. Dersom det ikke finnes eppokode for planten, så velges " +
+                "en overordnet eppokode, og sort kan angis i eget felt.",
+        required = true,
     )
     val eppoKode: String,
 
@@ -25,11 +27,17 @@ data class BehandletVekstDto(
         required = false,
     )
     val partinummer: Int?,
+
+    @Schema(
+        description = "Her kan sort legges inn, dersom eppokode ikke er nok beskrivende.", required = false,
+    )
+    val sort: String?,
 ) {
     fun toBehandletVekst() =
         BehandletVekst(
             bbchFase = bbchFase,
             eppoKode = eppoKode,
             partinummer = partinummer,
+            sort = sort,
         )
 }

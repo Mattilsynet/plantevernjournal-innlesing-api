@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Plantevernmiddel(
-    val autorisasjonsnummer: String,
-
     val dosering: Mengde,
+
+    val registreringsnummer: String,
 )
