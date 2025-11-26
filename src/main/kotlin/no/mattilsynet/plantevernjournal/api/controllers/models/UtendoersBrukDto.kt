@@ -36,6 +36,9 @@ data class UtendoersBrukDto(
     )
     val bruksomraade: Bruksomraade,
 
+    @Schema(description = "Fritekstfelt hvor man kan legge inn informasjon for egen nytte", required = false)
+    val egenReferanse: String?,
+
     @Schema(
         description = "Gårdsnummer til gården", required = false,
     )
@@ -54,10 +57,11 @@ data class UtendoersBrukDto(
         description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true,
     )
     val startTid: LocalDateTime,
-){
+) {
     init {
         if (bruksomraade == Bruksomraade.JORDBRUK) {
-            require(!gaardsnummer.isNullOrBlank()) { "Hvis bruksområde er jordbruk kan ikke gårdsnummer være tomt" }
+            require(!gaardsnummer.isNullOrBlank())
+            { "Hvis bruksområde er jordbruk kan ikke gårdsnummer være tomt" }
         }
     }
 
@@ -70,6 +74,7 @@ data class UtendoersBrukDto(
             behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
             behandler = behandler.toPerson(),
             bruksomraade = bruksomraade,
+            egenReferanse = egenReferanse,
             gaardsnummer = gaardsnummer,
             organisasjonsnummer = organisasjonsnummer,
             plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },

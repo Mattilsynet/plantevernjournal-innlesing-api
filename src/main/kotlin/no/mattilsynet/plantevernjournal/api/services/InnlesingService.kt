@@ -16,24 +16,24 @@ class InnlesingService(
 ) {
 
     fun froeEllerFormeringsMatriale(froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto) {
+        froeEllerFormeringsMatrialeDto.behandledeVekster.validateEppokoder()
         natsService.publishJournalForFroeEllerFormeringsmateriale(
             froeEllerFormeringsMatrialeDto.toFroeEllerFormeringsMatriale(),
         )
-        froeEllerFormeringsMatrialeDto.behandledeVekster.validateEppokoder()
     }
 
     fun innendoersBruk(innendoersBrukDto: InnendoersBrukDto) {
+        innendoersBrukDto.behandledeVekster.validateEppokoder()
         natsService.publishJournalForInnendoersBruk(
             innendoersBrukDto.toInnendoersBruk(),
         )
-        innendoersBrukDto.behandledeVekster.validateEppokoder()
     }
 
     fun utendoersBruk(utendoersBrukDto: UtendoersBrukDto) {
+        utendoersBrukDto.behandledeVekster.validateEppokoder()
         natsService.publishJournalForUtendoersBruk(
             utendoersBrukDto.toUtendoersBrukDto(),
         )
-        utendoersBrukDto.behandledeVekster.validateEppokoder()
     }
 
     private fun List<BehandletVekstDto>.validateEppokoder() =
@@ -43,8 +43,7 @@ class InnlesingService(
             }.takeIf { it.isNotEmpty() }
             ?.let { eppoKoder ->
                 throw NoSuchElementException(
-                    eppoKoder.joinToString(", ") + " finnes ikke i eppodatabasen. " +
-                            "Innsendte data er lagret, selv om validering feilet"
+                    eppoKoder.joinToString(", ") + " finnes ikke i eppodatabasen."
                 )
             }
 }
