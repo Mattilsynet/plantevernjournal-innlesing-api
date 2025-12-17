@@ -2,7 +2,7 @@ package no.mattilsynet.plantevernjournal.api.nats.consumers
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
+import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import no.mattilsynet.plantevernjournal.api.nats.consumers.models.EppoNats
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
