@@ -53,10 +53,10 @@ dependencies {
     implementation("org.locationtech.jts.io:jts-io-common:1.20.0")
     implementation("org.wololo:jts2geojson:0.18.1")
 
-    // nats og fisk
-    implementation(platform("no.mattilsynet.fisk.libs:virtual-nats-bom:2025.11.07-10.45-faf515ae8bca"))
-    implementation("no.mattilsynet.fisk.libs:spring")
-    implementation("no.mattilsynet.fisk.libs:virtual-nats")
+    // virtual-nats
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2025.12.17-15.20-ca0da11503aa"))
+    implementation("no.mattilsynet.virtualnats:virtual-nats-core")
+    implementation("no.mattilsynet.virtualnats:virtual-nats-spring-3")
 
     // nats
     implementation("io.nats:jnats")

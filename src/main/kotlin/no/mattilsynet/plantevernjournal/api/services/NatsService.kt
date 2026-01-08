@@ -5,7 +5,7 @@ package no.mattilsynet.plantevernjournal.api.services
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
+import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import no.mattilsynet.plantevernjournal.api.domain.FroeEllerFormeringsMatriale
 import no.mattilsynet.plantevernjournal.api.domain.InnendoersBruk
 import no.mattilsynet.plantevernjournal.api.domain.UtendoersBruk
