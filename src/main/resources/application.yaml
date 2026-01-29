@@ -16,15 +16,12 @@ spring:
         enabled: true
       secretmanager:
         enabled: true
-      storage:
-        project-id: plantevernjournal-dev-f405
-        enabled: true
 
   config:
     import: "sm@"
 
   profiles:
-    active: dev
+    active: local
 
 eppo:
   token: ${sm@eppo-token}
