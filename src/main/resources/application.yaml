@@ -32,4 +32,4 @@ eppo:
 
 nats:
   url: tls://connect.nats.mattilsynet.io:4222
-  creds: ${sm@nats-user-plantevernjournal-innlesing-api-creds}
+  creds: ${sm@nats-creds}
