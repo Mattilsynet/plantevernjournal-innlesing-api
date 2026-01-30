@@ -24,8 +24,9 @@ spring:
     active: local
 
 eppo:
-  token: ${sm@eppo-token}
-  uri: "https://data.eppo.int/api/rest/1.0"
+  api:
+    uri: "https://api.eppo.int/gd/v2"
+    token: ${sm@eppo-api-token}
 
 nats:
   url: tls://connect.nats.mattilsynet.io:4222
