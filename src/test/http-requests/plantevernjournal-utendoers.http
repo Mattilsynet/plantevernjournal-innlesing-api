@@ -16,7 +16,7 @@ Content-Type: application/json
     },
     {
       "bbchFase": "01",
-      "eppoKode": "PRUA",
+      "eppoKode": "PRULA",
       "partinummer": 27,
       "sort": "tja"
     }
