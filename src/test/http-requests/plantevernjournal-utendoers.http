@@ -10,13 +10,13 @@ Content-Type: application/json
   "behandledeVekster": [
     {
       "bbchFase": "05",
-      "eppoKode": "SOLTU",
+      "eppoKode": "1PRUNG",
       "partinummer": 2,
-      "sort": "eple"
+      "sort": "Magnolia"
     },
     {
       "bbchFase": "01",
-      "eppoKode": "MMMMM",
+      "eppoKode": "PRUA",
       "partinummer": 27,
       "sort": "tja"
     }
