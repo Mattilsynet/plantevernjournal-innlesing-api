@@ -39,3 +39,14 @@ jobs:
       name: "plantevernjournal-innlesing-api"
       service-account: "plvjournal-inn-api-cr-svc-sa"
       environment: dev
+
+  staging:
+    name: Deploy to staging
+    needs: publish
+    uses: ./.github/workflows/deploy-cloud-run.yaml
+    with:
+      project-id: plvjournal-staging-8a24
+      project-number: 489756086490
+      name: "plantevernjournal-innlesing-api"
+      service-account: "plvjournal-inn-api-cr-svc-sa"
+      environment: staging
