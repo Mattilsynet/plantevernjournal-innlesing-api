@@ -1,17 +1,20 @@
 package no.mattilsynet.plantevernjournal.api.clients
-import no.mattilsynet.plantevernjournal.api.clients.models.Code2PrefamesResponse
+
+import kotlinx.coroutines.reactive.awaitSingle
+import no.mattilsynet.plantevernjournal.api.clients.models.EppoTaxon
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.bodyToFlux
 import reactor.util.retry.Retry
 import java.time.Duration
 
 @Component
-class EppoClient(
-    @Value("\${eppo.token}") private val eppoToken: String,
-    @Value("\${eppo.uri}") private val eppoUri: String,
+class EppoApiClient(
+    @Value("\${eppo.api.token}") private val eppoToken: String,
+    @Value("\${eppo.api.uri}") private val eppoUri: String,
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -22,20 +25,19 @@ class EppoClient(
     suspend fun getNavnFraEppoKode(eppoKode: String) =
         runCatching {
             WebClient.create()
-                .post()
-                .uri("$eppoUri/tools/codes2prefnames")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .bodyValue("authtoken=$eppoToken&intext=$eppoKode")
+                .get()
+                .uri("$eppoUri/taxons/taxon/${eppoKode}/names")
+                .header("X-Api-Key", eppoToken)
+                .header("Accept", MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
-                .bodyToMono(Code2PrefamesResponse::class.java)
+                .bodyToFlux<EppoTaxon>()
                 .retryWhen(retrySpec)
-                .block()
-                ?.response
-                .also {
-                    logger.info("Henter koden $eppoKode fra eppo")
-                }
+                .collectList()
+                .awaitSingle()
         }.onFailure {
             logger.warn("getNavnFraEppokode fikk feil for eppokode $eppoKode", it)
-            throw it
-        }.getOrNull()
+        }.getOrNull().also {
+            logger.info("Henter koden $eppoKode fra eppo")
+        }
+
 }
