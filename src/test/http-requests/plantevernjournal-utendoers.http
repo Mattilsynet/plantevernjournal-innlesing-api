@@ -1,3 +1,6 @@
+# stagingmiljøet:
+# POST https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/plantevernjournal/innlesing/v1/utendoersbruk
+
 ### Post plantevernjournal for utendørs bruk
 POST http://localhost:8080/plantevernjournal/innlesing/v1/utendoersbruk
 Content-Type: application/json

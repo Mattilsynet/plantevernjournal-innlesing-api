@@ -27,13 +27,12 @@ repositories {
 dependencies {
     // Spring boot:
     implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
 
     //Security
     implementation("org.springframework.security:spring-security-oauth2-resource-server")
 
-    // Spring webflux. Brukes for kontakt med eppo:
+    // Spring webflux
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
