@@ -28,9 +28,7 @@ dependencies {
     // Spring boot:
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-security")
-
-    //Security
-    implementation("org.springframework.security:spring-security-oauth2-resource-server")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 
     // Spring webflux
     implementation("org.springframework.boot:spring-boot-starter-webflux")

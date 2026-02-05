@@ -21,7 +21,7 @@ spring:
     import: "sm@"
 
   profiles:
-    active: local
+    active: staging
 
 eppo:
   api:
@@ -31,3 +31,8 @@ eppo:
 nats:
   url: tls://connect.nats.mattilsynet.io:4222
   creds: ${sm@nats-creds}
+
+logging:
+  level:
+    org.springframework.security: TRACE
+    org.springframework.security.oauth2.server.resource.web.server: TRACE
