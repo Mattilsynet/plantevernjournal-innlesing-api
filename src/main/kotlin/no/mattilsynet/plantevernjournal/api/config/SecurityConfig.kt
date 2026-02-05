@@ -3,14 +3,17 @@ package no.mattilsynet.plantevernjournal.api.config
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.web.server.SecurityWebFilterChain
+
 
 @Configuration
 @EnableWebFluxSecurity
 @Profile("staging", "prod")
 class SecurityConfig {
+
     @Bean
     fun securityFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain =
         http.csrf { it.disable() }
@@ -19,9 +22,12 @@ class SecurityConfig {
                     .pathMatchers("/swagger-ui/**", "/v3/api-docs/**")
                     .permitAll()
 
-                    .pathMatchers("/plantevernjournal/innlesing/v*")
-                    .hasAuthority("Mattilsynet:plantevern.journal.innlesing")
+                    .pathMatchers("/plantevernjournal/**")
+                    .hasAuthority("SCOPE_Mattilsynet:plantevern.journal.innlesing") // Spring endrer scope i token til SCOPE_Mattilsynet...
 
                     .anyExchange().authenticated()
-            }.build()
+            }.oauth2ResourceServer { http ->
+                http.jwt(Customizer.withDefaults())
+            }
+            .build()
 }
