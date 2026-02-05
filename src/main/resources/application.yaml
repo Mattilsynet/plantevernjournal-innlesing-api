@@ -31,8 +31,3 @@ eppo:
 nats:
   url: tls://connect.nats.mattilsynet.io:4222
   creds: ${sm@nats-creds}
-
-logging:
-  level:
-    org.springframework.security: TRACE
-    org.springframework.security.oauth2.server.resource.web.server: TRACE
