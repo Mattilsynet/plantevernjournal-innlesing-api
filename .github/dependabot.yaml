@@ -10,3 +10,5 @@ updates:
     open-pull-requests-limit: 20
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "no.mattilsynet.virtualnats:virtual-nats-bom"
