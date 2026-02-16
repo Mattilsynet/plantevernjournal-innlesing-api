@@ -18,13 +18,13 @@ Link til api-dokumentasjon i dev: https://plantevernjournal-innlesing-api.plante
 ### Miljøer
 Det skal være tre ulike miljøer:
 
-#### dev
+#### dev:
 Brukes for testing av innsending av data, uten autentisering. Data som sendes inn er ikke tenkt som reelle data, de regnes kun som test. Dataene vil slettes med ujevne mellomrom. Miljøet er satt opp med testformål, for å se hvordan datamodellene virker og for å komme i gang så vi kan få tilbakemeldinger fra de som kobler seg på.
 
-#### staging
+#### staging:
 Brukes for testing av innsending av data, med autentisering
 
-#### produksjon
+#### produksjon:
 Ikke klart enda 
 
 
