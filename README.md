@@ -22,7 +22,7 @@ Det skal være tre ulike miljøer:
 Brukes for testing av innsending av data, uten autentisering. Data som sendes inn er ikke tenkt som reelle data, de regnes kun som test. Dataene vil slettes med ujevne mellomrom. Miljøet er satt opp med testformål, for å se hvordan datamodellene virker og for å komme i gang så vi kan få tilbakemeldinger fra de som kobler seg på.
 
 #### staging:
-Brukes for testing av innsending av data, med autentisering
+Brukes for testing av innsending av data, med autentisering. Her er det 
 
 #### produksjon:
 Ikke klart enda 
@@ -30,6 +30,8 @@ Ikke klart enda
 
 ### Maskinporten
 Maskinporten skal brukes til autentisering når man sender inn data. For å starte opp med maskinporten går man via Samarbeidsportalen. På [Selvbetjening av Maskinporten via Samarbeidsportalen](https://docs.digdir.no/docs/Maskinporten/maskinporten_sjolvbetjening_web.html) [Selvbetjening som API-konsument](https://docs.digdir.no/docs/Maskinporten/maskinporten_sjolvbetjening_web.html#selvbetjening-som-api-konsument) finnes det informasjon om framgangsmåte.
+
+Stagingmiljøet går mot testmiljøet til maskinporten sitt testmiljø, mens produksjon går mot produksjonsmiljøet.
 
 For å sende inn data til digital plantevernjournal, så er det scope _Mattilsynet:plantevern.journal.innlesing_
 
