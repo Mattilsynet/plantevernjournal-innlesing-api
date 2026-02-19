@@ -16,13 +16,15 @@ Link til api-dokumentasjon i dev: https://plantevernjournal-innlesing-api.plante
 
 
 ### Miljøer
-Det skal være tre ulike miljøer:
+Det er tre ulike miljøer:
 
 #### dev:
-Brukes for testing av innsending av data, uten autentisering. Data som sendes inn er ikke tenkt som reelle data, de regnes kun som test. Dataene vil slettes med ujevne mellomrom. Miljøet er satt opp med testformål, for å se hvordan datamodellene virker og for å komme i gang så vi kan få tilbakemeldinger fra de som kobler seg på.
+Brukes for testing av innsending av data, uten autentisering. Data som sendes inn er ikke tenkt som reelle data, de regnes kun som test. Dataene vil slettes med ujevne mellomrom. Miljøet er satt opp med testformål, for å se hvordan datamodellene virker og for å komme i gang så vi kan få tilbakemeldinger fra de som har sendt inn testdata.
+Api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html
 
 #### staging:
-Brukes for testing av innsending av data, med autentisering. Her er det 
+Brukes for testing av innsending av data, med autentisering. Dette er et testmiljø, og skal bare ha data for testformål. Dette miljøet kan brukes for å teste hele løpet, med autentisering med maskinporten, og innsending av data.
+Api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/swagger-ui/index.html
 
 #### produksjon:
 Ikke klart enda 
@@ -31,8 +33,6 @@ Ikke klart enda
 ### Maskinporten
 Maskinporten skal brukes til autentisering når man sender inn data. For å starte opp med maskinporten går man via Samarbeidsportalen. På [Selvbetjening av Maskinporten via Samarbeidsportalen](https://docs.digdir.no/docs/Maskinporten/maskinporten_sjolvbetjening_web.html) [Selvbetjening som API-konsument](https://docs.digdir.no/docs/Maskinporten/maskinporten_sjolvbetjening_web.html#selvbetjening-som-api-konsument) finnes det informasjon om framgangsmåte.
 
-Stagingmiljøet går mot testmiljøet til maskinporten sitt testmiljø, mens produksjon går mot produksjonsmiljøet.
-
 For å sende inn data til digital plantevernjournal, så er det scope _Mattilsynet:plantevern.journal.innlesing_
 
 Ta kontakt på _plantevernjournal@mattilsynet.no_ hvis det er noe dere trenger hjelp med.
@@ -40,9 +40,11 @@ Ta kontakt på _plantevernjournal@mattilsynet.no_ hvis det er noe dere trenger h
 Dev-miljøet ligger åpent, så her kan man teste innsending av data uten å sette opp maskinporten. Vi har laget et stagingmiljø som krever autentisering, for at man skal kunne teste at oppsettet med maskinporten er riktig.
 Link til api-dokumentasjon i staging: https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/swagger-ui/index.html
 
+Stagingmiljøet går mot testmiljøet til maskinporten sitt testmiljø, mens produksjon går mot produksjonsmiljøet. Dev-miljøet ligger åpent, så er trenger man sende inn data uten å autentisere seg.
+
 
 ### Datamodeller
-Det er laget tre ulike datamodeller for bruk av plantevernmidler, en for [innendørs bruk](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/InnendoersBrukDto.kt), en for [utendørs bruk](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/UtendoersBrukDto.kt) og en for bruk på [frø eller annet formeringsmateriale](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/FroeEllerFormeringsMatrialeDto.kt). En del av dataene som skal samles inn er felles, men modellene har også noen egne egenskaper som gjør at det er valgt å dele de inn, i stedet for å ha en felles datamodell.
+Det er laget tre ulike datamodeller for bruk av plantevernmidler, en for [innendørs bruk](src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/InnendoersBrukDto.kt), en for [utendørs bruk](src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/UtendoersBrukDto.kt) og en for bruk på [frø eller annet formeringsmateriale](src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/models/FroeEllerFormeringsMatrialeDto.kt). En del av dataene som skal samles inn er felles, men modellene har også noen egne egenskaper som gjør at det er valgt å dele de inn, i stedet for å ha en felles datamodell.
 
 
 ### Rest-endepunkter
@@ -50,13 +52,13 @@ Det er laget tre ulike rest-endepunkter for å sende inn data, ett for utendørs
 
 Det finnes også rest-endepunkter for å hente ut kodeverk.
 
-De ulike rest-endepunktene finnes i [github](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/PlantevernjournalController.kt) eller i [swagger](https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html).
+De ulike rest-endepunktene finnes i [github](src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/PlantevernjournalInnlesingController.kt) eller i [swagger](https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html).
 
 
 ### Kartdata
 Kartdata er sentralt i bruk av digital journalføring av plantevermidler. Vi har valgt å bruke [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON). Nå er det frivillig å sende inn kartdata i feltene for _behandledeOmraader_, men det skal bli obligatorisk på sikt. Det er i dag frivillig, sånn at manglende kartdata ikke skal være et hinder for å teste ut løsningen.  
 
-Gyldige geometrityper er gitt [her](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/blob/master/src/main/kotlin/no/mattilsynet/plantevernjournal/api/shared/kodeverk/GeometriTyper.kt).
+Gyldige geometrityper er gitt [her](src/main/kotlin/no/mattilsynet/plantevernjournal/api/shared/kodeverk/GeometriTyper.kt).
 
 I GeoJSON er det mulig å sende inn properties, det bruker vi ikke per i dag.
 
@@ -82,5 +84,5 @@ Det finnes ikke eppokoder for alle plantearter, så det kan være tilfeller hvor
 
 
 ### Testdata
-Det er laget filer med testdata som man kan bruke som utgangspunkt for egen testing, eller for å teste rest-endepunktene i swaggerdokumentasjonen. Eksempelfilene ligger [her](https://github.com/Mattilsynet/plantevernjournal-innlesing-api/tree/master/src/test/http-requests).
+Det er laget filer med testdata som man kan bruke som utgangspunkt for egen testing, eller for å teste rest-endepunktene i swaggerdokumentasjonen. Eksempelfilene ligger [her](src/test/http-requests).
 Dette er testfiler som vi bruker i utviklingen, så de vil oppdateres forløpende etter som datamodellene og rest-endepunktene endrer seg.
