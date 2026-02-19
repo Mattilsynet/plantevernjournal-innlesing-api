@@ -40,7 +40,7 @@ Ta kontakt på _plantevernjournal@mattilsynet.no_ hvis det er noe dere trenger h
 Dev-miljøet ligger åpent, så her kan man teste innsending av data uten å sette opp maskinporten. Vi har laget et stagingmiljø som krever autentisering, for at man skal kunne teste at oppsettet med maskinporten er riktig.
 Link til api-dokumentasjon i staging: https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/swagger-ui/index.html
 
-Stagingmiljøet går mot testmiljøet til maskinporten sitt testmiljø, mens produksjon går mot produksjonsmiljøet. Dev-miljøet ligger åpent, så er trenger man sende inn data uten å autentisere seg.
+Stagingmiljøet går mot maskinporten sitt testmiljø, mens produksjon går mot produksjonsmiljøet. Dev-miljøet ligger åpent, så her kan man sende inn data uten å autentisere seg.
 
 
 ### Datamodeller
