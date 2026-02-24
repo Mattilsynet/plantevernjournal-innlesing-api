@@ -110,8 +110,8 @@ Content-Type: application/json
     ]
   },
   "bruksomraade": "JORDBRUK",
-  "gaardsnummer": "0505-067-11",
-  "organisasjonsnummer": "987654123",
+  "organisasjonsnummerEier": "987654123",
+  "organisasjonsnummerSproeyter": "897456875",
   "plantevernmiddel": [
     {
       "dosering": {

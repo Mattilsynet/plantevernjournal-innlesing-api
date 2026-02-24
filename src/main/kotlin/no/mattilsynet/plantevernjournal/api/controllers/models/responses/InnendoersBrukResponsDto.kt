@@ -1,16 +1,21 @@
-package no.mattilsynet.plantevernjournal.api.controllers.models
+package no.mattilsynet.plantevernjournal.api.controllers.models.responses
 
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Pattern
-import no.mattilsynet.plantevernjournal.api.domain.InnendoersBruk
+import no.mattilsynet.plantevernjournal.api.controllers.models.BehandletVekstDto
+import no.mattilsynet.plantevernjournal.api.controllers.models.MengdeDto
+import no.mattilsynet.plantevernjournal.api.controllers.models.PersonDto
+import no.mattilsynet.plantevernjournal.api.controllers.models.PlantevernmiddelDto
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
 import org.wololo.geojson.FeatureCollection
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.UUID
 
 @Schema(
     description = "Journalfelter for innendørs bruk av plantevernmidler",
 )
-data class InnendoersBrukDto(
+data class InnendoersBrukResponsDto(
     @Schema(
         description = "Liste med vekster som ble behandlet av plantevernmidler", required = true,
     )
@@ -49,6 +54,14 @@ data class InnendoersBrukDto(
     @Schema(description = "Fritekstfelt hvor man kan legge inn informasjon for egen nytte", required = false)
     val egenReferanse: String?,
 
+    @Schema(description = "Id for å identifisere innlesingen", required = true)
+    val id: UUID,
+
+    @Schema(
+        description = "Når journalføringen ble lest inn", required = true,
+    )
+    val opprettet: LocalDateTime,
+
     @Schema(description = "Organisasjonsnummer til den som eier arealet det ble sprøytet på", required = true)
     @Pattern(regexp = "^[89]\\d{8}", message = "Organisasjonsnummer må starte med 8 eller 9, og være 9 siffer")
     val organisasjonsnummerEier: String,
@@ -61,23 +74,4 @@ data class InnendoersBrukDto(
         description = "Liste av plantevernmiddel og mengde som ble brukt", required = true,
     )
     val plantevernmiddel: List<PlantevernmiddelDto>,
-){
-
-    @kotlinx.serialization.ExperimentalSerializationApi
-    @kotlin.uuid.ExperimentalUuidApi
-    fun toInnendoersBruk() =
-        InnendoersBruk(
-            behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),
-            behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
-            behandler = behandler.toPerson(),
-            behandletDato = behandletDato,
-            bruksomraade = bruksomraade,
-            bygningsnummer = bygningsnummer,
-            bygningsstoerrelse = bygningsstoerrelse.toMengde(),
-            egenReferanse = egenReferanse,
-            organisasjonsnummerEier = organisasjonsnummerEier,
-            organisasjonsnummerSproeyter = organisasjonsnummerSproeyter,
-            plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },
-        )
-
-}
+)

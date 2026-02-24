@@ -49,8 +49,8 @@ Content-Type: application/json
     "enhet": "KVADRATMETER",
     "verdi": 450
   },
-  "gaardsnummer": "0505-067-11",
-  "organisasjonsnummer": "987654321",
+  "organisasjonsnummerEier": "987654123",
+  "organisasjonsnummerSproeyter": "897456875",
   "plantevernmiddel": [
     {
       "dosering": {
