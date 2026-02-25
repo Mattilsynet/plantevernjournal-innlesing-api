@@ -16,7 +16,7 @@ Link til api-dokumentasjon i dev: https://plantevernjournal-innlesing-api.plante
 
 
 ### Miljøer
-Det er tre ulike miljøer:
+[Det er tre ulike miljøer:](dokumentasjon/bilder/miljoeoversikt.png)
 
 #### dev:
 Brukes for testing av innsending av data, uten autentisering. Data som sendes inn er ikke tenkt som reelle data, de regnes kun som test. Dataene vil slettes med ujevne mellomrom. Miljøet er satt opp med testformål, for å se hvordan datamodellene virker og for å komme i gang så vi kan få tilbakemeldinger fra de som har sendt inn testdata.
@@ -50,13 +50,17 @@ Det er laget tre ulike datamodeller for bruk av plantevernmidler, en for [innend
 ### Rest-endepunkter
 Det er laget tre ulike rest-endepunkter for å sende inn data, ett for utendørsbruk, ett for innendørsbruk og ett for sprøyting på frø og formeringsmateriale. Det er valgt tre ulike rest-endepunkter, sånn at vi kan ha en datamodell for hver type sprøyting.
 
+Det er også tre tilsvarende endepunkter for å slette innlesinger basert på id. Dersom det er en innlesing som skal endres, så må den slettes og sendes inn på nytt. Det er ikke mulig å hente data man har sendt inn, så det må man ha oversikt over selv.
+
 Det finnes også rest-endepunkter for å hente ut kodeverk.
 
-De ulike rest-endepunktene finnes i [github](src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/PlantevernjournalInnlesingController.kt) eller i [swagger](https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html).
+Informasjon om de [ulike rest-endepunktene](dokumentasjon/bilder/endepunkter.png) finnes i [github](src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/PlantevernjournalInnlesingController.kt) og i [swagger](https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html).
 
 
 ### Kartdata
-Kartdata er sentralt i bruk av digital journalføring av plantevermidler. Vi har valgt å bruke [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON). Nå er det frivillig å sende inn kartdata i feltene for _behandledeOmraader_, men det skal bli obligatorisk på sikt. Det er i dag frivillig, sånn at manglende kartdata ikke skal være et hinder for å teste ut løsningen.  
+Kartdata er sentralt i bruk av digital journalføring av plantevermidler. Vi har valgt å bruke [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON).
+
+For sprøyting utendørs er det obligatorisk å sende inn kartdata. Nå er det frivillig å sende inn kartdata i feltene for _behandledeOmraader_ for sprøyting innendørs og på frø og formeringsmateriale, fordi det er usikkert om det skal sendes inn kartdata i disse tilfellene.  
 
 Gyldige geometrityper er gitt [her](src/main/kotlin/no/mattilsynet/plantevernjournal/api/shared/kodeverk/GeometriTyper.kt).
 
@@ -68,7 +72,7 @@ Det skal angis vekststadium for vekstene som sprøytes, og til det skal det bruk
 
 Det vil bli obligatorisk å sende inn vekststadium på sikt.
 
-Her er et eksempel på utviklingsstadier for [korn](https://www.felleskjopet.no/globalassets/planteproduksjon/plantekultur/plantevern/utviklingsstadier-for-korn.pdf) (fra Felleskjøpet), og for [potet](https://potet.no/kunnskap/fagartikler/potet/potet/bbch-skala-for-potet) (fra Fagforum Potet).
+Her er et eksempel på utviklingsstadier for [potet](https://potet.no/kunnskap/fagartikler/potet/potet/bbch-skala-for-potet) (fra Fagforum Potet).
 
 
 ### Eppokoder
