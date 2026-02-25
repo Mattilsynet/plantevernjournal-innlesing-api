@@ -58,3 +58,23 @@ Content-Type: application/json
     }
   ]
 }
+
+> {%
+    client.test("Innlesing av frø og formeringsmateriale gikk bra", function () {
+        client.assert(response.status === 201, "Status er ikke 201");
+    });
+
+    const id = jsonPath(response.body, '$.id')
+    client.global.set("formeringsmaterialeId", id)
+%}
+
+### Delete plantevernjournal for frø og formeringsmateriale
+DELETE http://localhost:8080/plantevernjournal/innlesing/v1/formeringsmateriale/{{formeringsmaterialeId}}
+Content-Type: application/json
+
+> {%
+    client.test("Sletting av frø og formeringsmateriale gikk bra", function () {
+        client.assert(response.status === 204, "Status er ikke 204");
+    });
+
+%}

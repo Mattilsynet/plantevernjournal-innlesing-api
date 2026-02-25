@@ -5,7 +5,6 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.BehandletVekstDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.FroeEllerFormeringsMatrialeDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.InnendoersBrukDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.UtendoersBrukDto
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -16,8 +15,6 @@ class InnlesingService(
     private val eppoService: EppoService,
     private val natsService: NatsService,
 ) {
-
-    private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun postFroeEllerFormeringsMatriale(froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto) =
         froeEllerFormeringsMatrialeDto.behandledeVekster.validateEppokoder()
@@ -68,15 +65,15 @@ class InnlesingService(
             }
 
     fun deleteUtendoersBruk(id: UUID) {
-        logger.info("Skal slette utendørsbruk med id $id")
+        natsService.publishSlettJournalForUtendoersBruk(id)
     }
 
     fun deleteInnendoersBruk(id: UUID) {
-        logger.info("Skal slette innendørsbruk med id $id")
+        natsService.publishSlettJournalForInnendoersBruk(id)
     }
 
     fun deleteFroeEllerFormeringsMatriale(id: UUID) {
-        logger.info("Skal slette frø eller formeringsmateriale med id $id")
+        natsService.publishSlettJournalForFroeEllerFormeringsmateriale(id)
     }
 
     private fun List<BehandletVekstDto>.validateEppokoder() =

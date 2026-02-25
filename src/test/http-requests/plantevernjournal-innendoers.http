@@ -61,3 +61,23 @@ Content-Type: application/json
     }
   ]
 }
+
+> {%
+    client.test("Innlesing av innendørs bruk gikk bra", function () {
+        client.assert(response.status === 201, "Status er ikke 201");
+    });
+
+    const id = jsonPath(response.body, '$.id')
+    client.global.set("innendoersId", id)
+%}
+
+### Delete plantevernjournal for innendørs bruk
+DELETE http://localhost:8080/plantevernjournal/innlesing/v1/innendoersbruk/{{innendoersId}}
+Content-Type: application/json
+
+> {%
+    client.test("Sletting av innendørs bruk gikk bra", function () {
+        client.assert(response.status === 204, "Status er ikke 204");
+    });
+
+%}

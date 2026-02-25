@@ -11,6 +11,7 @@ import no.mattilsynet.plantevernjournal.api.domain.InnendoersBruk
 import no.mattilsynet.plantevernjournal.api.domain.UtendoersBruk
 import no.mattilsynet.plantevernjournal.api.nats.jetstream.subjects.JetStreamSubjectBuilder
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @kotlin.uuid.ExperimentalUuidApi
 @Service
@@ -47,6 +48,30 @@ class NatsService(
             subject = JetStreamSubjectBuilder
                 .plantevernjournalUtendoersV1(utendoersBruk.id.toString()),
             body = Json.encodeToString(utendoersBruk).toByteArray(),
+        )
+    }
+
+    fun publishSlettJournalForUtendoersBruk(id: UUID) {
+        jetStream.publish(
+            subject = JetStreamSubjectBuilder
+                .plantevernjournalSlettUtendoersV1(id = id.toString()),
+            body = "".toByteArray(),
+        )
+    }
+
+    fun publishSlettJournalForInnendoersBruk(id: UUID) {
+        jetStream.publish(
+            subject = JetStreamSubjectBuilder
+                .plantevernjournalSlettInnendoersV1(id = id.toString()),
+            body = "".toByteArray(),
+        )
+    }
+
+    fun publishSlettJournalForFroeEllerFormeringsmateriale(id: UUID) {
+        jetStream.publish(
+            subject = JetStreamSubjectBuilder
+                .plantevernjournalSlettFroeV1(id = id.toString()),
+            body = "".toByteArray(),
         )
     }
 }
