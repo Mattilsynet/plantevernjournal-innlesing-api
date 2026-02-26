@@ -18,17 +18,17 @@ object JetStreamSubjectBuilder {
         subject = "mattilsynet.plantevernjournal.innlesing.utendoers.v1.$id",
     )
 
-    fun plantevernjournalSlettFroeV1(id: String = "*") = JetStreamSubject(
+    fun plantevernjournalSlettFroeV1(id: String) = JetStreamSubject(
         stream = "plantevernjournal_slett_innlesing_froe_v1",
         subject = "mattilsynet.plantevernjournal.slett.innlesing.froe.v1.$id",
     )
 
-    fun plantevernjournalSlettInnendoersV1(id: String = "*") = JetStreamSubject(
+    fun plantevernjournalSlettInnendoersV1(id: String) = JetStreamSubject(
         stream = "plantevernjournal_slett_innlesing_innendoers_v1",
         subject = "mattilsynet.plantevernjournal.slett.innlesing.innendoers.v1.$id",
     )
 
-    fun plantevernjournalSlettUtendoersV1(id: String = "*") = JetStreamSubject(
+    fun plantevernjournalSlettUtendoersV1(id: String) = JetStreamSubject(
         stream = "plantevernjournal_slett_innlesing_utendoers_v1",
         subject = "mattilsynet.plantevernjournal.slett.innlesing.utendoers.v1.$id",
     )

@@ -77,13 +77,15 @@ class InnlesingService(
     }
 
     private fun List<BehandletVekstDto>.validateEppokoder() =
-        map { it.eppoKode }
-            .filter { eppoKode ->
-                eppoService.getNavnFraEppoKode(eppoKode = eppoKode) == null
-            }.takeIf { it.isNotEmpty() }
-            ?.let { eppoKoder ->
-                throw NoSuchElementException(
-                    eppoKoder.joinToString(", ") + " finnes ikke i eppodatabasen."
-                )
-            }
+        true
+    /*     map { it.eppoKode }
+             .filter { eppoKode ->
+                 eppoService.getNavnFraEppoKode(eppoKode = eppoKode) == null
+             }.takeIf { it.isNotEmpty() }
+             ?.let { eppoKoder ->
+                 throw NoSuchElementException(
+                     eppoKoder.joinToString(", ") + " finnes ikke i eppodatabasen."
+                 )
+             }
+ */
 }
