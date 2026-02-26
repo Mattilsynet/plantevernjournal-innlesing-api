@@ -110,8 +110,8 @@ Content-Type: application/json
     ]
   },
   "bruksomraade": "JORDBRUK",
-  "gaardsnummer": "0505-067-11",
-  "organisasjonsnummer": "987654123",
+  "organisasjonsnummerEier": "987654123",
+  "organisasjonsnummerSproeyter": "897456875",
   "plantevernmiddel": [
     {
       "dosering": {
@@ -123,3 +123,23 @@ Content-Type: application/json
   ],
   "startTid": "2024-10-18T12:00:00"
 }
+
+> {%
+    client.test("Innlesing av utendørsbruk gikk bra", function () {
+        client.assert(response.status === 201, "Status er ikke 201");
+    });
+
+    const id = jsonPath(response.body, '$.id')
+    client.global.set("utendoersId", id)
+%}
+
+### Delete plantevernjournal for utendørs bruk
+DELETE http://localhost:8080/plantevernjournal/innlesing/v1/utendoersbruk/{{utendoersId}}
+Content-Type: application/json
+
+> {%
+    client.test("Sletting av utendørsbruk gikk bra", function () {
+        client.assert(response.status === 204, "Status er ikke 204");
+    });
+
+%}

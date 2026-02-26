@@ -6,6 +6,7 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.FroeEllerFormerin
 import no.mattilsynet.plantevernjournal.api.controllers.models.InnendoersBrukDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.UtendoersBrukDto
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @OptIn(ExperimentalSerializationApi::class)
 @kotlin.uuid.ExperimentalUuidApi
@@ -15,35 +16,76 @@ class InnlesingService(
     private val natsService: NatsService,
 ) {
 
-    fun froeEllerFormeringsMatriale(froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto) {
+    fun postFroeEllerFormeringsMatriale(froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto) =
         froeEllerFormeringsMatrialeDto.behandledeVekster.validateEppokoder()
-        natsService.publishJournalForFroeEllerFormeringsmateriale(
-            froeEllerFormeringsMatrialeDto.toFroeEllerFormeringsMatriale(),
-        )
-    }
+            .run {
+                froeEllerFormeringsMatrialeDto.toFroeEllerFormeringsMatriale().let { froeEllerFormeringsMatriale ->
+                    natsService.publishJournalForFroeEllerFormeringsmateriale(
+                        froeEllerFormeringsMatriale = froeEllerFormeringsMatriale,
+                    )
 
-    fun innendoersBruk(innendoersBrukDto: InnendoersBrukDto) {
+                    froeEllerFormeringsMatriale.toFroeEllerFormeringsMatrialeResponsDto(
+                        behandledeOmraader = froeEllerFormeringsMatrialeDto.behandledeOmraader,
+                        behandledeVekster = froeEllerFormeringsMatrialeDto.behandledeVekster,
+                        plantevernmiddel = froeEllerFormeringsMatrialeDto.plantevernmiddel,
+                    )
+                }
+            }
+
+    fun postInnendoersBruk(innendoersBrukDto: InnendoersBrukDto) =
         innendoersBrukDto.behandledeVekster.validateEppokoder()
-        natsService.publishJournalForInnendoersBruk(
-            innendoersBrukDto.toInnendoersBruk(),
-        )
+            .run {
+                innendoersBrukDto.toInnendoersBruk().let { innendoersBruk ->
+                    natsService.publishJournalForInnendoersBruk(
+                        innendoersBruk = innendoersBruk,
+                    )
+
+                    innendoersBruk.toInnendoersBrukResponsDto(
+                        behandledeOmraader = innendoersBrukDto.behandledeOmraader,
+                        behandledeVekster = innendoersBrukDto.behandledeVekster,
+                        plantevernmiddel = innendoersBrukDto.plantevernmiddel,
+                    )
+                }
+            }
+
+    fun postUtendoersBruk(utendoersBrukDto: UtendoersBrukDto) =
+        utendoersBrukDto.behandledeVekster.validateEppokoder()
+            .run {
+                utendoersBrukDto.toUtendoersBruk().let { utendoersBruk ->
+                    natsService.publishJournalForUtendoersBruk(
+                        utendoersBruk = utendoersBruk,
+                    )
+
+                    utendoersBruk.toUtendoersBrukResponsDto(
+                        behandledeOmraader = utendoersBrukDto.behandledeOmraader,
+                        behandledeVekster = utendoersBrukDto.behandledeVekster,
+                        plantevernmiddel = utendoersBrukDto.plantevernmiddel,
+                    )
+                }
+            }
+
+    fun deleteUtendoersBruk(id: UUID) {
+        natsService.publishSlettJournalForUtendoersBruk(id)
     }
 
-    fun utendoersBruk(utendoersBrukDto: UtendoersBrukDto) {
-        utendoersBrukDto.behandledeVekster.validateEppokoder()
-        natsService.publishJournalForUtendoersBruk(
-            utendoersBrukDto.toUtendoersBrukDto(),
-        )
+    fun deleteInnendoersBruk(id: UUID) {
+        natsService.publishSlettJournalForInnendoersBruk(id)
+    }
+
+    fun deleteFroeEllerFormeringsMatriale(id: UUID) {
+        natsService.publishSlettJournalForFroeEllerFormeringsmateriale(id)
     }
 
     private fun List<BehandletVekstDto>.validateEppokoder() =
-        map { it.eppoKode }
-            .filter { eppoKode ->
-                eppoService.getNavnFraEppoKode(eppoKode = eppoKode) == null
-            }.takeIf { it.isNotEmpty() }
-            ?.let { eppoKoder ->
-                throw NoSuchElementException(
-                    eppoKoder.joinToString(", ") + " finnes ikke i eppodatabasen."
-                )
-            }
+        true
+    /*     map { it.eppoKode }
+             .filter { eppoKode ->
+                 eppoService.getNavnFraEppoKode(eppoKode = eppoKode) == null
+             }.takeIf { it.isNotEmpty() }
+             ?.let { eppoKoder ->
+                 throw NoSuchElementException(
+                     eppoKoder.joinToString(", ") + " finnes ikke i eppodatabasen."
+                 )
+             }
+ */
 }

@@ -1,17 +1,21 @@
-package no.mattilsynet.plantevernjournal.api.controllers.models
+package no.mattilsynet.plantevernjournal.api.controllers.models.responses
 
 import io.swagger.v3.oas.annotations.media.Schema
-import jakarta.validation.constraints.Pattern
-import no.mattilsynet.plantevernjournal.api.domain.FroeEllerFormeringsMatriale
+import no.mattilsynet.plantevernjournal.api.controllers.models.BehandletVekstDto
+import no.mattilsynet.plantevernjournal.api.controllers.models.MengdeDto
+import no.mattilsynet.plantevernjournal.api.controllers.models.PersonDto
+import no.mattilsynet.plantevernjournal.api.controllers.models.PlantevernmiddelDto
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
 import org.wololo.geojson.FeatureCollection
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.UUID
 
 
 @Schema(
     description = "Journalfelter for bruk av plantevernmidler på frø eller formeringsmateriale",
 )
-data class FroeEllerFormeringsMatrialeDto(
+data class FroeEllerFormeringsMatrialeResponsDto(
     @Schema(
         description = "Liste av frø eller formeringsmateriale som ble behandlet av plantevernmidler", required = true,
     )
@@ -43,12 +47,18 @@ data class FroeEllerFormeringsMatrialeDto(
     @Schema(description = "Fritekstfelt hvor man kan legge inn informasjon for egen nytte", required = false)
     val egenReferanse: String?,
 
+    @Schema(description = "Id for å identifisere innlesingen", required = true)
+    val id: UUID,
+
+    @Schema(
+        description = "Når journalføringen ble lest inn", required = true,
+    )
+    val opprettet: LocalDateTime,
+
     @Schema(description = "Organisasjonsnummer til den som eier arealet det ble sprøytet på", required = true)
-    @Pattern(regexp = "^[89]\\d{8}", message = "Organisasjonsnummer må starte med 8 eller 9, og være 9 siffer")
     val organisasjonsnummerEier: String,
 
     @Schema(description = "Organisasjonsnummer til den som sprøytet med plantevernmidler", required = true)
-    @Pattern(regexp = "^[89]\\d{8}", message = "Organisasjonsnummer må starte med 8 eller 9, og være 9 siffer")
     val organisasjonsnummerSproeyter: String,
 
     @Schema(
@@ -56,21 +66,4 @@ data class FroeEllerFormeringsMatrialeDto(
         required = true,
     )
     val plantevernmiddel: List<PlantevernmiddelDto>,
-) {
-
-    @kotlinx.serialization.ExperimentalSerializationApi
-    @kotlin.uuid.ExperimentalUuidApi
-    fun toFroeEllerFormeringsMatriale() =
-        FroeEllerFormeringsMatriale(
-            behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
-            behandler = behandler.toPerson(),
-            behandletDato = behandletDato,
-            behandletMengde = behandletMengde.toMengde(),
-            behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),
-            bruksomraade = bruksomraade,
-            egenReferanse = egenReferanse,
-            organisasjonsnummerEier = organisasjonsnummerEier,
-            organisasjonsnummerSproeyter = organisasjonsnummerSproeyter,
-            plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },
-        )
-}
+)
