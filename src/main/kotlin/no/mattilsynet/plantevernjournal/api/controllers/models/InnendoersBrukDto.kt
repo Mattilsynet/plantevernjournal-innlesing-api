@@ -61,11 +61,13 @@ data class InnendoersBrukDto(
         description = "Liste av plantevernmiddel og mengde som ble brukt", required = true,
     )
     val plantevernmiddel: List<PlantevernmiddelDto>,
-){
+) {
 
     @kotlinx.serialization.ExperimentalSerializationApi
     @kotlin.uuid.ExperimentalUuidApi
-    fun toInnendoersBruk() =
+    fun toInnendoersBruk(
+        innsender: String,
+    ) =
         InnendoersBruk(
             behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),
             behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
@@ -75,6 +77,7 @@ data class InnendoersBrukDto(
             bygningsnummer = bygningsnummer,
             bygningsstoerrelse = bygningsstoerrelse.toMengde(),
             egenReferanse = egenReferanse,
+            innsender = innsender,
             organisasjonsnummerEier = organisasjonsnummerEier,
             organisasjonsnummerSproeyter = organisasjonsnummerSproeyter,
             plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },

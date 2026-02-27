@@ -59,7 +59,9 @@ data class UtendoersBrukDto(
 ) {
     @ExperimentalSerializationApi
     @kotlin.uuid.ExperimentalUuidApi
-    fun toUtendoersBruk() =
+    fun toUtendoersBruk(
+        innsender: String,
+    ) =
         UtendoersBruk(
             arealBehandletOmraade = arealBehandletOmraade.toMengde(),
             behandledeOmraader = behandledeOmraader.toBehandledeOmraader(),
@@ -67,6 +69,7 @@ data class UtendoersBrukDto(
             behandler = behandler.toPerson(),
             bruksomraade = bruksomraade,
             egenReferanse = egenReferanse,
+            innsender = innsender,
             organisasjonsnummerEier = organisasjonsnummerEier,
             organisasjonsnummerSproeyter = organisasjonsnummerSproeyter,
             plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },
