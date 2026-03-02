@@ -23,7 +23,9 @@ class SecurityConfig {
                     .permitAll()
 
                     .pathMatchers("/plantevernjournal/**")
-                    .hasAuthority("SCOPE_Mattilsynet:plantevern.journal.innlesing") // Spring endrer scope i token til SCOPE_Mattilsynet...
+                    .hasAuthority(
+                        "SCOPE_mattilsynet:plantevern.journal.innlesing",
+                    ) // Spring endrer scope i token til SCOPE_mattilsynet...
 
                     .anyExchange().authenticated()
             }.oauth2ResourceServer { http ->
