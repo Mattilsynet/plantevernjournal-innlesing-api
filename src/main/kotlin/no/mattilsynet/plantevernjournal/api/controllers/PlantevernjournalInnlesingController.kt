@@ -15,6 +15,8 @@ import no.mattilsynet.plantevernjournal.api.services.InnlesingService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -40,16 +42,19 @@ class PlantevernjournalInnlesingController(
         description = "Endepunkt for å sende inn informasjon om sprøyting på frø og formeringsmateriale",
     )
     fun postFroeEllerFormeringsmateriale(
+        @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
             name = "froeEllerFormeringsMatrialeDto",
             description = "Data for å plantevernjournal for formeringsmateriale eller frø"
         ) @Valid @RequestBody froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
     ): ResponseEntity<FroeEllerFormeringsMatrialeResponsDto> =
         runCatching {
-            innlesingService.postFroeEllerFormeringsMatriale(froeEllerFormeringsMatrialeDto)
-                .let { froeEllerFormeringsMatrialeResponsDto ->
-                    return ResponseEntity.status(HttpStatus.CREATED).body(froeEllerFormeringsMatrialeResponsDto)
-                }
+            innlesingService.postFroeEllerFormeringsMatriale(
+                froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDto,
+                innsender = getInnsenderFraTokenEllerNull(jwt),
+            ).let { froeEllerFormeringsMatrialeResponsDto ->
+                return ResponseEntity.status(HttpStatus.CREATED).body(froeEllerFormeringsMatrialeResponsDto)
+            }
         }.getOrThrow()
 
     @Operation(
@@ -57,15 +62,18 @@ class PlantevernjournalInnlesingController(
     )
     @PostMapping("/innendoersbruk", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun postInnendoersBruk(
+        @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
             name = "innendoersBrukDto",
             description = "Data for å plantevernjournal for innendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody innendoersBrukDto: InnendoersBrukDto,
     ): ResponseEntity<InnendoersBrukResponsDto> = runCatching {
-        innlesingService.postInnendoersBruk(innendoersBrukDto = innendoersBrukDto)
-            .let { innendoersBrukResponsDto ->
-                return ResponseEntity.status(HttpStatus.CREATED).body(innendoersBrukResponsDto)
-            }
+        innlesingService.postInnendoersBruk(
+            innendoersBrukDto = innendoersBrukDto,
+            innsender = getInnsenderFraTokenEllerNull(jwt),
+        ).let { innendoersBrukResponsDto ->
+            return ResponseEntity.status(HttpStatus.CREATED).body(innendoersBrukResponsDto)
+        }
     }.getOrThrow()
 
     @Operation(
@@ -73,15 +81,18 @@ class PlantevernjournalInnlesingController(
     )
     @PostMapping("/utendoersbruk", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun postUtendoersBruk(
+        @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
             name = "utendoersBrukDto",
             description = "Data for å plantevernjournal for utendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody utendoersBrukDto: UtendoersBrukDto,
     ): ResponseEntity<UtendoersBrukResponsDto> = runCatching {
-        innlesingService.postUtendoersBruk(utendoersBrukDto = utendoersBrukDto)
-            .let { utendoersBrukResponsDto ->
-                return ResponseEntity.status(HttpStatus.CREATED).body(utendoersBrukResponsDto)
-            }
+        innlesingService.postUtendoersBruk(
+            innsender = getInnsenderFraTokenEllerNull(jwt),
+            utendoersBrukDto = utendoersBrukDto,
+        ).let { utendoersBrukResponsDto ->
+            return ResponseEntity.status(HttpStatus.CREATED).body(utendoersBrukResponsDto)
+        }
     }.getOrThrow()
 
     @Operation(
@@ -129,4 +140,13 @@ class PlantevernjournalInnlesingController(
     }.onFailure {
         throw it
     }.getOrDefault(ResponseEntity.noContent().build())
+
+    private fun getInnsenderFraTokenEllerNull(jwt: Jwt?) =
+        jwt
+            ?.getClaimAsMap("consumer")
+            ?.get("ID")
+            ?.let {
+               it as String
+            }?.substringAfter(':')
+
 }

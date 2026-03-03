@@ -60,7 +60,9 @@ data class FroeEllerFormeringsMatrialeDto(
 
     @kotlinx.serialization.ExperimentalSerializationApi
     @kotlin.uuid.ExperimentalUuidApi
-    fun toFroeEllerFormeringsMatriale() =
+    fun toFroeEllerFormeringsMatriale(
+        innsender: String?,
+    ) =
         FroeEllerFormeringsMatriale(
             behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
             behandler = behandler.toPerson(),
@@ -69,6 +71,7 @@ data class FroeEllerFormeringsMatrialeDto(
             behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),
             bruksomraade = bruksomraade,
             egenReferanse = egenReferanse,
+            innsender = innsender,
             organisasjonsnummerEier = organisasjonsnummerEier,
             organisasjonsnummerSproeyter = organisasjonsnummerSproeyter,
             plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },

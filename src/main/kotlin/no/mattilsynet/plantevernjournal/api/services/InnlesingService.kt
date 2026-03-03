@@ -16,10 +16,15 @@ class InnlesingService(
     private val natsService: NatsService,
 ) {
 
-    fun postFroeEllerFormeringsMatriale(froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto) =
+    fun postFroeEllerFormeringsMatriale(
+        froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
+        innsender: String?,
+    ) =
         froeEllerFormeringsMatrialeDto.behandledeVekster.validateEppokoder()
             .run {
-                froeEllerFormeringsMatrialeDto.toFroeEllerFormeringsMatriale().let { froeEllerFormeringsMatriale ->
+                froeEllerFormeringsMatrialeDto.toFroeEllerFormeringsMatriale(
+                    innsender = innsender,
+                ).let { froeEllerFormeringsMatriale ->
                     natsService.publishJournalForFroeEllerFormeringsmateriale(
                         froeEllerFormeringsMatriale = froeEllerFormeringsMatriale,
                     )
@@ -32,10 +37,12 @@ class InnlesingService(
                 }
             }
 
-    fun postInnendoersBruk(innendoersBrukDto: InnendoersBrukDto) =
+    fun postInnendoersBruk(innendoersBrukDto: InnendoersBrukDto, innsender: String?) =
         innendoersBrukDto.behandledeVekster.validateEppokoder()
             .run {
-                innendoersBrukDto.toInnendoersBruk().let { innendoersBruk ->
+                innendoersBrukDto.toInnendoersBruk(
+                    innsender = innsender,
+                    ).let { innendoersBruk ->
                     natsService.publishJournalForInnendoersBruk(
                         innendoersBruk = innendoersBruk,
                     )
@@ -48,20 +55,21 @@ class InnlesingService(
                 }
             }
 
-    fun postUtendoersBruk(utendoersBrukDto: UtendoersBrukDto) =
+    fun postUtendoersBruk(innsender: String?, utendoersBrukDto: UtendoersBrukDto) =
         utendoersBrukDto.behandledeVekster.validateEppokoder()
             .run {
-                utendoersBrukDto.toUtendoersBruk().let { utendoersBruk ->
-                    natsService.publishJournalForUtendoersBruk(
-                        utendoersBruk = utendoersBruk,
-                    )
+                utendoersBrukDto.toUtendoersBruk(innsender = innsender)
+                    .let { utendoersBruk ->
+                        natsService.publishJournalForUtendoersBruk(
+                            utendoersBruk = utendoersBruk,
+                        )
 
-                    utendoersBruk.toUtendoersBrukResponsDto(
-                        behandledeOmraader = utendoersBrukDto.behandledeOmraader,
-                        behandledeVekster = utendoersBrukDto.behandledeVekster,
-                        plantevernmiddel = utendoersBrukDto.plantevernmiddel,
-                    )
-                }
+                        utendoersBruk.toUtendoersBrukResponsDto(
+                            behandledeOmraader = utendoersBrukDto.behandledeOmraader,
+                            behandledeVekster = utendoersBrukDto.behandledeVekster,
+                            plantevernmiddel = utendoersBrukDto.plantevernmiddel,
+                        )
+                    }
             }
 
     fun deleteUtendoersBruk(id: UUID) {
