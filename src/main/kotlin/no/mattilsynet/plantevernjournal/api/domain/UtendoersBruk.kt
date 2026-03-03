@@ -32,7 +32,7 @@ data class UtendoersBruk(
     @Serializable(with = UUIDSerializer::class)
     val id: UUID = UUID.randomUUID(),
 
-    val innsender: String,
+    val innsender: String?,
 
     @Serializable(with = LocalDateTimeSerializer::class)
     val opprettet: LocalDateTime = LocalDateTime.now(),

@@ -60,7 +60,7 @@ data class UtendoersBrukDto(
     @ExperimentalSerializationApi
     @kotlin.uuid.ExperimentalUuidApi
     fun toUtendoersBruk(
-        innsender: String,
+        innsender: String?,
     ) =
         UtendoersBruk(
             arealBehandletOmraade = arealBehandletOmraade.toMengde(),

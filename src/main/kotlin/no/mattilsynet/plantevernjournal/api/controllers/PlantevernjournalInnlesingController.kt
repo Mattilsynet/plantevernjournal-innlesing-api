@@ -51,7 +51,7 @@ class PlantevernjournalInnlesingController(
         runCatching {
             innlesingService.postFroeEllerFormeringsMatriale(
                 froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDto,
-                innsender = getInnsenderFraTokenEllerMattilsynetOrganisasjonsnummer(jwt),
+                innsender = getInnsenderFraTokenEllerNull(jwt),
             ).let { froeEllerFormeringsMatrialeResponsDto ->
                 return ResponseEntity.status(HttpStatus.CREATED).body(froeEllerFormeringsMatrialeResponsDto)
             }
@@ -70,7 +70,7 @@ class PlantevernjournalInnlesingController(
     ): ResponseEntity<InnendoersBrukResponsDto> = runCatching {
         innlesingService.postInnendoersBruk(
             innendoersBrukDto = innendoersBrukDto,
-            innsender = getInnsenderFraTokenEllerMattilsynetOrganisasjonsnummer(jwt),
+            innsender = getInnsenderFraTokenEllerNull(jwt),
         ).let { innendoersBrukResponsDto ->
             return ResponseEntity.status(HttpStatus.CREATED).body(innendoersBrukResponsDto)
         }
@@ -88,7 +88,7 @@ class PlantevernjournalInnlesingController(
         ) @Valid @RequestBody utendoersBrukDto: UtendoersBrukDto,
     ): ResponseEntity<UtendoersBrukResponsDto> = runCatching {
         innlesingService.postUtendoersBruk(
-            innsender = getInnsenderFraTokenEllerMattilsynetOrganisasjonsnummer(jwt),
+            innsender = getInnsenderFraTokenEllerNull(jwt),
             utendoersBrukDto = utendoersBrukDto,
         ).let { utendoersBrukResponsDto ->
             return ResponseEntity.status(HttpStatus.CREATED).body(utendoersBrukResponsDto)
@@ -141,13 +141,12 @@ class PlantevernjournalInnlesingController(
         throw it
     }.getOrDefault(ResponseEntity.noContent().build())
 
-    private fun getInnsenderFraTokenEllerMattilsynetOrganisasjonsnummer(jwt: Jwt?) =
-        if (jwt == null || jwt.getClaimAsMap(("consumer")) == null
-            || jwt.getClaimAsMap("consumer")["ID"] == null
-        ) {
-            "985399077"
-        } else {
-            (jwt.getClaimAsMap("consumer")["ID"] as String).substring(5)
-        }
+    private fun getInnsenderFraTokenEllerNull(jwt: Jwt?) =
+        jwt
+            ?.getClaimAsMap("consumer")
+            ?.get("ID")
+            ?.let {
+               it as String
+            }?.substringAfter(':')
 
 }

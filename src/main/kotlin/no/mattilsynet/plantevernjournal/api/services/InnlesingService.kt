@@ -18,7 +18,7 @@ class InnlesingService(
 
     fun postFroeEllerFormeringsMatriale(
         froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
-        innsender: String,
+        innsender: String?,
     ) =
         froeEllerFormeringsMatrialeDto.behandledeVekster.validateEppokoder()
             .run {
@@ -37,7 +37,7 @@ class InnlesingService(
                 }
             }
 
-    fun postInnendoersBruk(innendoersBrukDto: InnendoersBrukDto, innsender: String) =
+    fun postInnendoersBruk(innendoersBrukDto: InnendoersBrukDto, innsender: String?) =
         innendoersBrukDto.behandledeVekster.validateEppokoder()
             .run {
                 innendoersBrukDto.toInnendoersBruk(
@@ -55,7 +55,7 @@ class InnlesingService(
                 }
             }
 
-    fun postUtendoersBruk(innsender: String, utendoersBrukDto: UtendoersBrukDto) =
+    fun postUtendoersBruk(innsender: String?, utendoersBrukDto: UtendoersBrukDto) =
         utendoersBrukDto.behandledeVekster.validateEppokoder()
             .run {
                 utendoersBrukDto.toUtendoersBruk(innsender = innsender)

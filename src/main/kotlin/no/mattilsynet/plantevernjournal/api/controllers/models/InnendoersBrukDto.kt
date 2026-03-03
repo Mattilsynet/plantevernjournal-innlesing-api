@@ -66,7 +66,7 @@ data class InnendoersBrukDto(
     @kotlinx.serialization.ExperimentalSerializationApi
     @kotlin.uuid.ExperimentalUuidApi
     fun toInnendoersBruk(
-        innsender: String,
+        innsender: String?,
     ) =
         InnendoersBruk(
             behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),

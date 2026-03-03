@@ -61,7 +61,7 @@ data class FroeEllerFormeringsMatrialeDto(
     @kotlinx.serialization.ExperimentalSerializationApi
     @kotlin.uuid.ExperimentalUuidApi
     fun toFroeEllerFormeringsMatriale(
-        innsender: String,
+        innsender: String?,
     ) =
         FroeEllerFormeringsMatriale(
             behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
