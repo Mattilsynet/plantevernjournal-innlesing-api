@@ -5,13 +5,13 @@ package no.mattilsynet.plantevernjournal.api.services
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import no.mattilsynet.plantevernjournal.api.domain.FroeEllerFormeringsMatriale
 import no.mattilsynet.plantevernjournal.api.domain.InnendoersBruk
+import no.mattilsynet.plantevernjournal.api.domain.SlettInnsending
 import no.mattilsynet.plantevernjournal.api.domain.UtendoersBruk
 import no.mattilsynet.plantevernjournal.api.nats.jetstream.subjects.JetStreamSubjectBuilder
+import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import org.springframework.stereotype.Service
-import java.util.UUID
 
 @kotlin.uuid.ExperimentalUuidApi
 @Service
@@ -51,27 +51,27 @@ class NatsService(
         )
     }
 
-    fun publishSlettJournalForUtendoersBruk(id: UUID) {
+    fun publishSlettJournalForUtendoersBruk(slettInnsending: SlettInnsending) {
         jetStream.publish(
             subject = JetStreamSubjectBuilder
-                .plantevernjournalSlettUtendoersV1(id = id.toString()),
-            body = "".toByteArray(),
+                .plantevernjournalSlettUtendoersV1(id = slettInnsending.id.toString()),
+            body = Json.encodeToString(slettInnsending).toByteArray(),
         )
     }
 
-    fun publishSlettJournalForInnendoersBruk(id: UUID) {
+    fun publishSlettJournalForInnendoersBruk(slettInnsending: SlettInnsending) {
         jetStream.publish(
             subject = JetStreamSubjectBuilder
-                .plantevernjournalSlettInnendoersV1(id = id.toString()),
-            body = "".toByteArray(),
+                .plantevernjournalSlettInnendoersV1(id = slettInnsending.id.toString()),
+            body = Json.encodeToString(slettInnsending).toByteArray(),
         )
     }
 
-    fun publishSlettJournalForFroeEllerFormeringsmateriale(id: UUID) {
+    fun publishSlettJournalForFroeEllerFormeringsmateriale(slettInnsending: SlettInnsending) {
         jetStream.publish(
             subject = JetStreamSubjectBuilder
-                .plantevernjournalSlettFroeV1(id = id.toString()),
-            body = "".toByteArray(),
+                .plantevernjournalSlettFroeV1(id = slettInnsending.id.toString()),
+            body = Json.encodeToString(slettInnsending).toByteArray(),
         )
     }
 }

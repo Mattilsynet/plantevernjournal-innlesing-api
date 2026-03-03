@@ -100,12 +100,16 @@ class PlantevernjournalInnlesingController(
     )
     @DeleteMapping("/utendoersbruk/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun deleteUtendoersBruk(
+        @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
             name = "id",
             description = "Id til innlesingen som skal slettes"
         ) @PathVariable id: UUID,
     ): ResponseEntity<Unit> = runCatching {
-        innlesingService.deleteUtendoersBruk(id)
+        innlesingService.deleteUtendoersBruk(
+            id = id,
+            innsender = getInnsenderFraTokenEllerNull(jwt),
+        )
         return ResponseEntity.noContent().build()
     }.getOrThrow()
 
@@ -114,12 +118,16 @@ class PlantevernjournalInnlesingController(
     )
     @DeleteMapping("/innendoersbruk/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun deleteInnendoersBruk(
+        @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
             name = "id",
             description = "Id til innlesingen som skal slettes"
         ) @PathVariable id: UUID,
     ): ResponseEntity<Unit> = runCatching {
-        innlesingService.deleteInnendoersBruk(id)
+        innlesingService.deleteInnendoersBruk(
+            id = id,
+            innsender = getInnsenderFraTokenEllerNull(jwt),
+        )
         return ResponseEntity.noContent().build()
     }.onFailure {
         throw it
@@ -130,12 +138,16 @@ class PlantevernjournalInnlesingController(
     )
     @DeleteMapping("/formeringsmateriale/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun deleteFroeEllerFormeringsMateriale(
+        @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
             name = "id",
             description = "Id til innlesingen som skal slettes"
         ) @PathVariable id: UUID,
     ): ResponseEntity<Unit> = runCatching {
-        innlesingService.deleteFroeEllerFormeringsMatriale(id)
+        innlesingService.deleteFroeEllerFormeringsMatriale(
+            id = id,
+            innsender = getInnsenderFraTokenEllerNull(jwt),
+        )
         return ResponseEntity.noContent().build()
     }.onFailure {
         throw it

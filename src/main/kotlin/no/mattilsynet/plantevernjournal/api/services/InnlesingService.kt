@@ -5,6 +5,7 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.BehandletVekstDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.FroeEllerFormeringsMatrialeDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.InnendoersBrukDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.UtendoersBrukDto
+import no.mattilsynet.plantevernjournal.api.domain.SlettInnsending
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -72,16 +73,22 @@ class InnlesingService(
                     }
             }
 
-    fun deleteUtendoersBruk(id: UUID) {
-        natsService.publishSlettJournalForUtendoersBruk(id)
+    fun deleteUtendoersBruk(id: UUID, innsender: String?) {
+        natsService.publishSlettJournalForUtendoersBruk(
+            SlettInnsending(id = id, innsender = innsender)
+        )
     }
 
-    fun deleteInnendoersBruk(id: UUID) {
-        natsService.publishSlettJournalForInnendoersBruk(id)
+    fun deleteInnendoersBruk(id: UUID, innsender: String?) {
+        natsService.publishSlettJournalForInnendoersBruk(
+            SlettInnsending(id = id, innsender = innsender)
+        )
     }
 
-    fun deleteFroeEllerFormeringsMatriale(id: UUID) {
-        natsService.publishSlettJournalForFroeEllerFormeringsmateriale(id)
+    fun deleteFroeEllerFormeringsMatriale(id: UUID, innsender: String?) {
+        natsService.publishSlettJournalForFroeEllerFormeringsmateriale(
+            SlettInnsending(id = id, innsender = innsender)
+        )
     }
 
     private fun List<BehandletVekstDto>.validateEppokoder() =
