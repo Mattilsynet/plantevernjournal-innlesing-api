@@ -1,7 +1,7 @@
 package no.mattilsynet.plantevernjournal.api
 
-import no.mattilsynet.virtualnats.virtualnatsspring3.SpringVirtualNatsStarter
-import no.mattilsynet.virtualnats.virtualnatsspring3.wrapper.LoggerVirtualNatsWrapper
+import no.mattilsynet.virtualnats.virtualnatsspring.SpringVirtualNatsStarter
+import no.mattilsynet.virtualnats.virtualnatsspring.wrapper.LoggerVirtualNatsWrapper
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
