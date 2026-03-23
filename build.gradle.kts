@@ -1,8 +1,8 @@
 plugins {
-    kotlin("jvm") version "2.3.10"
-    kotlin("plugin.spring") version "2.3.10"
-    kotlin("plugin.serialization") version "2.3.10"
-    id("org.springframework.boot") version "4.0.3"
+    kotlin("jvm") version "2.3.20"
+    kotlin("plugin.spring") version "2.3.20"
+    kotlin("plugin.serialization") version "2.3.20"
+    id("org.springframework.boot") version "4.0.4"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -55,9 +55,9 @@ dependencies {
     implementation("org.wololo:jts2geojson:0.18.1")
 
     // virtual-nats
-    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.03.02-10.45-28162fc3e228"))
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.03.18-11.44-d54445cace5e"))
     implementation("no.mattilsynet.virtualnats:virtual-nats-core")
-    implementation("no.mattilsynet.virtualnats:virtual-nats-spring-3")
+    implementation("no.mattilsynet.virtualnats:virtual-nats-spring")
 
     // nats
     implementation("io.nats:jnats")
