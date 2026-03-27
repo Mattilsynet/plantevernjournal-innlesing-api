@@ -77,7 +77,7 @@ jobs:
         run: echo "hash=$(cut -c 1-7 <<< ${{ github.sha }})" >> $GITHUB_OUTPUT
 
       - name: Build and push to GAR
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           build-args: "COMMIT_HASH=${{ steps.setup_commit_hash.outputs.hash }}"
           context: .
