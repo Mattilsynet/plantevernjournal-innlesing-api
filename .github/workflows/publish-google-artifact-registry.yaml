@@ -42,14 +42,14 @@ jobs:
 
       - name: Login to GAR
         id: docker_login
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ inputs.registry }}
           username: 'oauth2accesstoken'
           password: '${{ steps.auth.outputs.access_token }}' # resultat fra autentisering til google cloud
 
       - name: Login to registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ inputs.registry }}
           username: "oauth2accesstoken"
