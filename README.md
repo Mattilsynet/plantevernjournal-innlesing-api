@@ -33,7 +33,9 @@ Ikke klart enda
 ### Maskinporten
 Maskinporten skal brukes til autentisering når man sender inn data. For å starte opp med maskinporten går man via Samarbeidsportalen. På [Selvbetjening av Maskinporten via Samarbeidsportalen](https://docs.digdir.no/docs/Maskinporten/maskinporten_sjolvbetjening_web.html) [Selvbetjening som API-konsument](https://docs.digdir.no/docs/Maskinporten/maskinporten_sjolvbetjening_web.html#selvbetjening-som-api-konsument) finnes det informasjon om framgangsmåte.
 
-For å sende inn data til digital plantevernjournal, så er det scope _Mattilsynet:plantevern.journal.innlesing_
+For å sende inn data til digital plantevernjournal er scopet _mattilsynet:plantevern.journal.innlesing_.
+
+**Hvis du er en skifteleverandør, skal du innhente samtykke fra sluttbruker før du sender inn data. Mer informasjon om denne flyten finnes i [Autentisering via Maskinporten med Systembruker](maskinporten.md).**
 
 Ta kontakt på _plantevernjournal@mattilsynet.no_ hvis det er noe dere trenger hjelp med.
 
