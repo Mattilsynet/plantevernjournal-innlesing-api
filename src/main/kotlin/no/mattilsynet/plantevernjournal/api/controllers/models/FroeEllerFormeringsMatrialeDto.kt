@@ -44,11 +44,11 @@ data class FroeEllerFormeringsMatrialeDto(
     val egenReferanse: String?,
 
     @Schema(description = "Organisasjonsnummer til den som eier arealet det ble sprøytet på", required = true)
-    @Pattern(regexp = "^[89]\\d{8}", message = "Organisasjonsnummer må starte med 8 eller 9, og være 9 siffer")
+    @field:Pattern(regexp = "^[89]\\d{8}", message = "Organisasjonsnummer må starte med 8 eller 9, og være 9 siffer")
     val organisasjonsnummerEier: String,
 
     @Schema(description = "Organisasjonsnummer til den som sprøytet med plantevernmidler", required = true)
-    @Pattern(regexp = "^[89]\\d{8}", message = "Organisasjonsnummer må starte med 8 eller 9, og være 9 siffer")
+    @field:Pattern(regexp = "^[89]\\d{8}", message = "Organisasjonsnummer må starte med 8 eller 9, og være 9 siffer")
     val organisasjonsnummerSproeyter: String,
 
     @Schema(
