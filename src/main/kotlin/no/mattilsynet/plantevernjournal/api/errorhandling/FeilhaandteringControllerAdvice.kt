@@ -9,9 +9,11 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.FeilmeldingModell
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.GeometriTyper
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.support.WebExchangeBindException
 
 @ControllerAdvice
 class FeilhaandteringControllerAdvice {
@@ -52,6 +54,45 @@ class FeilhaandteringControllerAdvice {
             HttpStatus.BAD_REQUEST,
         )
 
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "400", description = "Bad Request",
+                content = [Content(schema = Schema(implementation = FeilmeldingModellDto::class))],
+            )]
+    )
+    fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException)
+            : ResponseEntity<FeilmeldingModellDto> =
+        ResponseEntity(
+            FeilmeldingModellDto(
+                melding = ex.message,
+                status = HttpStatus.BAD_REQUEST.value(),
+            ),
+            HttpStatus.BAD_REQUEST,
+        )
+
+    @ExceptionHandler(WebExchangeBindException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "400", description = "Bad Request",
+                content = [Content(schema = Schema(implementation = FeilmeldingModellDto::class))],
+            )]
+    )
+    fun handleWebExchangeBindException(ex: WebExchangeBindException)
+            : ResponseEntity<FeilmeldingModellDto> =
+        ResponseEntity(
+            FeilmeldingModellDto(
+                melding = ex.bindingResult.fieldErrors.map {
+                    "${it.field}: ${it.defaultMessage}"
+                }.toList().joinToString(", "),
+                status = HttpStatus.BAD_REQUEST.value(),
+            ),
+            HttpStatus.BAD_REQUEST,
+        )
     @ExceptionHandler(JsonMappingException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ApiResponses(

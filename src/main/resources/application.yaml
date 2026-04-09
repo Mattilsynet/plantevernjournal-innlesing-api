@@ -3,8 +3,6 @@ server:
   forward-headers-strategy: framework
   shutdown: graceful
   port: ${PORT:8080}
-  error:
-    include-message: always
 
 spring:
   application:
