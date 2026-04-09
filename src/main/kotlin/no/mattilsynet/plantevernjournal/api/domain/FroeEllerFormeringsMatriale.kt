@@ -44,6 +44,8 @@ data class FroeEllerFormeringsMatriale(
 
     val organisasjonsnummerSproeyter: String,
 
+    val paaVegneAv: String?,
+
     val plantevernmiddel: List<Plantevernmiddel>,
 ) {
     fun toFroeEllerFormeringsMatrialeResponsDto(

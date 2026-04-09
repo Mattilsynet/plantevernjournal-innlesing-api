@@ -20,11 +20,13 @@ class InnlesingService(
     fun postFroeEllerFormeringsMatriale(
         froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
         innsender: String?,
+        paaVegneAv: String?,
     ) =
         froeEllerFormeringsMatrialeDto.behandledeVekster.validateEppokoder()
             .run {
                 froeEllerFormeringsMatrialeDto.toFroeEllerFormeringsMatriale(
                     innsender = innsender,
+                    paaVegneAv = paaVegneAv,
                 ).let { froeEllerFormeringsMatriale ->
                     natsService.publishJournalForFroeEllerFormeringsmateriale(
                         froeEllerFormeringsMatriale = froeEllerFormeringsMatriale,
@@ -38,12 +40,17 @@ class InnlesingService(
                 }
             }
 
-    fun postInnendoersBruk(innendoersBrukDto: InnendoersBrukDto, innsender: String?) =
+    fun postInnendoersBruk(
+        innendoersBrukDto: InnendoersBrukDto,
+        innsender: String?,
+        paaVegneAv: String?,
+    ) =
         innendoersBrukDto.behandledeVekster.validateEppokoder()
             .run {
                 innendoersBrukDto.toInnendoersBruk(
                     innsender = innsender,
-                    ).let { innendoersBruk ->
+                    paaVegneAv = paaVegneAv,
+                ).let { innendoersBruk ->
                     natsService.publishJournalForInnendoersBruk(
                         innendoersBruk = innendoersBruk,
                     )
@@ -56,10 +63,17 @@ class InnlesingService(
                 }
             }
 
-    fun postUtendoersBruk(innsender: String?, utendoersBrukDto: UtendoersBrukDto) =
+    fun postUtendoersBruk(
+        innsender: String?,
+        paaVegneAv: String?,
+        utendoersBrukDto: UtendoersBrukDto,
+    ) =
         utendoersBrukDto.behandledeVekster.validateEppokoder()
             .run {
-                utendoersBrukDto.toUtendoersBruk(innsender = innsender)
+                utendoersBrukDto.toUtendoersBruk(
+                    innsender = innsender,
+                    paaVegneAv = paaVegneAv,
+                )
                     .let { utendoersBruk ->
                         natsService.publishJournalForUtendoersBruk(
                             utendoersBruk = utendoersBruk,

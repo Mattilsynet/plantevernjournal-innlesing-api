@@ -67,6 +67,7 @@ data class InnendoersBrukDto(
     @kotlin.uuid.ExperimentalUuidApi
     fun toInnendoersBruk(
         innsender: String?,
+        paaVegneAv: String?,
     ) =
         InnendoersBruk(
             behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),
@@ -80,6 +81,7 @@ data class InnendoersBrukDto(
             innsender = innsender,
             organisasjonsnummerEier = organisasjonsnummerEier,
             organisasjonsnummerSproeyter = organisasjonsnummerSproeyter,
+            paaVegneAv = paaVegneAv,
             plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },
         )
 

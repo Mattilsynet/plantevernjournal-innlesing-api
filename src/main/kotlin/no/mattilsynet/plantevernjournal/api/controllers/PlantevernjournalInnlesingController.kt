@@ -1,5 +1,7 @@
 package no.mattilsynet.plantevernjournal.api.controllers
 
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -8,6 +10,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import no.mattilsynet.plantevernjournal.api.controllers.models.FroeEllerFormeringsMatrialeDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.InnendoersBrukDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.UtendoersBrukDto
+import no.mattilsynet.plantevernjournal.api.controllers.models.jwt.AuthorizationDetail
 import no.mattilsynet.plantevernjournal.api.controllers.models.responses.FroeEllerFormeringsMatrialeResponsDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.responses.InnendoersBrukResponsDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.responses.UtendoersBrukResponsDto
@@ -51,7 +54,8 @@ class PlantevernjournalInnlesingController(
         runCatching {
             innlesingService.postFroeEllerFormeringsMatriale(
                 froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDto,
-                innsender = getInnsenderFraTokenEllerNull(jwt),
+                innsender = jwt?.getInnsenderFraTokenEllerNull(),
+                paaVegneAv = jwt?.getPaaVegneAvFraToken(),
             ).let { froeEllerFormeringsMatrialeResponsDto ->
                 return ResponseEntity.status(HttpStatus.CREATED).body(froeEllerFormeringsMatrialeResponsDto)
             }
@@ -70,7 +74,8 @@ class PlantevernjournalInnlesingController(
     ): ResponseEntity<InnendoersBrukResponsDto> = runCatching {
         innlesingService.postInnendoersBruk(
             innendoersBrukDto = innendoersBrukDto,
-            innsender = getInnsenderFraTokenEllerNull(jwt),
+            innsender = jwt?.getInnsenderFraTokenEllerNull(),
+            paaVegneAv = jwt?.getPaaVegneAvFraToken(),
         ).let { innendoersBrukResponsDto ->
             return ResponseEntity.status(HttpStatus.CREATED).body(innendoersBrukResponsDto)
         }
@@ -88,7 +93,8 @@ class PlantevernjournalInnlesingController(
         ) @Valid @RequestBody utendoersBrukDto: UtendoersBrukDto,
     ): ResponseEntity<UtendoersBrukResponsDto> = runCatching {
         innlesingService.postUtendoersBruk(
-            innsender = getInnsenderFraTokenEllerNull(jwt),
+            innsender = jwt?.getInnsenderFraTokenEllerNull(),
+            paaVegneAv = jwt?.getPaaVegneAvFraToken(),
             utendoersBrukDto = utendoersBrukDto,
         ).let { utendoersBrukResponsDto ->
             return ResponseEntity.status(HttpStatus.CREATED).body(utendoersBrukResponsDto)
@@ -108,7 +114,7 @@ class PlantevernjournalInnlesingController(
     ): ResponseEntity<Unit> = runCatching {
         innlesingService.deleteUtendoersBruk(
             id = id,
-            innsender = getInnsenderFraTokenEllerNull(jwt),
+            innsender = jwt?.getInnsenderFraTokenEllerNull(),
         )
         return ResponseEntity.noContent().build()
     }.getOrThrow()
@@ -126,7 +132,7 @@ class PlantevernjournalInnlesingController(
     ): ResponseEntity<Unit> = runCatching {
         innlesingService.deleteInnendoersBruk(
             id = id,
-            innsender = getInnsenderFraTokenEllerNull(jwt),
+            innsender = jwt?.getInnsenderFraTokenEllerNull(),
         )
         return ResponseEntity.noContent().build()
     }.onFailure {
@@ -146,19 +152,25 @@ class PlantevernjournalInnlesingController(
     ): ResponseEntity<Unit> = runCatching {
         innlesingService.deleteFroeEllerFormeringsMatriale(
             id = id,
-            innsender = getInnsenderFraTokenEllerNull(jwt),
+            innsender = jwt?.getInnsenderFraTokenEllerNull(),
         )
         return ResponseEntity.noContent().build()
     }.onFailure {
         throw it
     }.getOrDefault(ResponseEntity.noContent().build())
 
-    private fun getInnsenderFraTokenEllerNull(jwt: Jwt?) =
-        jwt
-            ?.getClaimAsMap("consumer")
+    private fun Jwt.getInnsenderFraTokenEllerNull() =
+        getClaimAsMap("consumer")
             ?.get("ID")
             ?.let {
-               it as String
+                it as String
             }?.substringAfter(':')
+
+    private val objectMapper = jacksonObjectMapper()
+
+    private fun Jwt.getPaaVegneAvFraToken() =
+        (claims["authorization_details"]?.let {
+            objectMapper.convertValue(it, object : TypeReference<List<AuthorizationDetail>>() {})}[0]
+            ?.systemUserOrg?.id as String).substringAfter(":")
 
 }

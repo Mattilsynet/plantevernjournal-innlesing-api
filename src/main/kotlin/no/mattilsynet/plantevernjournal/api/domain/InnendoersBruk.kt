@@ -45,6 +45,8 @@ data class InnendoersBruk(
 
     val organisasjonsnummerSproeyter: String,
 
+    val paaVegneAv: String?,
+
     val plantevernmiddel: List<Plantevernmiddel>,
 ) {
     fun toInnendoersBrukResponsDto(

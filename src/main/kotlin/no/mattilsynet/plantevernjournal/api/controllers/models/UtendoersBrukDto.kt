@@ -61,6 +61,7 @@ data class UtendoersBrukDto(
     @kotlin.uuid.ExperimentalUuidApi
     fun toUtendoersBruk(
         innsender: String?,
+        paaVegneAv: String?,
     ) =
         UtendoersBruk(
             arealBehandletOmraade = arealBehandletOmraade.toMengde(),
@@ -72,6 +73,7 @@ data class UtendoersBrukDto(
             innsender = innsender,
             organisasjonsnummerEier = organisasjonsnummerEier,
             organisasjonsnummerSproeyter = organisasjonsnummerSproeyter,
+            paaVegneAv = paaVegneAv,
             plantevernmiddel = plantevernmiddel.map { it.toPlantevernmiddel() },
             startTid = startTid,
         )
