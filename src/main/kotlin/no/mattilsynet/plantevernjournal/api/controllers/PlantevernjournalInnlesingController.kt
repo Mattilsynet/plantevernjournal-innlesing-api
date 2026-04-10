@@ -51,7 +51,6 @@ class PlantevernjournalInnlesingController(
             description = "Data for å plantevernjournal for formeringsmateriale eller frø"
         ) @Valid @RequestBody froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
     ): ResponseEntity<FroeEllerFormeringsMatrialeResponsDto> =
-        runCatching {
             innlesingService.postFroeEllerFormeringsMatriale(
                 froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDto,
                 innsender = jwt?.getInnsenderFraTokenEllerNull(),
@@ -59,7 +58,6 @@ class PlantevernjournalInnlesingController(
             ).let { froeEllerFormeringsMatrialeResponsDto ->
                 return ResponseEntity.status(HttpStatus.CREATED).body(froeEllerFormeringsMatrialeResponsDto)
             }
-        }.getOrThrow()
 
     @Operation(
         description = "Endepunkt for å sende inn informasjon om sprøyting som foregår innendørs, feks i et veksthus",
@@ -71,7 +69,7 @@ class PlantevernjournalInnlesingController(
             name = "innendoersBrukDto",
             description = "Data for å plantevernjournal for innendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody innendoersBrukDto: InnendoersBrukDto,
-    ): ResponseEntity<InnendoersBrukResponsDto> = runCatching {
+    ): ResponseEntity<InnendoersBrukResponsDto> =
         innlesingService.postInnendoersBruk(
             innendoersBrukDto = innendoersBrukDto,
             innsender = jwt?.getInnsenderFraTokenEllerNull(),
@@ -79,7 +77,6 @@ class PlantevernjournalInnlesingController(
         ).let { innendoersBrukResponsDto ->
             return ResponseEntity.status(HttpStatus.CREATED).body(innendoersBrukResponsDto)
         }
-    }.getOrThrow()
 
     @Operation(
         description = "Endepunkt for å sende inn informasjon om sprøyting som skjer utendørs, feks på et jorde",
@@ -91,7 +88,7 @@ class PlantevernjournalInnlesingController(
             name = "utendoersBrukDto",
             description = "Data for å plantevernjournal for utendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody utendoersBrukDto: UtendoersBrukDto,
-    ): ResponseEntity<UtendoersBrukResponsDto> = runCatching {
+    ): ResponseEntity<UtendoersBrukResponsDto> =
         innlesingService.postUtendoersBruk(
             innsender = jwt?.getInnsenderFraTokenEllerNull(),
             paaVegneAv = jwt?.getPaaVegneAvFraToken(),
@@ -99,7 +96,6 @@ class PlantevernjournalInnlesingController(
         ).let { utendoersBrukResponsDto ->
             return ResponseEntity.status(HttpStatus.CREATED).body(utendoersBrukResponsDto)
         }
-    }.getOrThrow()
 
     @Operation(
         description = "Endepunkt for å slette informasjon som er sendt inn om utendørs sprøyting",

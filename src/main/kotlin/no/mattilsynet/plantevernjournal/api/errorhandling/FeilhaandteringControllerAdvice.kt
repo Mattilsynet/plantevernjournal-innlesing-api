@@ -7,15 +7,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import no.mattilsynet.plantevernjournal.api.controllers.models.FeilmeldingModellDto
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.GeometriTyper
+import org.springframework.core.codec.DecodingException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
-import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.bind.support.WebExchangeBindException
+import org.springframework.web.server.ServerWebInputException
 
-@ControllerAdvice
+@RestControllerAdvice
 class FeilhaandteringControllerAdvice {
 
     @ExceptionHandler(IllegalArgumentException::class)
@@ -93,6 +95,33 @@ class FeilhaandteringControllerAdvice {
             ),
             HttpStatus.BAD_REQUEST,
         )
+
+    @ExceptionHandler(ServerWebInputException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "400", description = "Bad Request",
+                content = [Content(schema = Schema(implementation = FeilmeldingModellDto::class))],
+            )]
+    )
+    fun handleServerWebInputException(ex: ServerWebInputException): ResponseEntity<FeilmeldingModellDto> {
+        return ResponseEntity(
+            FeilmeldingModellDto(
+                melding = getFeilmelding(ex),
+                status = HttpStatus.BAD_REQUEST.value(),
+            ),
+            HttpStatus.BAD_REQUEST,
+        )
+    }
+
+    private fun getFeilmelding(exception: Exception) =
+        when (exception.cause) {
+            is DecodingException ->
+                "${exception.cause?.message}"
+            else -> "Det skjedde noe feil " + exception.cause?.message
+        }
+
     @ExceptionHandler(JsonMappingException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ApiResponses(
