@@ -115,6 +115,7 @@ class PlantevernjournalInnlesingController(
         innlesingService.deleteUtendoersBruk(
             id = id,
             innsender = jwt?.getInnsenderFraTokenEllerNull(),
+            paaVegneAv = jwt?.getPaaVegneAvFraToken(),
         )
         return ResponseEntity.noContent().build()
     }.getOrThrow()
@@ -133,6 +134,7 @@ class PlantevernjournalInnlesingController(
         innlesingService.deleteInnendoersBruk(
             id = id,
             innsender = jwt?.getInnsenderFraTokenEllerNull(),
+            paaVegneAv = jwt?.getPaaVegneAvFraToken(),
         )
         return ResponseEntity.noContent().build()
     }.onFailure {
@@ -153,6 +155,7 @@ class PlantevernjournalInnlesingController(
         innlesingService.deleteFroeEllerFormeringsMatriale(
             id = id,
             innsender = jwt?.getInnsenderFraTokenEllerNull(),
+            paaVegneAv = jwt?.getPaaVegneAvFraToken(),
         )
         return ResponseEntity.noContent().build()
     }.onFailure {

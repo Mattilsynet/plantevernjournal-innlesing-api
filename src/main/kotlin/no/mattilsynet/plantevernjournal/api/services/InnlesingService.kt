@@ -87,21 +87,33 @@ class InnlesingService(
                     }
             }
 
-    fun deleteUtendoersBruk(id: UUID, innsender: String?) {
+    fun deleteUtendoersBruk(
+        id: UUID,
+        innsender: String?,
+        paaVegneAv: String?,
+    ) {
         natsService.publishSlettJournalForUtendoersBruk(
-            SlettInnsending(id = id, innsender = innsender)
+            SlettInnsending(id = id, innsender = innsender, paaVegneAv = paaVegneAv),
         )
     }
 
-    fun deleteInnendoersBruk(id: UUID, innsender: String?) {
+    fun deleteInnendoersBruk(
+        id: UUID,
+        innsender: String?,
+        paaVegneAv: String?,
+    ) {
         natsService.publishSlettJournalForInnendoersBruk(
-            SlettInnsending(id = id, innsender = innsender)
+            SlettInnsending(id = id, innsender = innsender, paaVegneAv = paaVegneAv)
         )
     }
 
-    fun deleteFroeEllerFormeringsMatriale(id: UUID, innsender: String?) {
+    fun deleteFroeEllerFormeringsMatriale(
+        id: UUID,
+        innsender: String?,
+        paaVegneAv: String?,
+    ) {
         natsService.publishSlettJournalForFroeEllerFormeringsmateriale(
-            SlettInnsending(id = id, innsender = innsender)
+            SlettInnsending(id = id, innsender = innsender, paaVegneAv = paaVegneAv)
         )
     }
 
