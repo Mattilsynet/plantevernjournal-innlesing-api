@@ -85,7 +85,7 @@ Content-Type: application/json
           ]
         }
       }
-    ]
+      ]
   },
   "bruksomraade": "JORDBRUK",
   "organisasjonsnummerEier": "987654123",

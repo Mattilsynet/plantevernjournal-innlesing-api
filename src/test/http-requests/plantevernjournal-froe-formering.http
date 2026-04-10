@@ -4,7 +4,7 @@ POST http://localhost:8080/plantevernjournal/innlesing/v1/formeringsmateriale
 Content-Type: application/json
 
 {
-  "behandledeVekster":  [
+  "behandledeVekster": [
     {
       "bbchFase": "05",
       "eppoKode": "SOLTU",
@@ -31,15 +31,27 @@ Content-Type: application/json
       {
         "type": "Feature",
         "geometry": {
-          "type": "LineString",
+          "type": "MultiLineString",
           "coordinates": [
             [
-              10.744249,
-              59.920790
+              [
+                10.744249,
+                59.920790
+              ],
+              [
+                10.742875,
+                59.921951
+              ]
             ],
             [
-              10.742875,
-              59.921951
+              [
+                10.744249,
+                59.920790
+              ],
+              [
+                10.742875,
+                59.921951
+              ]
             ]
           ]
         }

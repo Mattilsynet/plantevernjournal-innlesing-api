@@ -5,6 +5,7 @@ import org.wololo.geojson.Feature
 import org.wololo.geojson.FeatureCollection
 import org.wololo.geojson.Geometry
 import org.wololo.geojson.LineString
+import org.wololo.geojson.MultiLineString
 import org.wololo.geojson.Point
 import org.wololo.geojson.Polygon
 
@@ -32,6 +33,7 @@ class FeatureCollectionValidator {
         when (geometry) {
             is Point -> validatePoint(geometry, index)
             is LineString -> validateLineString(geometry, index)
+            is MultiLineString -> validateMultiLineString(geometry, index)
             is Polygon -> validatePolygon(geometry, index)
 
             else -> throw IllegalArgumentException(
@@ -52,6 +54,15 @@ class FeatureCollectionValidator {
         val koordinater = line.coordinates
         require(koordinater != null && koordinater.size >= 2) {
             "Feature[$index] LineString må ha minst to punkter"
+        }
+    }
+
+    private fun validateMultiLineString(line: MultiLineString, index: Int) {
+        val koordinater = line.coordinates
+        require(koordinater != null &&
+                koordinater.size >= 2 &&
+                koordinater.all { it.size >= 2 }) {
+            "Feature[$index] MultiLineString må ha minst to punkter i minst to linjer"
         }
     }
 
