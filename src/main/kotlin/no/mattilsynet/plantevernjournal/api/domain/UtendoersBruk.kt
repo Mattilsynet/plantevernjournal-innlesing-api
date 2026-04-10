@@ -41,6 +41,8 @@ data class UtendoersBruk(
 
     val organisasjonsnummerSproeyter: String,
 
+    val paaVegneAv: String?,
+
     val plantevernmiddel: List<Plantevernmiddel>,
 
     @Serializable(with = LocalDateTimeSerializer::class)
