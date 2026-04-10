@@ -15,6 +15,7 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.responses.FroeEll
 import no.mattilsynet.plantevernjournal.api.controllers.models.responses.InnendoersBrukResponsDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.responses.UtendoersBrukResponsDto
 import no.mattilsynet.plantevernjournal.api.services.InnlesingService
+import no.mattilsynet.plantevernjournal.api.validation.FeatureCollectionValidator
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -37,6 +38,7 @@ import java.util.UUID
     name = "Innlesing plantevernjournal",
 )
 class PlantevernjournalInnlesingController(
+    private val featureCollectionValidator: FeatureCollectionValidator,
     private val innlesingService: InnlesingService,
 ) {
 
@@ -51,6 +53,9 @@ class PlantevernjournalInnlesingController(
             description = "Data for å plantevernjournal for formeringsmateriale eller frø"
         ) @Valid @RequestBody froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
     ): ResponseEntity<FroeEllerFormeringsMatrialeResponsDto> =
+        froeEllerFormeringsMatrialeDto.behandledeOmraader?.let { featureCollection ->
+            featureCollectionValidator.validate(featureCollection)
+        }.run {
             innlesingService.postFroeEllerFormeringsMatriale(
                 froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDto,
                 innsender = jwt?.getInnsenderFraTokenEllerNull(),
@@ -58,6 +63,7 @@ class PlantevernjournalInnlesingController(
             ).let { froeEllerFormeringsMatrialeResponsDto ->
                 return ResponseEntity.status(HttpStatus.CREATED).body(froeEllerFormeringsMatrialeResponsDto)
             }
+        }
 
     @Operation(
         description = "Endepunkt for å sende inn informasjon om sprøyting som foregår innendørs, feks i et veksthus",
@@ -70,12 +76,16 @@ class PlantevernjournalInnlesingController(
             description = "Data for å plantevernjournal for innendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody innendoersBrukDto: InnendoersBrukDto,
     ): ResponseEntity<InnendoersBrukResponsDto> =
-        innlesingService.postInnendoersBruk(
-            innendoersBrukDto = innendoersBrukDto,
-            innsender = jwt?.getInnsenderFraTokenEllerNull(),
-            paaVegneAv = jwt?.getPaaVegneAvFraToken(),
-        ).let { innendoersBrukResponsDto ->
-            return ResponseEntity.status(HttpStatus.CREATED).body(innendoersBrukResponsDto)
+        innendoersBrukDto.behandledeOmraader?.let { featureCollection ->
+            featureCollectionValidator.validate(featureCollection)
+        }.run {
+            innlesingService.postInnendoersBruk(
+                innendoersBrukDto = innendoersBrukDto,
+                innsender = jwt?.getInnsenderFraTokenEllerNull(),
+                paaVegneAv = jwt?.getPaaVegneAvFraToken(),
+            ).let { innendoersBrukResponsDto ->
+                return ResponseEntity.status(HttpStatus.CREATED).body(innendoersBrukResponsDto)
+            }
         }
 
     @Operation(
@@ -89,12 +99,16 @@ class PlantevernjournalInnlesingController(
             description = "Data for å plantevernjournal for utendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody utendoersBrukDto: UtendoersBrukDto,
     ): ResponseEntity<UtendoersBrukResponsDto> =
-        innlesingService.postUtendoersBruk(
-            innsender = jwt?.getInnsenderFraTokenEllerNull(),
-            paaVegneAv = jwt?.getPaaVegneAvFraToken(),
-            utendoersBrukDto = utendoersBrukDto,
-        ).let { utendoersBrukResponsDto ->
-            return ResponseEntity.status(HttpStatus.CREATED).body(utendoersBrukResponsDto)
+        featureCollectionValidator.validate(
+            utendoersBrukDto.behandledeOmraader,
+        ).run {
+            innlesingService.postUtendoersBruk(
+                innsender = jwt?.getInnsenderFraTokenEllerNull(),
+                paaVegneAv = jwt?.getPaaVegneAvFraToken(),
+                utendoersBrukDto = utendoersBrukDto,
+            ).let { utendoersBrukResponsDto ->
+                return ResponseEntity.status(HttpStatus.CREATED).body(utendoersBrukResponsDto)
+            }
         }
 
     @Operation(
@@ -169,7 +183,7 @@ class PlantevernjournalInnlesingController(
 
     private fun Jwt.getPaaVegneAvFraToken() =
         (claims["authorization_details"]?.let {
-            objectMapper.convertValue(it, object : TypeReference<List<AuthorizationDetail>>() {})}[0]
-            ?.systemUserOrg?.let {id as String})?.substringAfter(":")
+            objectMapper.convertValue(it, object : TypeReference<List<AuthorizationDetail>>() {})
+        }[0]?.systemUserOrg?.let { id as String })?.substringAfter(":")
 
 }
