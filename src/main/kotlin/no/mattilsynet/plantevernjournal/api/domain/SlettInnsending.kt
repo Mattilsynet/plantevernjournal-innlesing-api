@@ -11,4 +11,6 @@ data class SlettInnsending (
     val id: UUID,
 
     val innsender: String?,
+
+    val paaVegneAv: String?,
 )
