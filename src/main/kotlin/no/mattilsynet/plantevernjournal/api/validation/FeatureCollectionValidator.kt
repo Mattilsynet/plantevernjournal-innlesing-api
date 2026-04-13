@@ -6,6 +6,7 @@ import org.wololo.geojson.FeatureCollection
 import org.wololo.geojson.Geometry
 import org.wololo.geojson.LineString
 import org.wololo.geojson.MultiLineString
+import org.wololo.geojson.MultiPolygon
 import org.wololo.geojson.Point
 import org.wololo.geojson.Polygon
 
@@ -35,9 +36,10 @@ class FeatureCollectionValidator {
             is LineString -> validateLineString(geometry, index)
             is MultiLineString -> validateMultiLineString(geometry, index)
             is Polygon -> validatePolygon(geometry, index)
+            is MultiPolygon -> validateMultiPolygon(geometry, index)
 
             else -> throw IllegalArgumentException(
-                "Feature[$index] has unsupported geometry type: ${geometry.javaClass.simpleName}"
+                "Feature[$index] har en geometritype som ikke støttes: ${geometry.javaClass.simpleName}"
             )
         }
     }
@@ -73,8 +75,28 @@ class FeatureCollectionValidator {
         }
 
         rings.forEachIndexed { ringIndex, ring ->
-            require(ring.size >= 4) {
-                "Feature[$index] Polygon ring[$ringIndex] må ha minst 4 punkter"
+            sjekkPolygonverdier(ring, index, ringIndex)
+        }
+    }
+
+    private fun sjekkPolygonverdier(ring: Array<out DoubleArray>, index: Int, ringIndex: Int) {
+        require(ring.size >= 4) {
+            "Feature[$index] Polygon ring[$ringIndex] må ha minst 4 punkter"
+        }
+        require(ring.first().contentEquals(ring.last())) {
+            "Feature[$index] Polygon ring[$ringIndex] må være lukket"
+        }
+    }
+
+    private fun validateMultiPolygon(polygon: MultiPolygon, index: Int) {
+        val rings = polygon.coordinates
+        require(rings != null && rings.size >= 2) {
+            "Feature[$index] MultiPolygon må ha minst to ringer"
+        }
+
+        rings.forEachIndexed { ringIndex, ring ->
+            ring.forEachIndexed { index, arrays ->
+                sjekkPolygonverdier(arrays, index, ringIndex)
             }
         }
     }
