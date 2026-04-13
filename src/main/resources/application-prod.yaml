@@ -4,8 +4,3 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://maskinporten.no/
-
-logging:
-  level:
-    org.springframework.security: TRACE
-    org.springframework.security.oauth2.server.resource.web.server: TRACE
