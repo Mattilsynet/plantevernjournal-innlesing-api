@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import no.mattilsynet.plantevernjournal.api.controllers.models.FeilmeldingModellDto
+import org.slf4j.LoggerFactory
 import org.springframework.core.codec.DecodingException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,6 +19,8 @@ import org.springframework.web.server.ServerWebInputException
 @RestControllerAdvice
 class FeilhaandteringControllerAdvice {
 
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     @ExceptionHandler(IllegalArgumentException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ApiResponses(
@@ -28,13 +31,16 @@ class FeilhaandteringControllerAdvice {
             )]
     )
     fun handleIllegalArgumentException(ex: IllegalArgumentException): ResponseEntity<FeilmeldingModellDto> =
-        ResponseEntity(
-            FeilmeldingModellDto(
-                melding = ex.message,
-                status = HttpStatus.BAD_REQUEST.value(),
-            ),
-            HttpStatus.BAD_REQUEST,
-        )
+        logger.warn("IllegalArgumentException", ex)
+            .run {
+                ResponseEntity(
+                    FeilmeldingModellDto(
+                        melding = ex.message,
+                        status = HttpStatus.BAD_REQUEST.value(),
+                    ),
+                    HttpStatus.BAD_REQUEST,
+                )
+            }
 
     @ExceptionHandler(NoSuchElementException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -46,13 +52,16 @@ class FeilhaandteringControllerAdvice {
             )]
     )
     fun handleNoSuchElementException(ex: NoSuchElementException): ResponseEntity<FeilmeldingModellDto> =
-        ResponseEntity(
-            FeilmeldingModellDto(
-                melding = ex.message,
-                status = HttpStatus.BAD_REQUEST.value(),
-            ),
-            HttpStatus.BAD_REQUEST,
-        )
+        logger.warn("NoSuchElementException", ex)
+            .run {
+                ResponseEntity(
+                    FeilmeldingModellDto(
+                        melding = ex.message,
+                        status = HttpStatus.BAD_REQUEST.value(),
+                    ),
+                    HttpStatus.BAD_REQUEST,
+                )
+            }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -65,13 +74,16 @@ class FeilhaandteringControllerAdvice {
     )
     fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException)
             : ResponseEntity<FeilmeldingModellDto> =
-        ResponseEntity(
-            FeilmeldingModellDto(
-                melding = ex.message,
-                status = HttpStatus.BAD_REQUEST.value(),
-            ),
-            HttpStatus.BAD_REQUEST,
-        )
+        logger.warn("MethodArgumentNotValidException", ex)
+            .run {
+                ResponseEntity(
+                    FeilmeldingModellDto(
+                        melding = ex.message,
+                        status = HttpStatus.BAD_REQUEST.value(),
+                    ),
+                    HttpStatus.BAD_REQUEST,
+                )
+            }
 
     @ExceptionHandler(WebExchangeBindException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -84,15 +96,18 @@ class FeilhaandteringControllerAdvice {
     )
     fun handleWebExchangeBindException(ex: WebExchangeBindException)
             : ResponseEntity<FeilmeldingModellDto> =
-        ResponseEntity(
-            FeilmeldingModellDto(
-                melding = ex.bindingResult.fieldErrors.map {
-                    "${it.field}: ${it.defaultMessage}"
-                }.toList().joinToString(", "),
-                status = HttpStatus.BAD_REQUEST.value(),
-            ),
-            HttpStatus.BAD_REQUEST,
-        )
+        logger.warn("WebExchangeBindException", ex)
+            .run {
+                ResponseEntity(
+                    FeilmeldingModellDto(
+                        melding = ex.bindingResult.fieldErrors.map {
+                            "${it.field}: ${it.defaultMessage}"
+                        }.toList().joinToString(", "),
+                        status = HttpStatus.BAD_REQUEST.value(),
+                    ),
+                    HttpStatus.BAD_REQUEST,
+                )
+            }
 
     @ExceptionHandler(ServerWebInputException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -104,6 +119,7 @@ class FeilhaandteringControllerAdvice {
             )]
     )
     fun handleServerWebInputException(ex: ServerWebInputException): ResponseEntity<FeilmeldingModellDto> {
+        logger.warn("ServerWebInputException", ex)
         return ResponseEntity(
             FeilmeldingModellDto(
                 melding = getFeilmelding(ex),
