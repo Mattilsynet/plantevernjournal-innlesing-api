@@ -2,11 +2,11 @@
 run kodeverk.http
 
 ### frø og formeringsmateriale
-run plantevernjournal-froe-formering.http
+run froe-formering.http
 
 ### innendørs
-run plantevernjournal-innendoers.http
+run innendoers.http
 
 ### utendørs
-run plantevernjournal-utendoers.http
+run utendoers.http
 

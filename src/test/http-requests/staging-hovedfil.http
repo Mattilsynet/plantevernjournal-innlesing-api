@@ -1,0 +1,13 @@
+### Hovedfil for å kjøre requests i stagingmiljøet
+
+### kodeverk
+run staging-kodeverk.http
+
+### frø og formeringsmateriale
+run staging-froe-formering.http
+
+### innendørs
+run staging-innendoers.http
+
+### utendørs
+run staging-utendoers.http

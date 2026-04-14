@@ -1,0 +1,129 @@
+@token = eyJraWQiOiJiZFhMRVduRGpMSGpwRThPZnl5TUp4UlJLbVo3MUxCOHUxeUREbVBpdVQwIiwiYWxnIjoiUlMyNTYifQ.eyJzY29wZSI6Im1hdHRpbHN5bmV0OnBsYW50ZXZlcm4uam91cm5hbC5pbm5sZXNpbmciLCJpc3MiOiJodHRwczovL3Rlc3QubWFza2lucG9ydGVuLm5vLyIsImNsaWVudF9hbXIiOiJwcml2YXRlX2tleV9qd3QiLCJ0b2tlbl90eXBlIjoiQmVhcmVyIiwiZXhwIjoxNzc2MTY3MzY4LCJpYXQiOjE3NzYxNjcwNjgsImNsaWVudF9pZCI6ImFlYTBlOTE5LWY4ZjEtNDU1MS1iM2JiLTY4Y2VmOGNlNTNmNyIsImp0aSI6Il9qajBkbUo2cTMyUVlja3hlQlRFQi1yeEJwX1MwLVZtMXRlN0lmTXV6WXMiLCJjb25zdW1lciI6eyJhdXRob3JpdHkiOiJpc282NTIzLWFjdG9yaWQtdXBpcyIsIklEIjoiMDE5Mjo5ODUzOTkwNzcifX0.eHPR8ObeJkzV6SPevIS64jm9xf3jWR9868xcLiukAsf-MjPQROVdfTlJWXBlf3oKEf9a-_4se6pOosNOwMgj9IhwynwKbQxJ8UHhfLDsOVsoOSJ3XBwaZr68OPYGFc0XHdFwy75r6TbEuE0UFJsFlLE65H_I_LbracRYMCbNSuGC5Or1e1eyJ751YaGG1YJ6zLd9IskcWFVH05_sdcBJa5lGmgeyeXUJVASEiZ4J0Zw0MHHdsfyWfQOuhN95vzdX_4CEucmJQ3-90iCBXKxUo_Ia3xxs8_MgCuGNnoEHerXWzK1Ul92Xf9BY61NNN2NVQgacO5Tr9Wq8_Du7fTSsE10t6njS2Oe8nk0LmUWJnJPMnttZHq5PXFlXWtkFVwbznGm6rBIGN5-8n7IHd5B5PK6NcBD8feCP9t2FfMOLNRNDmEgQ_olme5lzxM2qq5h4pIg1IED75r6r73G3ciz4BQfjU3lwSyCeGFF-t36RFdAygMElnXMt313lVbj1dsP3
+
+### Post plantevernjournal for utendørs bruk
+POST https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/plantevernjournal/innlesing/v1/utendoersbruk
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "arealBehandletOmraade": {
+    "enhet": "DEKAR",
+    "verdi": 65
+  },
+  "behandledeVekster": [
+    {
+      "bbchFase": "05",
+      "eppoKode": "1PRUNG",
+      "partinummer": 2,
+      "sort": "Magnolia"
+    },
+    {
+      "bbchFase": "01",
+      "eppoKode": "PRULA",
+      "partinummer": 27,
+      "sort": "tja"
+    }
+  ],
+  "behandler": {
+    "etternavn": "Hansen",
+    "fornavn": "Tine"
+  },
+  "behandledeOmraader": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "MultiPolygon",
+          "coordinates":
+          [
+            [
+              [
+                [10.744249, 59.920790],
+                [10.742875, 59.921951],
+                [10.745708, 59.921521],
+                [10.744249, 59.920790]
+              ]
+            ],
+            [
+              [
+                [10.744249, 59.920790],
+                [10.742875, 59.921951],
+                [10.745708, 59.921521],
+                [10.744249, 59.9207]
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            10.742875,
+            59.921951
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [10.744249, 59.920790],
+            [10.742875, 59.921951]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [10.744249, 59.920790],
+              [10.742875, 59.921951],
+              [10.745708, 59.921521],
+              [10.744249, 59.920790]
+            ]
+          ]
+        }
+      }
+      ]
+  },
+  "bruksomraade": "JORDBRUK",
+  "organisasjonsnummerEier": "987654123",
+  "organisasjonsnummerSproeyter": "897456875",
+  "plantevernmiddel": [
+    {
+      "dosering": {
+        "enhet": "LITER_PER_KILO",
+        "verdi": 34
+      },
+      "registreringsnummer": "12345"
+    }
+  ],
+  "startTid": "2024-10-18T12:00:00"
+}
+
+> {%
+    client.test("Innlesing av utendørsbruk gikk bra", function () {
+        client.assert(response.status === 201, "Status er ikke 201");
+    });
+
+    const id = jsonPath(response.body, '$.id')
+    client.global.set("utendoersId", id)
+%}
+
+### Delete plantevernjournal for utendørs bruk
+DELETE https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/plantevernjournal/innlesing/v1/utendoersbruk/{{utendoersId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+> {%
+    client.test("Sletting av utendørsbruk gikk bra", function () {
+        client.assert(response.status === 204, "Status er ikke 204");
+    });
+
+%}
