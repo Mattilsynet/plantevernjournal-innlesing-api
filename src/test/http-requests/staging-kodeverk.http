@@ -1,0 +1,11 @@
+### Hent kodeverk fra stagingmiljøet
+
+### Hent bruksområder
+GET https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/plantevernjournal/kodeverk/v1/bruksomraade
+
+### Hent enheter
+GET https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/plantevernjournal/kodeverk/v1/enhet
+
+### Hent geometrityper
+GET https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/plantevernjournal/kodeverk/v1/geometritype
+
