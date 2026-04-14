@@ -33,7 +33,7 @@ class FeilhaandteringControllerAdvice {
     fun handleIllegalArgumentException(ex: IllegalArgumentException): ResponseEntity<FeilmeldingModellDto> =
         logger.warn("IllegalArgumentException", ex)
             .run {
-                ResponseEntity(
+                return@run ResponseEntity(
                     FeilmeldingModellDto(
                         melding = ex.message,
                         status = HttpStatus.BAD_REQUEST.value(),
@@ -54,7 +54,7 @@ class FeilhaandteringControllerAdvice {
     fun handleNoSuchElementException(ex: NoSuchElementException): ResponseEntity<FeilmeldingModellDto> =
         logger.warn("NoSuchElementException", ex)
             .run {
-                ResponseEntity(
+                return@run ResponseEntity(
                     FeilmeldingModellDto(
                         melding = ex.message,
                         status = HttpStatus.BAD_REQUEST.value(),
@@ -76,7 +76,7 @@ class FeilhaandteringControllerAdvice {
             : ResponseEntity<FeilmeldingModellDto> =
         logger.warn("MethodArgumentNotValidException", ex)
             .run {
-                ResponseEntity(
+                return@run ResponseEntity(
                     FeilmeldingModellDto(
                         melding = ex.message,
                         status = HttpStatus.BAD_REQUEST.value(),
@@ -98,7 +98,7 @@ class FeilhaandteringControllerAdvice {
             : ResponseEntity<FeilmeldingModellDto> =
         logger.warn("WebExchangeBindException", ex)
             .run {
-                ResponseEntity(
+                return@run ResponseEntity(
                     FeilmeldingModellDto(
                         melding = ex.bindingResult.fieldErrors.map {
                             "${it.field}: ${it.defaultMessage}"
