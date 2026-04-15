@@ -12,5 +12,5 @@ data class AuthorizationDetail(
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class SystemUserOrg(
     @JsonProperty("ID")
-    val id: String,
+    val systemOrgId: String,
 )

@@ -184,6 +184,5 @@ class PlantevernjournalInnlesingController(
     private fun Jwt.getPaaVegneAvFraToken() =
         (claims["authorization_details"]?.let {
             objectMapper.convertValue(it, object : TypeReference<List<AuthorizationDetail>>() {})
-        }[0]?.systemUserOrg?.let { id as String })?.substringAfter(":")
-
+        }[0]?.systemUserOrg?.systemOrgId as String).substring(5)
 }
