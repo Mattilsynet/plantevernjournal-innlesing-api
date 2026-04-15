@@ -43,7 +43,7 @@ Registrering og administrering av ditt sluttbrukersystem hos Altinn skjer via [R
 
 Flyten er dokumentert hos [Altinn - "Metode A: Leverandørstyrt Opprettelse"](https://docs.altinn.studio/nb/authorization/guides/system-vendor/system-user/systemuserrequest/#1-opprette-systembruker-for-eget-system).
 
-Merk at når du oppretter klienten, må du enten basere deg på en rettighet (`rights`) eller tilgangspakke (`accessPackages`) som sluttbrukeren må ha når vedkommende samtykker til å dele data via ditt sluttbrukersystem. Et eksempel på en tilgangspakke er `urn:altinn:accesspackage:jordbruk`.
+Merk at når du oppretter klienten, må du enten basere deg på en rettighet (`rights`) eller tilgangspakke (`accessPackages`) som sluttbrukeren må ha når vedkommende samtykker til å dele data via ditt sluttbrukersystem. Vi har laget en ressurs (`rights`) spesifikt for digital plantevernjournal med id `mat-plantevern-journal` som kan benyttes.
 
 ### Steg 3: Registrere samtykke fra sluttbruker inn i Altinns systemregister
 **🔄 Per sluttbruker - gjøres én gang per sluttbruker**
