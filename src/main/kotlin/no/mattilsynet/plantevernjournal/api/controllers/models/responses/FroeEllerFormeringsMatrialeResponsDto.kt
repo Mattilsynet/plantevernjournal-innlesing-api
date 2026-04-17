@@ -51,7 +51,11 @@ data class FroeEllerFormeringsMatrialeResponsDto(
     val id: UUID,
 
     @Schema(
-        description = "Når journalføringen ble lest inn", required = true,
+        description = "Når journalføringen ble lest inn. Tidspunktet er i ISO-8601-format i UTC (Z).",
+        required = true,
+        type = "string",
+        format = "date-time",
+        example = "2024-01-15T10:30:00Z",
     )
     val opprettet: Instant,
 
