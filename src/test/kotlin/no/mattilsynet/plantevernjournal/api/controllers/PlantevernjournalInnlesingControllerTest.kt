@@ -105,7 +105,7 @@ internal class PlantevernjournalInnlesingControllerTest {
             .expectStatus().isCreated
 
         // Then:
-        verify(innlesingService).postFroeEllerFormeringsMatriale(
+        verify(innlesingService).postFroeEllerFormeringsMateriale(
             froeEllerFormeringsMatrialeDto = any(),
             innsender = anyOrNull(),
             paaVegneAv = anyOrNull(),

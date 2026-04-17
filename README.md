@@ -68,6 +68,8 @@ Gyldige geometrityper er gitt [her](src/main/kotlin/no/mattilsynet/plantevernjou
 
 I GeoJSON er det mulig å sende inn properties, det bruker vi ikke per i dag.
 
+Validering av geometri er beskrevet [her](dokumentasjon/validering.md).
+
 
 ### BBCH/vekststadier
 Det skal angis vekststadium for vekstene som sprøytes, og til det skal det brukes BBCH-skala. [Her](https://en.wikipedia.org/wiki/BBCH-scale) kan man lese litt om hva dette betyr. Vi kommer tilbake til akkurat hvordan dette skal angis.

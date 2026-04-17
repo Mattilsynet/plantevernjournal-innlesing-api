@@ -9,7 +9,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain
 
 @Configuration
 @EnableWebFluxSecurity
-@Profile("local", "dev")
+@Profile("local", "dev", "test")
 class SecurityConfigPermitAll {
     @Bean
     fun securityFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain =

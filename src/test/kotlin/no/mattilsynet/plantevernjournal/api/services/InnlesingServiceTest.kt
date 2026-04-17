@@ -35,7 +35,7 @@ internal class InnlesingServiceTest {
         val froeEllerFormeringsMatrialeDtoMock = createFroeEllerFormeringsMaterialeDtoMock()
 
         // When:
-        innlesingService.postFroeEllerFormeringsMatriale(
+        innlesingService.postFroeEllerFormeringsMateriale(
             froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDtoMock,
             innsender = "innsender",
             paaVegneAv = "paaVegneAv",

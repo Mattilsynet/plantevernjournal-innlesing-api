@@ -47,35 +47,53 @@ class FeatureCollectionValidator {
     // --- Geometry validators ---
 
     private fun validatePoint(point: Point, index: Int) {
-        point.coordinates
-            ?: throw IllegalArgumentException("Feature[$index] Point mangler koordinater")
-
+        require(point.coordinates != null) {
+            "Feature[$index] Point mangler koordinater"
+        }
+        require(point.coordinates.size == 2) {
+            "Feature[$index] Point må ha gyldig koordinat"
+        }
     }
 
     private fun validateLineString(line: LineString, index: Int) {
-        val koordinater = line.coordinates
-        require(koordinater != null && koordinater.size >= 2) {
+        val punkter = line.coordinates
+        require(punkter != null && punkter.size >= 2) {
             "Feature[$index] LineString må ha minst to punkter"
+        }
+
+        sjekkLinjepunkterRiktig(punkter = punkter, index = index)
+    }
+
+    private fun sjekkLinjepunkterRiktig(punkter: Array<out DoubleArray>, index: Int) {
+        punkter.forEachIndexed { punktIndex, punkt ->
+            require(punkt.size == 2) {
+                "Linje[$punktIndex] i Feature[$index] LineString må ha gyldig koordinat"
+            }
         }
     }
 
     private fun validateMultiLineString(line: MultiLineString, index: Int) {
-        val koordinater = line.coordinates
-        require(koordinater != null &&
-                koordinater.size >= 2 &&
-                koordinater.all { it.size >= 2 }) {
+        val linjer = line.coordinates
+        require(
+            linjer != null &&
+                    linjer.size >= 2 &&
+                    linjer.all { it.size >= 2 }) {
             "Feature[$index] MultiLineString må ha minst to punkter i minst to linjer"
+        }
+
+        linjer.forEachIndexed { linjerIndex, punkter ->
+            sjekkLinjepunkterRiktig(punkter = punkter, index = linjerIndex)
         }
     }
 
     private fun validatePolygon(polygon: Polygon, index: Int) {
         val rings = polygon.coordinates
-        require(rings != null && rings.isNotEmpty()) {
-            "Feature[$index] Polygon må ha minst en ring"
+        require(rings != null && rings.size == 1) {
+            "Feature[$index] Polygon må ha en ring"
         }
 
         rings.forEachIndexed { ringIndex, ring ->
-            sjekkPolygonverdier(ring, index, ringIndex)
+            sjekkPolygonverdier(ring = ring, index = index, ringIndex = ringIndex)
         }
     }
 
@@ -86,6 +104,8 @@ class FeatureCollectionValidator {
         require(ring.first().contentEquals(ring.last())) {
             "Feature[$index] Polygon ring[$ringIndex] må være lukket"
         }
+
+        sjekkLinjepunkterRiktig(punkter = ring, index = ringIndex)
     }
 
     private fun validateMultiPolygon(polygon: MultiPolygon, index: Int) {
@@ -96,7 +116,7 @@ class FeatureCollectionValidator {
 
         rings.forEachIndexed { ringIndex, ring ->
             ring.forEachIndexed { index, arrays ->
-                sjekkPolygonverdier(arrays, index, ringIndex)
+                sjekkPolygonverdier(ring = arrays, index = index, ringIndex = ringIndex)
             }
         }
     }

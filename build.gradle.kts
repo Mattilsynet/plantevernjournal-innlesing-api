@@ -11,7 +11,6 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
-
 val mockitoAgent = configurations.create("mockitoAgent")
 
 repositories {

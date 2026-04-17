@@ -56,7 +56,7 @@ class PlantevernjournalInnlesingController(
         froeEllerFormeringsMatrialeDto.behandledeOmraader?.let { featureCollection ->
             featureCollectionValidator.validate(featureCollection)
         }.run {
-            innlesingService.postFroeEllerFormeringsMatriale(
+            innlesingService.postFroeEllerFormeringsMateriale(
                 froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDto,
                 innsender = jwt?.getInnsenderFraTokenEllerNull(),
                 paaVegneAv = jwt?.getPaaVegneAvFraToken(),
@@ -114,7 +114,7 @@ class PlantevernjournalInnlesingController(
     @Operation(
         description = "Endepunkt for å slette informasjon som er sendt inn om utendørs sprøyting",
     )
-    @DeleteMapping("/utendoersbruk/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @DeleteMapping("/utendoersbruk/{id}")
     fun deleteUtendoersBruk(
         @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
@@ -133,7 +133,7 @@ class PlantevernjournalInnlesingController(
     @Operation(
         description = "Endepunkt for å slette informasjon som er sendt inn om innendørs sprøyting",
     )
-    @DeleteMapping("/innendoersbruk/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @DeleteMapping("/innendoersbruk/{id}")
     fun deleteInnendoersBruk(
         @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
@@ -154,7 +154,7 @@ class PlantevernjournalInnlesingController(
     @Operation(
         description = "Endepunkt for å slette informasjon som er sendt inn om sprøyting av frø og formeringmateriale",
     )
-    @DeleteMapping("/formeringsmateriale/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @DeleteMapping("/formeringsmateriale/{id}")
     fun deleteFroeEllerFormeringsMateriale(
         @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
