@@ -1,19 +1,27 @@
 spring:
+  cloud:
+    gcp:
+      secretmanager:
+        enabled: false
+      core:
+        enabled: false
+      sql:
+        enabled: false
   flyway:
     enabled: true
   profiles:
     active: test
   application:
     name: digiplant-api
+  web:
+    error:
+      include-message: always
 
 eppo:
-  token: tulletoken
-  uri: "http://tulleuri.com"
+  api:
+    token: tulletoken
+    uri: "http://tulleuri.com"
 
 nats:
   url: test
   creds: test
-
-server:
-  error:
-    include-message: always
