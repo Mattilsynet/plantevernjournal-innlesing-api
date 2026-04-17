@@ -6,10 +6,10 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.BehandletVekstDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.PlantevernmiddelDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.responses.UtendoersBrukResponsDto
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
-import no.mattilsynet.plantevernjournal.api.shared.serializers.LocalDateTimeSerializer
+import no.mattilsynet.plantevernjournal.api.shared.serializers.JavaInstantSerializer
 import no.mattilsynet.plantevernjournal.api.shared.serializers.UUIDSerializer
 import org.wololo.geojson.FeatureCollection
-import java.time.LocalDateTime
+import java.time.Instant
 import java.util.UUID
 import kotlin.uuid.ExperimentalUuidApi
 
@@ -34,8 +34,8 @@ data class UtendoersBruk(
 
     val innsender: String?,
 
-    @Serializable(with = LocalDateTimeSerializer::class)
-    val opprettet: LocalDateTime = LocalDateTime.now(),
+    @Serializable(with = JavaInstantSerializer::class)
+    val opprettet: Instant,
 
     val organisasjonsnummerEier: String,
 
@@ -45,8 +45,8 @@ data class UtendoersBruk(
 
     val plantevernmiddel: List<Plantevernmiddel>,
 
-    @Serializable(with = LocalDateTimeSerializer::class)
-    val startTid: LocalDateTime,
+    @Serializable(with = JavaInstantSerializer::class)
+    val startTid: Instant,
 ) {
 
     @ExperimentalSerializationApi

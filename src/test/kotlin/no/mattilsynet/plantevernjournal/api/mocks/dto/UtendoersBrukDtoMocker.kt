@@ -1,6 +1,5 @@
 package no.mattilsynet.plantevernjournal.api.mocks.dto
 
-import java.time.LocalDateTime
 import no.mattilsynet.plantevernjournal.api.controllers.models.UtendoersBrukDto
 import no.mattilsynet.plantevernjournal.api.mocks.dto.BehandletVekstDtoMocker.createBehandletVekstDtoMock
 import no.mattilsynet.plantevernjournal.api.mocks.dto.MengdeDtoMocker.createMengdeDtoMock
@@ -10,6 +9,7 @@ import no.mattilsynet.plantevernjournal.api.mocks.geometry.FeatureCollectionMock
 import no.mattilsynet.plantevernjournal.api.mocks.geometry.FeatureMocker.createFeatureMock
 import no.mattilsynet.plantevernjournal.api.mocks.geometry.PointMocker.createPointMock
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
+import java.time.Instant
 
 object UtendoersBrukDtoMocker {
 
@@ -24,7 +24,7 @@ object UtendoersBrukDtoMocker {
             organisasjonsnummerEier = "987654321",
             organisasjonsnummerSproeyter = "987461232",
             plantevernmiddel = listOf(createPlantevernmiddelDtoMock()),
-            startTid = LocalDateTime.now(),
+            startTid = Instant.now(),
         )
 
 }

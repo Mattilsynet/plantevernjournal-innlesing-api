@@ -7,8 +7,8 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.PersonDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.PlantevernmiddelDto
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
 import org.wololo.geojson.FeatureCollection
+import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.UUID
 
 
@@ -51,9 +51,13 @@ data class FroeEllerFormeringsMatrialeResponsDto(
     val id: UUID,
 
     @Schema(
-        description = "Når journalføringen ble lest inn", required = true,
+        description = "Når journalføringen ble lest inn. Tidspunktet er i ISO-8601-format i UTC (Z).",
+        required = true,
+        type = "string",
+        format = "date-time",
+        example = "2024-01-15T10:30:00Z",
     )
-    val opprettet: LocalDateTime,
+    val opprettet: Instant,
 
     @Schema(description = "Organisasjonsnummer til den som eier arealet det ble sprøytet på", required = true)
     val organisasjonsnummerEier: String,
