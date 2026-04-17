@@ -9,6 +9,8 @@ import no.mattilsynet.plantevernjournal.api.services.NatsService
 import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import no.mattilsynet.virtualnats.virtualnatsspring.SpringVirtualNatsStarter
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.any
+import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.springframework.beans.factory.annotation.Autowired
@@ -62,9 +64,9 @@ internal class PlantevernjournalInnlesingControllerTest {
 
         // Then:
         verify(innlesingService).postUtendoersBruk(
-            innsender = null,
-            paaVegneAv = null,
-            utendoersBrukDto = utendoersBrukDtoMock,
+            innsender = anyOrNull(),
+            paaVegneAv = anyOrNull(),
+            utendoersBrukDto = any(),
         )
     }
 
@@ -83,9 +85,9 @@ internal class PlantevernjournalInnlesingControllerTest {
 
         // Then:
         verify(innlesingService, times(1)).postInnendoersBruk(
-            innendoersBrukDto = innendoersBrukDtoMock,
-            innsender = null,
-            paaVegneAv = null,
+            innendoersBrukDto = any(),
+            innsender = anyOrNull(),
+            paaVegneAv = anyOrNull(),
         )
     }
 
@@ -104,9 +106,9 @@ internal class PlantevernjournalInnlesingControllerTest {
 
         // Then:
         verify(innlesingService).postFroeEllerFormeringsMateriale(
-            froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDtoMock,
-            innsender = null,
-            paaVegneAv = null,
+            froeEllerFormeringsMatrialeDto = any(),
+            innsender = anyOrNull(),
+            paaVegneAv = anyOrNull(),
         )
     }
 
