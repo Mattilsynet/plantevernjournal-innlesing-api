@@ -56,7 +56,7 @@ class PlantevernjournalInnlesingController(
         froeEllerFormeringsMatrialeDto.behandledeOmraader?.let { featureCollection ->
             featureCollectionValidator.validate(featureCollection)
         }.run {
-            innlesingService.postFroeEllerFormeringsMatriale(
+            innlesingService.postFroeEllerFormeringsMateriale(
                 froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDto,
                 innsender = jwt?.getInnsenderFraTokenEllerNull(),
                 paaVegneAv = jwt?.getPaaVegneAvFraToken(),

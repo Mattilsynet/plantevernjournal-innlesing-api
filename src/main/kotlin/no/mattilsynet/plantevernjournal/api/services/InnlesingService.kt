@@ -17,7 +17,7 @@ class InnlesingService(
     private val natsService: NatsService,
 ) {
 
-    fun postFroeEllerFormeringsMatriale(
+    fun postFroeEllerFormeringsMateriale(
         froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
         innsender: String?,
         paaVegneAv: String?,
