@@ -12,6 +12,8 @@ java {
     }
 }
 
+val mockitoAgent = configurations.create("mockitoAgent")
+
 repositories {
     gradlePluginPortal()
     mavenCentral()
@@ -67,6 +69,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:6.3.0")
+    mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
+
+    testImplementation("org.springframework.boot:spring-boot-webtestclient")
 }
 
 kotlin {

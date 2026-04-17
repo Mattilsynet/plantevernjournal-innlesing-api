@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Pattern
 import no.mattilsynet.plantevernjournal.api.domain.FroeEllerFormeringsMatriale
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
 import org.wololo.geojson.FeatureCollection
+import java.time.Instant
 import java.time.LocalDate
 
 
@@ -73,6 +74,7 @@ data class FroeEllerFormeringsMatrialeDto(
             bruksomraade = bruksomraade,
             egenReferanse = egenReferanse,
             innsender = innsender,
+            opprettet = Instant.now(),
             organisasjonsnummerEier = organisasjonsnummerEier,
             organisasjonsnummerSproeyter = organisasjonsnummerSproeyter,
             paaVegneAv = paaVegneAv,

@@ -5,12 +5,12 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.BehandletVekstDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.PlantevernmiddelDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.responses.InnendoersBrukResponsDto
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
+import no.mattilsynet.plantevernjournal.api.shared.serializers.JavaInstantSerializer
 import no.mattilsynet.plantevernjournal.api.shared.serializers.LocalDateSerializer
-import no.mattilsynet.plantevernjournal.api.shared.serializers.LocalDateTimeSerializer
 import no.mattilsynet.plantevernjournal.api.shared.serializers.UUIDSerializer
 import org.wololo.geojson.FeatureCollection
+import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.UUID
 
 @kotlinx.serialization.ExperimentalSerializationApi
@@ -38,8 +38,8 @@ data class InnendoersBruk(
 
     val innsender: String?,
 
-    @Serializable(with = LocalDateTimeSerializer::class)
-    val opprettet: LocalDateTime = LocalDateTime.now(),
+    @Serializable(with = JavaInstantSerializer::class)
+    val opprettet: Instant,
 
     val organisasjonsnummerEier: String,
 

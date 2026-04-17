@@ -7,7 +7,7 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.PersonDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.PlantevernmiddelDto
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
 import org.wololo.geojson.FeatureCollection
-import java.time.LocalDateTime
+import java.time.Instant
 import java.util.UUID
 
 @Schema(
@@ -47,7 +47,7 @@ data class UtendoersBrukResponsDto(
     @Schema(
         description = "Når journalføringen ble lest inn", required = true,
     )
-    val opprettet: LocalDateTime,
+    val opprettet: Instant,
 
     @Schema(description = "Organisasjonsnummer til den som eier arealet det ble sprøytet på", required = true)
     val organisasjonsnummerEier: String,
@@ -63,5 +63,5 @@ data class UtendoersBrukResponsDto(
     @Schema(
         description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true,
     )
-    val startTid: LocalDateTime,
+    val startTid: Instant,
 )

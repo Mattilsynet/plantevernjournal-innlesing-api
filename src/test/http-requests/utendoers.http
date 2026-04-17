@@ -102,7 +102,7 @@ Content-Type: application/json
       "registreringsnummer": "12345"
     }
   ],
-  "startTid": "2024-10-18T12:00:00"
+  "startTid": "2024-10-18T12:00:00Z"
 }
 
 > {%

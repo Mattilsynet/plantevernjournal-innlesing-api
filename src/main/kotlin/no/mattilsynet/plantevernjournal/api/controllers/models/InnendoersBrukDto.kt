@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Pattern
 import no.mattilsynet.plantevernjournal.api.domain.InnendoersBruk
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
 import org.wololo.geojson.FeatureCollection
+import java.time.Instant
 import java.time.LocalDate
 
 @Schema(
@@ -79,6 +80,7 @@ data class InnendoersBrukDto(
             bygningsstoerrelse = bygningsstoerrelse.toMengde(),
             egenReferanse = egenReferanse,
             innsender = innsender,
+            opprettet = Instant.now(),
             organisasjonsnummerEier = organisasjonsnummerEier,
             organisasjonsnummerSproeyter = organisasjonsnummerSproeyter,
             paaVegneAv = paaVegneAv,

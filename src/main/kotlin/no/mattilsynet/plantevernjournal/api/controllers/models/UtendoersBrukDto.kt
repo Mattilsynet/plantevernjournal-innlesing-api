@@ -6,7 +6,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import no.mattilsynet.plantevernjournal.api.domain.UtendoersBruk
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
 import org.wololo.geojson.FeatureCollection
-import java.time.LocalDateTime
+import java.time.Instant
 
 @Schema(
     description = "Journalfelter for utendørs bruk av plantevernmidler",
@@ -55,7 +55,7 @@ data class UtendoersBrukDto(
     @Schema(
         description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true,
     )
-    val startTid: LocalDateTime,
+    val startTid: Instant,
 ) {
     @ExperimentalSerializationApi
     @kotlin.uuid.ExperimentalUuidApi
@@ -71,6 +71,7 @@ data class UtendoersBrukDto(
             bruksomraade = bruksomraade,
             egenReferanse = egenReferanse,
             innsender = innsender,
+            opprettet = Instant.now(),
             organisasjonsnummerEier = organisasjonsnummerEier,
             organisasjonsnummerSproeyter = organisasjonsnummerSproeyter,
             paaVegneAv = paaVegneAv,
