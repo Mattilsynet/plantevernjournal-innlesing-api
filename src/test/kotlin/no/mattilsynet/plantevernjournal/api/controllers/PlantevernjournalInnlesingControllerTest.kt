@@ -9,13 +9,12 @@ import no.mattilsynet.plantevernjournal.api.services.NatsService
 import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import no.mattilsynet.virtualnats.virtualnatsspring.SpringVirtualNatsStarter
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.anyOrNull
-import org.mockito.kotlin.eq
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient
+import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -84,9 +83,9 @@ internal class PlantevernjournalInnlesingControllerTest {
 
         // Then:
         verify(innlesingService, times(1)).postInnendoersBruk(
-            innendoersBrukDto = eq(innendoersBrukDtoMock),
-            innsender = anyOrNull(),
-            paaVegneAv = anyOrNull(),
+            innendoersBrukDto = innendoersBrukDtoMock,
+            innsender = null,
+            paaVegneAv = null,
         )
     }
 
@@ -120,6 +119,7 @@ internal class PlantevernjournalInnlesingControllerTest {
         webTestClient.delete()
             .uri("/plantevernjournal/innlesing/v1/utendoersbruk/$id")
             .acceptCharset(StandardCharsets.UTF_8)
+            .accept(MediaType.APPLICATION_JSON)
             .exchange()
             .expectStatus().isNoContent
 
@@ -140,7 +140,7 @@ internal class PlantevernjournalInnlesingControllerTest {
             .expectStatus().isNoContent
 
         // Then:
-        verify(innlesingService).deleteUtendoersBruk(id = id, innsender = null, paaVegneAv = null)
+        verify(innlesingService).deleteInnendoersBruk(id = id, innsender = null, paaVegneAv = null)
     }
 
     @Test
@@ -156,7 +156,7 @@ internal class PlantevernjournalInnlesingControllerTest {
             .expectStatus().isNoContent
 
         // Then:
-        verify(innlesingService).deleteUtendoersBruk(id = id, innsender = null, paaVegneAv = null)
+        verify(innlesingService).deleteFroeEllerFormeringsMatriale(id = id, innsender = null, paaVegneAv = null)
     }
 
 }
