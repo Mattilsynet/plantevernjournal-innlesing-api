@@ -53,7 +53,9 @@ data class UtendoersBrukDto(
     val plantevernmiddel: List<PlantevernmiddelDto>,
 
     @Schema(
-        description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler", required = true,
+        description = "Dato med tidspunkt for når man behandlet vekster med plantevernmidler. Må oppgis i ISO-8601-format med tidssone/offset, for eksempel UTC med suffiks Z.",
+        example = "2024-10-18T12:00:00Z",
+        required = true,
     )
     val startTid: Instant,
 ) {

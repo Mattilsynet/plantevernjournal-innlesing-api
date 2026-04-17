@@ -58,7 +58,7 @@ data class InnendoersBrukResponsDto(
     val id: UUID,
 
     @Schema(
-        description = "Når journalføringen ble lest inn", required = true,
+        description = "Når journalføringen ble lest inn, i ISO-8601-format med UTC/offset", example = "2024-10-18T12:00:00Z", required = true,
     )
     val opprettet: Instant,
 
