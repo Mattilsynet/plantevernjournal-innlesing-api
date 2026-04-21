@@ -2,7 +2,7 @@
 
 Det kan sendes inn en liste av geometriske objekter, og det gjøres en enkel validering av dataene som sendes inn.
 
-Gyldige geometrityper er gitt [her](src/main/kotlin/no/mattilsynet/plantevernjournal/api/shared/kodeverk/GeometriTyper.kt). 
+Gyldige geometrityper er gitt [her](../src/main/kotlin/no/mattilsynet/plantevernjournal/api/shared/kodeverk/GeometriTyper.kt). 
 
 Dersom det ikke sendes inn en gyldig type, så kommer det en tilbakemelding av typen:
 _Feature[indeks] har en geometritype som ikke støttes: typeSomErSendtInn_
