@@ -43,7 +43,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
     // Springdoc (Swagger)
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.3")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.2")
 
     // gcp
     implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.0.2"))
