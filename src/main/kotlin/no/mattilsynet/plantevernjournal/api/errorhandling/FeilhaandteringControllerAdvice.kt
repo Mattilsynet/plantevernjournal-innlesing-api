@@ -109,6 +109,28 @@ class FeilhaandteringControllerAdvice {
                 )
             }
 
+    @ExceptionHandler(Exception::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "400", description = "Bad Request",
+                content = [Content(schema = Schema(implementation = FeilmeldingModellDto::class))],
+            )]
+    )
+    fun handleException(ex: Exception)
+            : ResponseEntity<FeilmeldingModellDto> =
+        logger.warn("Exception", ex)
+            .run {
+                return@run ResponseEntity(
+                    FeilmeldingModellDto(
+                        melding = ex.message,
+                        status = HttpStatus.BAD_REQUEST.value(),
+                    ),
+                    HttpStatus.BAD_REQUEST,
+                )
+            }
+
     @ExceptionHandler(ServerWebInputException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ApiResponses(
