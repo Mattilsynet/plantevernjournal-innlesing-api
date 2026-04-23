@@ -1,6 +1,5 @@
 package no.mattilsynet.plantevernjournal.api.services
 
-import kotlin.uuid.ExperimentalUuidApi
 import kotlinx.serialization.ExperimentalSerializationApi
 import no.mattilsynet.plantevernjournal.api.mocks.domain.SlettInnsendingMocker.createSlettInnsendingMock
 import no.mattilsynet.plantevernjournal.api.mocks.dto.FroeEllerFormeringsMatrialeDtoMocker.createFroeEllerFormeringsMaterialeDtoMock
@@ -9,10 +8,12 @@ import no.mattilsynet.plantevernjournal.api.mocks.dto.UtendoersBrukDtoMocker.cre
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
+import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.any
+import kotlin.uuid.ExperimentalUuidApi
 
 @OptIn(ExperimentalUuidApi::class, ExperimentalSerializationApi::class)
 internal class InnlesingServiceTest {
@@ -20,17 +21,20 @@ internal class InnlesingServiceTest {
     private lateinit var innlesingService: InnlesingService
 
     private val natsService = mock(NatsService::class.java)
+    private val eppoService = mock(EppoService::class.java)
 
     @BeforeEach
-    fun setUp() {
+    suspend fun setUp() {
         innlesingService = InnlesingService(
-            eppoService = mock(),
+            eppoService = eppoService,
             natsService = natsService,
         )
+
+        doReturn("Plantenavn").`when`(eppoService).getNavnFraEppoKode(any())
     }
 
     @Test
-    fun `postFroeEllerFormeringsMateriale poster til nats og returnerer opprettet og id`() {
+    suspend fun `postFroeEllerFormeringsMateriale poster til nats og returnerer opprettet og id`() {
         // Given:
         val froeEllerFormeringsMatrialeDtoMock = createFroeEllerFormeringsMaterialeDtoMock()
 
@@ -51,7 +55,7 @@ internal class InnlesingServiceTest {
     }
 
     @Test
-    fun `postInnendoersBruk poster til nats og returnerer opprettet og id`() {
+    suspend fun `postInnendoersBruk poster til nats og returnerer opprettet og id`() {
         // Given:
         val innendoersBrukDtoMock = createInnendoersBrukDtoMock()
 
@@ -72,7 +76,7 @@ internal class InnlesingServiceTest {
     }
 
     @Test
-    fun `postUtendoersBruk poster til nats og returnerer opprettet og id`() {
+    suspend fun `postUtendoersBruk poster til nats og returnerer opprettet og id`() {
         // Given:
         val utendoersBrukDto = createUtendoersBrukDtoMock()
 
