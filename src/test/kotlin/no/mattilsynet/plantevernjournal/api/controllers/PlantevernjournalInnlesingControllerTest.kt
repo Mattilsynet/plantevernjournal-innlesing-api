@@ -50,7 +50,7 @@ internal class PlantevernjournalInnlesingControllerTest {
     private lateinit var innlesingService: InnlesingService
 
     @Test
-    fun `postUtendoersBruk kaller videre paa innsendingService`() {
+    suspend fun `postUtendoersBruk kaller videre paa innsendingService`() {
         // Given:
         val utendoersBrukDtoMock = createUtendoersBrukDtoMock()
 
@@ -71,7 +71,7 @@ internal class PlantevernjournalInnlesingControllerTest {
     }
 
     @Test
-    fun `postInnendoersBruk kaller videre paa innsendingService`() {
+    suspend fun `postInnendoersBruk kaller videre paa innsendingService`() {
         // Given:
         val innendoersBrukDtoMock = createInnendoersBrukDtoMock()
 
@@ -92,7 +92,7 @@ internal class PlantevernjournalInnlesingControllerTest {
     }
 
     @Test
-    fun `postFroeEllerFormeringsMateriale kaller videre paa innsendingService`() {
+    suspend fun `postFroeEllerFormeringsMateriale kaller videre paa innsendingService`() {
         // Given:
         val froeEllerFormeringsMatrialeDtoMock = createFroeEllerFormeringsMaterialeDtoMock()
 
