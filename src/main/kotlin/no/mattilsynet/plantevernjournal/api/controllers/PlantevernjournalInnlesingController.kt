@@ -181,8 +181,14 @@ class PlantevernjournalInnlesingController(
 
     private val objectMapper = jacksonObjectMapper()
 
+    @Suppress("UNCHECKED_CAST")
     private fun Jwt.getPaaVegneAvFraToken() =
-        (claims["authorization_details"]?.let {
-            objectMapper.convertValue(it, object : TypeReference<List<AuthorizationDetail>>() {})
-        }[0]?.systemUserOrg?.systemOrgId as String).substring(5)
+        (claims["authorization_details"]
+            ?.let {
+                objectMapper.convertValue(it, object : TypeReference<List<AuthorizationDetail>>() {})
+            }[0]
+            ?.systemUserOrg
+            ?.systemOrgId
+            ?.let { it as String })  // må ha cast
+            ?.substring(5)
 }
