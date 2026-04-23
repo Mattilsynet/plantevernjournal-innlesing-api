@@ -86,7 +86,7 @@ I Eppodatabasen er det laget et kodeverk for klassifisering av planter, og det s
 
 Det finnes flere måter å hente eppokoder for planter på, dokumentasjon til rest-api'et til eppo finnes her: https://data.eppo.int/documentation/rest Det er også mulig å manuelt søke på planter på nettsiden: https://gd.eppo.int/
 
-Det valideres om det er gyldige eppokoder som sendes inn, og det returneres feil dersom en eller flere eppokoder ikke finnes. Dette er bare testdata, så inntil videre er det ikke viktig hvilken eppokode som brukes.
+Det valideres om det er gyldige eppokoder som sendes inn, og det returneres feil dersom en eller flere eppokoder ikke finnes. så lenge det er testdata er det ikke viktig hvilken eppokode som brukes, men produksjonsdata må være riktige.
 
 Det finnes ikke eppokoder for alle plantearter, så det kan være tilfeller hvor man ikke klarer å angi eksakt hva som er sprøytet på. Da skal den nærmeste eppokoden i hierarkiet sendes inn, og så angis sort i feltet for 'sort'.
 

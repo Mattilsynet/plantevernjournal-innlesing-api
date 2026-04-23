@@ -46,7 +46,7 @@ class PlantevernjournalInnlesingController(
     @Operation(
         description = "Endepunkt for å sende inn informasjon om sprøyting på frø og formeringsmateriale",
     )
-    fun postFroeEllerFormeringsmateriale(
+    suspend fun postFroeEllerFormeringsmateriale(
         @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
             name = "froeEllerFormeringsMatrialeDto",
@@ -69,7 +69,7 @@ class PlantevernjournalInnlesingController(
         description = "Endepunkt for å sende inn informasjon om sprøyting som foregår innendørs, feks i et veksthus",
     )
     @PostMapping("/innendoersbruk", consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun postInnendoersBruk(
+    suspend fun postInnendoersBruk(
         @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
             name = "innendoersBrukDto",
@@ -92,7 +92,7 @@ class PlantevernjournalInnlesingController(
         description = "Endepunkt for å sende inn informasjon om sprøyting som skjer utendørs, feks på et jorde",
     )
     @PostMapping("/utendoersbruk", consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun postUtendoersBruk(
+    suspend fun postUtendoersBruk(
         @AuthenticationPrincipal jwt: Jwt?,
         @Parameter(
             name = "utendoersBrukDto",
@@ -181,7 +181,7 @@ class PlantevernjournalInnlesingController(
 
     private val objectMapper = jacksonObjectMapper()
 
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("UNUSED")
     private fun Jwt.getPaaVegneAvFraToken() =
         (claims["authorization_details"]
             ?.let {

@@ -13,8 +13,8 @@ import java.time.Duration
 
 @Component
 class EppoApiClient(
-    @Value("\${eppo.api.token}") private val eppoToken: String,
-    @Value("\${eppo.api.uri}") private val eppoUri: String,
+    @Value($$"${eppo.api.token}") private val eppoToken: String,
+    @Value($$"${eppo.api.uri}") private val eppoUri: String,
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
