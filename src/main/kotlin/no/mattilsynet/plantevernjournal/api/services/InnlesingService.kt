@@ -17,7 +17,7 @@ class InnlesingService(
     private val natsService: NatsService,
 ) {
 
-    fun postFroeEllerFormeringsMateriale(
+    suspend fun postFroeEllerFormeringsMateriale(
         froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
         innsender: String?,
         paaVegneAv: String?,
@@ -40,7 +40,7 @@ class InnlesingService(
                 }
             }
 
-    fun postInnendoersBruk(
+    suspend fun postInnendoersBruk(
         innendoersBrukDto: InnendoersBrukDto,
         innsender: String?,
         paaVegneAv: String?,
@@ -63,7 +63,7 @@ class InnlesingService(
                 }
             }
 
-    fun postUtendoersBruk(
+    suspend fun postUtendoersBruk(
         innsender: String?,
         paaVegneAv: String?,
         utendoersBrukDto: UtendoersBrukDto,
@@ -117,9 +117,8 @@ class InnlesingService(
         )
     }
 
-    private fun List<BehandletVekstDto>.validateEppokoder() =
-        true
-    /*     map { it.eppoKode }
+    private suspend fun List<BehandletVekstDto>.validateEppokoder() =
+         map { it.eppoKode }
              .filter { eppoKode ->
                  eppoService.getNavnFraEppoKode(eppoKode = eppoKode) == null
              }.takeIf { it.isNotEmpty() }
@@ -128,5 +127,4 @@ class InnlesingService(
                      eppoKoder.joinToString(", ") + " finnes ikke i eppodatabasen."
                  )
              }
- */
 }
