@@ -1,6 +1,5 @@
 package no.mattilsynet.plantevernjournal.api.services
 
-import kotlinx.serialization.ExperimentalSerializationApi
 import no.mattilsynet.plantevernjournal.api.controllers.models.BehandletVekstDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.FroeEllerFormeringsMatrialeDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.InnendoersBrukDto
@@ -9,8 +8,6 @@ import no.mattilsynet.plantevernjournal.api.domain.SlettInnsending
 import org.springframework.stereotype.Service
 import java.util.UUID
 
-@OptIn(ExperimentalSerializationApi::class)
-@kotlin.uuid.ExperimentalUuidApi
 @Service
 class InnlesingService(
     private val eppoService: EppoService,

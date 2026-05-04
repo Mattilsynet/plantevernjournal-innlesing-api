@@ -59,8 +59,6 @@ data class FroeEllerFormeringsMatrialeDto(
     val plantevernmiddel: List<PlantevernmiddelDto>,
 ) {
 
-    @kotlinx.serialization.ExperimentalSerializationApi
-    @kotlin.uuid.ExperimentalUuidApi
     fun toFroeEllerFormeringsMatriale(
         innsender: String?,
         paaVegneAv: String?,

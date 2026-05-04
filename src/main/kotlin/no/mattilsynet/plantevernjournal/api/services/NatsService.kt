@@ -12,7 +12,6 @@ import no.mattilsynet.plantevernjournal.api.nats.jetstream.subjects.JetStreamSub
 import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import org.springframework.stereotype.Service
 
-@kotlin.uuid.ExperimentalUuidApi
 @Service
 class NatsService(
     nats: VirtualNats,

@@ -1,6 +1,5 @@
 package no.mattilsynet.plantevernjournal.api.services
 
-import kotlinx.serialization.ExperimentalSerializationApi
 import no.mattilsynet.plantevernjournal.api.mocks.domain.SlettInnsendingMocker.createSlettInnsendingMock
 import no.mattilsynet.plantevernjournal.api.mocks.dto.FroeEllerFormeringsMatrialeDtoMocker.createFroeEllerFormeringsMaterialeDtoMock
 import no.mattilsynet.plantevernjournal.api.mocks.dto.InnendoersBrukDtoMocker.createInnendoersBrukDtoMock
@@ -13,9 +12,7 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.any
-import kotlin.uuid.ExperimentalUuidApi
 
-@OptIn(ExperimentalUuidApi::class, ExperimentalSerializationApi::class)
 internal class InnlesingServiceTest {
 
     private lateinit var innlesingService: InnlesingService

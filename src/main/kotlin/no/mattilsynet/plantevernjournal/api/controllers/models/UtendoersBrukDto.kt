@@ -2,7 +2,6 @@ package no.mattilsynet.plantevernjournal.api.controllers.models
 
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Pattern
-import kotlinx.serialization.ExperimentalSerializationApi
 import no.mattilsynet.plantevernjournal.api.domain.UtendoersBruk
 import no.mattilsynet.plantevernjournal.api.shared.kodeverk.Bruksomraade
 import org.wololo.geojson.FeatureCollection
@@ -59,8 +58,6 @@ data class UtendoersBrukDto(
     )
     val startTid: Instant,
 ) {
-    @ExperimentalSerializationApi
-    @kotlin.uuid.ExperimentalUuidApi
     fun toUtendoersBruk(
         innsender: String?,
         paaVegneAv: String?,

@@ -1,6 +1,5 @@
 package no.mattilsynet.plantevernjournal.api.domain
 
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import no.mattilsynet.plantevernjournal.api.controllers.models.BehandletVekstDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.PlantevernmiddelDto
@@ -11,9 +10,7 @@ import no.mattilsynet.plantevernjournal.api.shared.serializers.UUIDSerializer
 import org.wololo.geojson.FeatureCollection
 import java.time.Instant
 import java.util.UUID
-import kotlin.uuid.ExperimentalUuidApi
 
-@ExperimentalSerializationApi
 @Serializable
 @Suppress("LongParameterList")
 data class UtendoersBruk(
@@ -49,8 +46,6 @@ data class UtendoersBruk(
     val startTid: Instant,
 ) {
 
-    @ExperimentalSerializationApi
-    @ExperimentalUuidApi
     fun toUtendoersBrukResponsDto(
         behandledeOmraader: FeatureCollection,
         behandledeVekster: List<BehandletVekstDto>,
