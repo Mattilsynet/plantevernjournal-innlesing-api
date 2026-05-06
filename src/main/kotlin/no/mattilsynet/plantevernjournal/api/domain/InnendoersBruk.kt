@@ -13,7 +13,6 @@ import java.time.Instant
 import java.time.LocalDate
 import java.util.UUID
 
-@kotlinx.serialization.ExperimentalSerializationApi
 @Serializable
 data class InnendoersBruk(
     val behandledeVekster: List<BehandletVekst>,

@@ -64,8 +64,6 @@ data class InnendoersBrukDto(
     val plantevernmiddel: List<PlantevernmiddelDto>,
 ) {
 
-    @kotlinx.serialization.ExperimentalSerializationApi
-    @kotlin.uuid.ExperimentalUuidApi
     fun toInnendoersBruk(
         innsender: String?,
         paaVegneAv: String?,

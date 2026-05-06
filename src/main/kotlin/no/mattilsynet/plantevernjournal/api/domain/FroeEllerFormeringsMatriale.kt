@@ -13,8 +13,6 @@ import java.time.Instant
 import java.time.LocalDate
 import java.util.UUID
 
-@kotlinx.serialization.ExperimentalSerializationApi
-@kotlin.uuid.ExperimentalUuidApi
 @Serializable
 data class FroeEllerFormeringsMatriale(
     val behandledeVekster: List<BehandletVekst>,
