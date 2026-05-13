@@ -27,8 +27,11 @@ Brukes for testing av innsending av data, med autentisering. Dette er et testmil
 Api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/swagger-ui/index.html
 
 #### produksjon:
-Ikke klart enda 
+For å få tilgang i produksjon, må man ha sendt inn data på korrekt måte i stagingmiljøet, og fått det godkjent av Mattilsynet. Mattilsynet vil så gi tilgang til å sende inn data i produksjonsmiljøet.
 
+Dette miljøet går mot maskinporten sitt produksjonsmiljø, og man må ha satt opp dette på korrekt måte før man kan sende inn data.
+
+Api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal.mattilsynet.io/swagger-ui/index.html
 
 ### Maskinporten
 Maskinporten skal brukes til autentisering når man sender inn data. For å starte opp med maskinporten går man via Samarbeidsportalen. På [Selvbetjening av Maskinporten via Samarbeidsportalen](https://docs.digdir.no/docs/Maskinporten/maskinporten_sjolvbetjening_web.html) [Selvbetjening som API-konsument](https://docs.digdir.no/docs/Maskinporten/maskinporten_sjolvbetjening_web.html#selvbetjening-som-api-konsument) finnes det informasjon om framgangsmåte.
