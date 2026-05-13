@@ -57,7 +57,7 @@ dependencies {
     implementation("org.wololo:jts2geojson:0.18.1")
 
     // virtual-nats
-    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.04.29-18.16-5fc008dac934"))
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.05.07-10.26-f771fe0f52ea"))
     implementation("no.mattilsynet.virtualnats:virtual-nats-core")
     implementation("no.mattilsynet.virtualnats:virtual-nats-spring")
 
@@ -80,6 +80,10 @@ kotlin {
         // versjon 2.3
         compilerOptions.freeCompilerArgs = listOf("-Xjsr305=strict", "-Xannotation-default-target=param-property")
     }
+}
+
+dependencyLocking {
+    lockAllConfigurations()
 }
 
 tasks {
