@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Plantevernjournal, utendørs bruk av plantevernmidler",
+  "description": "Journalfelter for utendørs bruk av plantevernmidler.",
+  "type": "object",
+  "properties": {
+    "plantevernmiddel": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "autorisasjonsnummer": {
+            "type": "string"
+          },
+          "dosering": {
+            "type": "object",
+            "description": "kg eller l plantevernmiddel per hektar",
+            "properties": {
+              "verdi": {
+                "type": "number"
+              },
+              "enhet": {
+                "type": "string",
+                "enum": ["kg/haa", "l/haa"]
+              }
+            },
+            "required": ["verdi", "enhet"]
+          }
+        },
+        "required": ["autorisasjonsnummer", "dosering"]
+      }
+    },
+    "bruksomraade": {
+      "type": "string",
+      "enum": ["JORDBRUK"]
+    },
+    "gaardsnummer": {
+      "type": "string"
+    },
+    "behandletDato": {
+      "type": "string",
+      "format": "date"
+    },
+    "behandletTid": {
+      "type": "string",
+      "description": "Klokkeslett da behandlingen ble utført.",
+      "format": "time"
+    },
+    "behandletOmraade": {
+      "type": "object",
+      "$comment": "Kartdata på formatet som bestemmes"
+    },
+    "arealBehandletOmraade": {
+      "type": "object",
+      "description": "Areal av behandlet område i dekar.",
+      "properties": {
+        "verdi": {
+          "type": "number"
+        },
+        "enhet": {
+          "type": "string",
+          "enum": ["daa"]
+        }
+      }
+    },
+    "behandledeVekster": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "eppoKode": {
+            "$comment": "Kan trenge forklaring før vi sender ut modellen.",
+            "type": "string"
+          },
+          "bbchFase": {
+            "type": "string",
+            "description": "Fra BBCH-skalaen til den behandlede veksten. To siffer."
+          }
+        },
+        "required": ["eppoKode"]
+      }
+    }
+  },
+  "if": {
+    "properties": {
+      "bruksomraade": {
+        "const": "JORDBRUK"
+      }
+    }
+  },
+  "then": {
+    "required": ["gaardsnummer"]
+  },
+  "required": [
+    "arealBehandletOmraade",
+    "behandletDato",
+    "behandletOmraade",
+    "behandledeVekster",
+    "bruksomraade",
+    "behandletTid",
+    "dosering",
+    "plantevernmiddel"
+  ]
+}
