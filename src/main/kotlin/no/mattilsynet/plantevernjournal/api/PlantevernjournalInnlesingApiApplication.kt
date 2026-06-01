@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Import
     LoggerVirtualNatsWrapper::class,
     SpringVirtualNatsStarter::class,
 )
-class PlantevernjournalApiApplication
+class PlantevernjournalInnlesingApiApplication
 
 fun main(args: Array<String>) {
-    runApplication<PlantevernjournalApiApplication>(*args)
+    runApplication<PlantevernjournalInnlesingApiApplication>(*args)
 }

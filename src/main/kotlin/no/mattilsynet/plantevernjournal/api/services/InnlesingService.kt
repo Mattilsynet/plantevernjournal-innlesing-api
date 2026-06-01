@@ -5,6 +5,7 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.FroeEllerFormerin
 import no.mattilsynet.plantevernjournal.api.controllers.models.InnendoersBrukDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.UtendoersBrukDto
 import no.mattilsynet.plantevernjournal.api.domain.SlettInnsending
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -13,6 +14,7 @@ class InnlesingService(
     private val eppoService: EppoService,
     private val natsService: NatsService,
 ) {
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun postFroeEllerFormeringsMateriale(
         froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
@@ -21,6 +23,7 @@ class InnlesingService(
     ) =
         froeEllerFormeringsMatrialeDto.behandledeVekster.validateEppokoder()
             .run {
+                logger.info("postFroeEllerFormeringsMateriale for innsender orgnr: $innsender")
                 froeEllerFormeringsMatrialeDto.toFroeEllerFormeringsMatriale(
                     innsender = innsender,
                     paaVegneAv = paaVegneAv,
@@ -28,6 +31,9 @@ class InnlesingService(
                     natsService.publishJournalForFroeEllerFormeringsmateriale(
                         froeEllerFormeringsMatriale = froeEllerFormeringsMatriale,
                     )
+
+                    logger.info("postFroeEllerFormeringsMateriale ferdig for innsender orgnr: $innsender" +
+                            " og ${froeEllerFormeringsMatriale.id}")
 
                     froeEllerFormeringsMatriale.toFroeEllerFormeringsMatrialeResponsDto(
                         behandledeOmraader = froeEllerFormeringsMatrialeDto.behandledeOmraader,
@@ -44,6 +50,7 @@ class InnlesingService(
     ) =
         innendoersBrukDto.behandledeVekster.validateEppokoder()
             .run {
+                logger.info("postInnendoersBruk for innsender orgnr: $innsender")
                 innendoersBrukDto.toInnendoersBruk(
                     innsender = innsender,
                     paaVegneAv = paaVegneAv,
@@ -51,6 +58,9 @@ class InnlesingService(
                     natsService.publishJournalForInnendoersBruk(
                         innendoersBruk = innendoersBruk,
                     )
+
+                    logger.info("postInnendoersBruk ferdig for innsender orgnr: $innsender" +
+                            " og ${innendoersBruk.id}")
 
                     innendoersBruk.toInnendoersBrukResponsDto(
                         behandledeOmraader = innendoersBrukDto.behandledeOmraader,
@@ -67,6 +77,7 @@ class InnlesingService(
     ) =
         utendoersBrukDto.behandledeVekster.validateEppokoder()
             .run {
+                logger.info("postUtendoersBruk for innsender orgnr: $innsender")
                 utendoersBrukDto.toUtendoersBruk(
                     innsender = innsender,
                     paaVegneAv = paaVegneAv,
@@ -75,6 +86,9 @@ class InnlesingService(
                         natsService.publishJournalForUtendoersBruk(
                             utendoersBruk = utendoersBruk,
                         )
+
+                        logger.info("postUtendoersBruk ferdig for innsender orgnr: $innsender" +
+                                " og ${utendoersBruk.id}")
 
                         utendoersBruk.toUtendoersBrukResponsDto(
                             behandledeOmraader = utendoersBrukDto.behandledeOmraader,
@@ -89,6 +103,7 @@ class InnlesingService(
         innsender: String?,
         paaVegneAv: String?,
     ) {
+        logger.info("deleteUtendoersBruk for innsender: $innsender og id $id")
         natsService.publishSlettJournalForUtendoersBruk(
             SlettInnsending(id = id, innsender = innsender, paaVegneAv = paaVegneAv),
         )
@@ -99,6 +114,7 @@ class InnlesingService(
         innsender: String?,
         paaVegneAv: String?,
     ) {
+        logger.info("deleteInnendoersBruk for innsender: $innsender og id $id")
         natsService.publishSlettJournalForInnendoersBruk(
             SlettInnsending(id = id, innsender = innsender, paaVegneAv = paaVegneAv)
         )
@@ -109,6 +125,7 @@ class InnlesingService(
         innsender: String?,
         paaVegneAv: String?,
     ) {
+        logger.info("deleteFroeEllerFormeringsMatriale for innsender: $innsender og id $id")
         natsService.publishSlettJournalForFroeEllerFormeringsmateriale(
             SlettInnsending(id = id, innsender = innsender, paaVegneAv = paaVegneAv)
         )

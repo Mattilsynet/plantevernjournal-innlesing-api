@@ -10,6 +10,7 @@ import no.mattilsynet.plantevernjournal.api.domain.SlettInnsending
 import no.mattilsynet.plantevernjournal.api.domain.UtendoersBruk
 import no.mattilsynet.plantevernjournal.api.nats.jetstream.subjects.JetStreamSubjectBuilder
 import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
@@ -18,6 +19,7 @@ class NatsService(
 ) {
 
     private val jetStream = nats.jetStream()
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     fun publishJournalForFroeEllerFormeringsmateriale(
         froeEllerFormeringsMatriale: FroeEllerFormeringsMatriale,
@@ -27,6 +29,8 @@ class NatsService(
                 .plantevernjournalFroeV1(froeEllerFormeringsMatriale.id.toString()),
             body = Json.encodeToString(froeEllerFormeringsMatriale).toByteArray(),
         )
+        logger.info("Melding postet til publishJournalForFroeEllerFormeringsmateriale for id " +
+                froeEllerFormeringsMatriale.id)
     }
 
     fun publishJournalForInnendoersBruk(
@@ -37,6 +41,8 @@ class NatsService(
                 .plantevernjournalInnendoersV1(innendoersBruk.id.toString()),
             body = Json.encodeToString(innendoersBruk).toByteArray(),
         )
+        logger.info("Melding postet til publishJournalForInnendoersBruk for id " +
+                innendoersBruk.id)
     }
 
     fun publishJournalForUtendoersBruk(
@@ -47,6 +53,8 @@ class NatsService(
                 .plantevernjournalUtendoersV1(utendoersBruk.id.toString()),
             body = Json.encodeToString(utendoersBruk).toByteArray(),
         )
+        logger.info("Melding postet til publishJournalForUtendoersBruk for id " +
+                utendoersBruk.id)
     }
 
     fun publishSlettJournalForUtendoersBruk(slettInnsending: SlettInnsending) {
@@ -55,6 +63,8 @@ class NatsService(
                 .plantevernjournalSlettUtendoersV1(id = slettInnsending.id.toString()),
             body = Json.encodeToString(slettInnsending).toByteArray(),
         )
+        logger.info("Melding postet til publishSlettJournalForUtendoersBruk for id " +
+                slettInnsending.id)
     }
 
     fun publishSlettJournalForInnendoersBruk(slettInnsending: SlettInnsending) {
@@ -63,6 +73,8 @@ class NatsService(
                 .plantevernjournalSlettInnendoersV1(id = slettInnsending.id.toString()),
             body = Json.encodeToString(slettInnsending).toByteArray(),
         )
+        logger.info("Melding postet til publishSlettJournalForInnendoersBruk for id " +
+                slettInnsending.id)
     }
 
     fun publishSlettJournalForFroeEllerFormeringsmateriale(slettInnsending: SlettInnsending) {
@@ -71,5 +83,7 @@ class NatsService(
                 .plantevernjournalSlettFroeV1(id = slettInnsending.id.toString()),
             body = Json.encodeToString(slettInnsending).toByteArray(),
         )
+        logger.info("Melding postet til publishSlettJournalForFroeEllerFormeringsmateriale for id " +
+                slettInnsending.id)
     }
 }

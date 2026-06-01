@@ -50,7 +50,7 @@ jobs:
         with:
           project_id: ${{ inputs.project-id }}
 
-      - name: Deploy Plantevernjournal API
+      - name: Deploy Plantevernjournal innlesing API
         uses: google-github-actions/deploy-cloudrun@v3
         with:
           project_id: ${{ inputs.project-id }}
