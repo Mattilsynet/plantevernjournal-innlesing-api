@@ -60,7 +60,7 @@ dependencies {
     implementation("org.wololo:jts2geojson:0.18.1")
 
     // virtual-nats
-    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.05.07-10.26-f771fe0f52ea"))
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.05.26-09.03-379df0aadc48"))
     implementation("no.mattilsynet.virtualnats:virtual-nats-core")
     implementation("no.mattilsynet.virtualnats:virtual-nats-spring")
 
