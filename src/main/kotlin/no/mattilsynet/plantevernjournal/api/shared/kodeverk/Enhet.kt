@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 enum class Enhet(val enhet: String) {
     ANTALL(enhet = "antall"),
     DEKAR(enhet = "daa"),
+    GRAM(enhet = "g"),
     KILO(enhet = "kg"),
     KILO_PER_ANTALL(enhet = "kg/antall"),
     KILO_PER_DEKAR(enhet = "kg/daa"),
@@ -17,6 +18,7 @@ enum class Enhet(val enhet: String) {
     KILO_PER_TONN(enhet = "kg/tonn"),
     KUBIKKMETER(enhet = "m3"),
     KVADRATMETER(enhet = "m2"),
+    LITER(enhet = "l"),
     LITER_PER_ANTALL(enhet = "l/antall"),
     LITER_PER_DEKAR(enhet = "l/daa"),
     LITER_PER_KILO(enhet = "l/kg"),
