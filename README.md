@@ -27,7 +27,7 @@ Brukes for testing av innsending av data, med autentisering. Dette er et testmil
 Api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/swagger-ui/index.html
 
 #### produksjon:
-For å få tilgang i produksjon, må man ha sendt inn data på korrekt måte i stagingmiljøet, og fått det godkjent av Mattilsynet. Mattilsynet vil så gi tilgang til å sende inn data i produksjonsmiljøet.
+For å få tilgang i produksjon, må man ha sendt inn data på korrekt måte i stagingmiljøet, og fått det godkjent av Mattilsynet. Mattilsynet vil så gi tilgang til å sende inn data i produksjonsmiljøet. Ta kontakt på epost _plantevernjournal@mattilsynet.no_
 
 Dette miljøet går mot maskinporten sitt produksjonsmiljø, og man må ha satt opp dette på korrekt måte før man kan sende inn data.
 

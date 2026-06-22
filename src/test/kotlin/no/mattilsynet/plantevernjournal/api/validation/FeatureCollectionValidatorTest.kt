@@ -17,6 +17,7 @@ import org.wololo.geojson.LineString
 import org.wololo.geojson.MultiLineString
 import org.wololo.geojson.MultiPolygon
 import org.wololo.geojson.Point
+import org.wololo.geojson.Polygon
 
 class FeatureCollectionValidatorTest {
 
@@ -171,6 +172,50 @@ class FeatureCollectionValidatorTest {
         }.message!!.let { message ->
             assertEquals(
                 "Feature[0] MultiLineString må ha minst to punkter i minst to linjer",
+                message
+            )
+        }
+    }
+
+    @Test
+    fun `Validering av Polygon med to ringer feiler`() {
+        // Given:
+        featureCollectionMock = createFeatureCollectionMock(
+            Polygon(
+                arrayOf(
+                    arrayOf(doubleArrayOf(0.0, 0.0)),
+                    arrayOf(doubleArrayOf(1.0, 1.0))
+                )
+            )
+        )
+
+        // When & then:
+        assertThrows(IllegalArgumentException::class.java) {
+            validator.validate(featureCollectionMock)
+        }.message!!.let { message ->
+            assertEquals(
+                "Feature[0] Polygon må ha bare en ring. Er det flere ringer, så må det sendes inn som en " +
+                        "liste av polygoner, eller som multipolygon",
+                message
+            )
+        }
+    }
+
+    @Test
+    fun `Validering av Polygon uten ringer feiler`() {
+        // Given:
+        featureCollectionMock = createFeatureCollectionMock(
+            Polygon(
+                emptyArray<Array<DoubleArray>>()
+            )
+        )
+
+        // When & then:
+        assertThrows(IllegalArgumentException::class.java) {
+            validator.validate(featureCollectionMock)
+        }.message!!.let { message ->
+            assertEquals(
+                "Feature[0] Polygon må ha en ring",
                 message
             )
         }
