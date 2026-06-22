@@ -1,0 +1,34 @@
+name: Update Gradle lock files
+
+on:
+  pull_request:
+    paths:
+      - 'build.gradle.kts'
+
+jobs:
+  update-lockfiles:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21.x'
+
+      - name: Update lock files
+        run: ./gradlew dependencies --write-locks
+
+      - name: Commit lock files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add gradle.lockfile
+          git commit -m "Update lock files" || echo "No changes"
+          git push
