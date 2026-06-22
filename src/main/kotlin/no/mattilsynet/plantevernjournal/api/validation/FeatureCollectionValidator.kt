@@ -88,8 +88,12 @@ class FeatureCollectionValidator {
 
     private fun validatePolygon(polygon: Polygon, index: Int) {
         val rings = polygon.coordinates
-        require(rings != null && rings.size == 1) {
+        require(rings != null && rings.size > 0) {
             "Feature[$index] Polygon må ha en ring"
+        }
+        require(rings.size < 2) {
+            "Feature[$index] Polygon må ha bare en ring. Er det flere ringer, så må det sendes inn som en liste" +
+                    " av polygoner, eller som multipolygon"
         }
 
         rings.forEachIndexed { ringIndex, ring ->
