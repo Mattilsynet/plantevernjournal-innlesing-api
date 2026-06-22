@@ -1,8 +1,8 @@
 plugins {
-    kotlin("jvm") version "2.3.21"
-    kotlin("plugin.spring") version "2.3.21"
-    kotlin("plugin.serialization") version "2.3.21"
-    id("org.springframework.boot") version "4.0.6"
+    kotlin("jvm") version "2.4.0"
+    kotlin("plugin.spring") version "2.4.0"
+    kotlin("plugin.serialization") version "2.4.0"
+    id("org.springframework.boot") version "4.1.0"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -60,7 +60,7 @@ dependencies {
     implementation("org.wololo:jts2geojson:0.18.1")
 
     // virtual-nats
-    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.05.26-09.03-379df0aadc48"))
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.06.09-12.54-30acef52e5e8"))
     implementation("no.mattilsynet.virtualnats:virtual-nats-core")
     implementation("no.mattilsynet.virtualnats:virtual-nats-spring")
 
@@ -79,9 +79,7 @@ dependencies {
 
 kotlin {
     compilerOptions {
-        // -Xannotation-default-target=param-property fjerner advarsel om annoteringer. Kan muligens fjernes fra Kotlin
-        // versjon 2.3
-        compilerOptions.freeCompilerArgs = listOf("-Xjsr305=strict", "-Xannotation-default-target=param-property")
+        compilerOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
     }
 }
 
