@@ -7,6 +7,8 @@ Gyldige geometrityper er gitt [her](../src/main/kotlin/no/mattilsynet/plantevern
 Dersom det ikke sendes inn en gyldig type, så kommer det en tilbakemelding av typen:
 _Feature[indeks] har en geometritype som ikke støttes: typeSomErSendtInn_
 
+Det ligger eksempler på de ulike geometritypene i våre [testdata](../src/test/http-requests).
+
 ### Point:
 Point må inneholde ett gyldig koordinat.
 
@@ -20,6 +22,8 @@ Det sjekkes ikke om linjene er krysser hverandre, er overlappende eller like.
 
 ### Polygon:
 Polygonet må inneholde minst fire punkter, og alle disse må være gyldig koordinater. Polygon må være lukket, dvs at først og siste koordinat må være like.
+
+Hvis man har flere polygoner i samme innsendinger, så må disse enten sendes inn som en liste av polygoner, eller som et multipolygon med flere polygoner.
 
 ### MultiPolygon:
 Et multiPolygon må inneholde minst to polygoner, og ellers følge samme regler som polygon.
