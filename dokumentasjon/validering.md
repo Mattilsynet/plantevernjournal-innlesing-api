@@ -23,7 +23,9 @@ Det sjekkes ikke om linjene er krysser hverandre, er overlappende eller like.
 ### Polygon:
 Polygonet må inneholde minst fire punkter, og alle disse må være gyldig koordinater. Polygon må være lukket, dvs at først og siste koordinat må være like.
 
-Hvis man har flere polygoner i samme innsendinger, så må disse enten sendes inn som en liste av polygoner, eller som et multipolygon med flere polygoner.
+Dersom det fx er deler av et jorde som ikke er sprøytet pga en kolle eller noe annet, så skal det sendes inn en liste av polygoner. Det første skal være hovedområdet, og så kommer de usprøytede områdene etterpå. De usprøytede områdene må ligge inni hovedområdet.
+
+Hvis man har flere hovedområder (polygoner) i samme innsending, så må disse enten sendes inn som en liste av polygoner, eller som et multipolygon med flere polygoner.
 
 ### MultiPolygon:
 Et multiPolygon må inneholde minst to polygoner, og ellers følge samme regler som polygon.
