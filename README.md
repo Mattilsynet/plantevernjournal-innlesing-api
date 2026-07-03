@@ -2,6 +2,8 @@
 
 Mattilsynet skal samle inn data om bruk av plantevernmidler i landbruket i Norge. Team Planter er et eget produktteam som driver utviklingen av et system for dette. Vi nås på epost _plantevernjournal@mattilsynet.no_ hvis dere vil kontakte oss.
 
+Mattilsynet sin tolkning er at journalføring for bruk av beiset såvare ikke er inkludert i plantevernmiddelforordningen. I EUs forslag til forenklinger i forordning (EF) nr. 1007/2009, COM(2025)1030, er det foreslått at beising av såvarer med plantevernmidler, og bruk av beiset såvare, skal regnes som bruk av plantevernmiddel. Foreløpig skal det ikke føres journal ved bruk av beiset såvare, men dette kan bli endret på sikt.
+
 plantevernjournal-innlesing-api inneholder datamodellene som skal brukes når man sender inn data til Mattilsynet. Dette er en veldig tidlig versjon av disse modellene, som er under utvikling, og det vil bli endringer.
 
 EU-kravet som skal implementeres er beskrevet her: https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R0564
