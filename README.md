@@ -63,13 +63,15 @@ Informasjon om de [ulike rest-endepunktene](dokumentasjon/bilder/endepunkter.png
 
 
 ### Kartdata
-Kartdata er sentralt i bruk av digital journalføring av plantevermidler. Vi har valgt å bruke [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON).
+Kartdata er sentralt i bruk av digital journalføring av plantevermidler. Vi har valgt å bruke [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON). Det er obligatorisk å sende inn kartdata.
 
-For sprøyting utendørs er det obligatorisk å sende inn kartdata. Nå er det frivillig å sende inn kartdata i feltene for _behandledeOmraader_ for sprøyting innendørs og på frø og formeringsmateriale, fordi det er usikkert om det skal sendes inn kartdata i disse tilfellene.  
+For sprøyting utendørs sendes kartdata inn i feltet ```behandledeOmraader```.
+
+For sprøyting innendørs og på frø og formeringsmateriale brukes feltet ``behandlingssted``. Dersom det er vanskelig eller ikke mulig å sende inn et polygon for behanlingsstedet, så skal det minimum sendes inn et koordinat, sånn at det er mulig å kartfeste hvor sprøytingen har foregått.
 
 Gyldige geometrityper er gitt [her](src/main/kotlin/no/mattilsynet/plantevernjournal/api/shared/kodeverk/GeometriTyper.kt).
 
-I GeoJSON er det mulig å sende inn properties, det bruker vi ikke per i dag.
+I GeoJSON er det mulig å sende inn properties, det bruker vi ikke per i dag, men det som eventuelt sendes inn i properties blir tatt vare på.
 
 Validering av geometri er beskrevet [her](dokumentasjon/validering.md).
 

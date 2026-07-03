@@ -36,7 +36,7 @@ class InnlesingService(
                             " og ${froeEllerFormeringsMatriale.id}")
 
                     froeEllerFormeringsMatriale.toFroeEllerFormeringsMatrialeResponsDto(
-                        behandledeOmraader = froeEllerFormeringsMatrialeDto.behandledeOmraader,
+                        behandledeOmraader = froeEllerFormeringsMatrialeDto.behandlingssted,
                         behandledeVekster = froeEllerFormeringsMatrialeDto.behandledeVekster,
                         plantevernmiddel = froeEllerFormeringsMatrialeDto.plantevernmiddel,
                     )
@@ -63,7 +63,7 @@ class InnlesingService(
                             " og ${innendoersBruk.id}")
 
                     innendoersBruk.toInnendoersBrukResponsDto(
-                        behandledeOmraader = innendoersBrukDto.behandledeOmraader,
+                        behandledeOmraader = innendoersBrukDto.behandlingssted,
                         behandledeVekster = innendoersBrukDto.behandledeVekster,
                         plantevernmiddel = innendoersBrukDto.plantevernmiddel,
                     )

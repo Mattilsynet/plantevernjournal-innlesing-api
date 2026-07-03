@@ -15,7 +15,7 @@ object InnendoersBrukDtoMocker {
 
     fun createInnendoersBrukDtoMock() =
         InnendoersBrukDto(
-            behandledeOmraader = createFeatureCollectionMock(createFeatureMock(createPointMock())),
+            behandlingssted = createFeatureCollectionMock(createFeatureMock(createPointMock())),
             behandledeVekster = listOf(createBehandletVekstDtoMock()),
             behandler = createPersonDtoMock(),
             behandletDato = LocalDate.now(),

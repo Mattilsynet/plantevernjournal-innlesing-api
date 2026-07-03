@@ -19,7 +19,7 @@ object FroeEllerFormeringsMatrialeDtoMocker {
             behandler = createPersonDtoMock(),
             behandletDato = LocalDate.now(),
             behandletMengde = createMengdeDtoMock(),
-            behandledeOmraader = createFeatureCollectionMock(createFeatureMock(createPointMock())),
+            behandlingssted = createFeatureCollectionMock(createFeatureMock(createPointMock())),
             bruksomraade = Bruksomraade.JORDBRUK,
             egenReferanse = "Egen referanse",
             organisasjonsnummerEier = "987654321",
