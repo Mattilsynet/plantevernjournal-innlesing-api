@@ -25,6 +25,8 @@ data class FroeEllerFormeringsMatriale(
 
     val behandletMengde: Mengde,
 
+    // behandledeOmraader brukes internt for å få samsvar mellom de ulike typene sprøyting
+    // mens behandlingssted brukes utad mot de eksterne systemene for at det skal bli lettere å skjønne hva som menes
     val behandledeOmraader: List<JsonElement>?,
 
     val bruksomraade: Bruksomraade,

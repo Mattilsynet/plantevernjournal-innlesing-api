@@ -50,7 +50,7 @@ class PlantevernjournalInnlesingController(
             description = "Data for å plantevernjournal for formeringsmateriale eller frø"
         ) @Valid @RequestBody froeEllerFormeringsMatrialeDto: FroeEllerFormeringsMatrialeDto,
     ): ResponseEntity<FroeEllerFormeringsMatrialeResponsDto> =
-        froeEllerFormeringsMatrialeDto.behandledeOmraader?.let { featureCollection ->
+        froeEllerFormeringsMatrialeDto.behandlingssted.let { featureCollection ->
             featureCollectionValidator.validate(featureCollection)
         }.run {
             innlesingService.postFroeEllerFormeringsMateriale(
@@ -73,7 +73,7 @@ class PlantevernjournalInnlesingController(
             description = "Data for å plantevernjournal for innendørs bruk av plantevernmiddel"
         ) @Valid @RequestBody innendoersBrukDto: InnendoersBrukDto,
     ): ResponseEntity<InnendoersBrukResponsDto> =
-        innendoersBrukDto.behandledeOmraader?.let { featureCollection ->
+        innendoersBrukDto.behandlingssted.let { featureCollection ->
             featureCollectionValidator.validate(featureCollection)
         }.run {
             innlesingService.postInnendoersBruk(

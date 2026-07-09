@@ -26,9 +26,9 @@ data class InnendoersBrukDto(
     val behandletDato: LocalDate,
 
     @Schema(
-        description = "Geografiske områder hvor man har behandlet med plantevernmidler", required = false,
+        description = "Område eller minst ett punkt for hvor behandlingen foregikk", required = true,
     )
-    val behandledeOmraader: FeatureCollection?,
+    val behandlingssted: FeatureCollection,
 
     @Schema(
         description = "Hvilket bruksområde har behandlingen", required = true,
@@ -69,7 +69,7 @@ data class InnendoersBrukDto(
         paaVegneAv: String?,
     ) =
         InnendoersBruk(
-            behandledeOmraader = behandledeOmraader?.toBehandledeOmraader(),
+            behandledeOmraader = behandlingssted.toBehandledeOmraader(),
             behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
             behandler = behandler.toPerson(),
             behandletDato = behandletDato,

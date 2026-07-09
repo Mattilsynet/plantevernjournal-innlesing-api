@@ -25,7 +25,7 @@ Content-Type: application/json
     "fornavn": "Lars"
   },
   "behandletDato": "2024-10-18",
-  "behandledeOmraader": {
+  "behandlingssted": {
     "type": "FeatureCollection",
     "features": [
       {
