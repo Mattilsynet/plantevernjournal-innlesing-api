@@ -1,6 +1,7 @@
 package no.mattilsynet.plantevernjournal.api.domain
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
 import no.mattilsynet.plantevernjournal.api.controllers.models.BehandletVekstDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.PlantevernmiddelDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.responses.FroeEllerFormeringsMatrialeResponsDto
@@ -26,7 +27,7 @@ data class FroeEllerFormeringsMatriale(
 
     // behandledeOmraader brukes internt for å få samsvar mellom de ulike typene sprøyting
     // mens behandlingssted brukes utad mot de eksterne systemene for at det skal bli lettere å skjønne hva som menes
-    val behandledeOmraader: List<String>?,
+    val behandledeOmraader: List<JsonElement>?,
 
     val bruksomraade: Bruksomraade,
 

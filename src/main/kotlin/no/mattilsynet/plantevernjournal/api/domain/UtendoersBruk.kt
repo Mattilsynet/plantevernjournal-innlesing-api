@@ -1,6 +1,7 @@
 package no.mattilsynet.plantevernjournal.api.domain
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
 import no.mattilsynet.plantevernjournal.api.controllers.models.BehandletVekstDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.PlantevernmiddelDto
 import no.mattilsynet.plantevernjournal.api.controllers.models.responses.UtendoersBrukResponsDto
@@ -20,7 +21,7 @@ data class UtendoersBruk(
 
     val behandler: Person,
 
-    val behandledeOmraader: List<String>?,
+    val behandledeOmraader: List<JsonElement>?,
 
     val bruksomraade: Bruksomraade,
 
