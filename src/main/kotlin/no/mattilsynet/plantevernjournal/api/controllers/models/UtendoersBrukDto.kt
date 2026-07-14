@@ -59,13 +59,14 @@ data class UtendoersBrukDto(
     val startTid: Instant,
 ) {
     fun toUtendoersBruk(
+        eppoKoderOgNavn: List<Pair<String, String>>,
         innsender: String?,
         paaVegneAv: String?,
     ) =
         UtendoersBruk(
             arealBehandletOmraade = arealBehandletOmraade.toMengde(),
             behandledeOmraader = behandledeOmraader.toBehandledeOmraader(),
-            behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
+            behandledeVekster = behandledeVekster.map { it.toBehandletVekst(eppoKoderOgNavn = eppoKoderOgNavn) },
             behandler = behandler.toPerson(),
             bruksomraade = bruksomraade,
             egenReferanse = egenReferanse,

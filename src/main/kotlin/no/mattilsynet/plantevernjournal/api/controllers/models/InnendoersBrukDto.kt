@@ -65,12 +65,13 @@ data class InnendoersBrukDto(
 ) {
 
     fun toInnendoersBruk(
+        eppoKoderOgNavn: List<Pair<String, String>>,
         innsender: String?,
         paaVegneAv: String?,
     ) =
         InnendoersBruk(
             behandledeOmraader = behandlingssted.toBehandledeOmraader(),
-            behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
+            behandledeVekster = behandledeVekster.map { it.toBehandletVekst(eppoKoderOgNavn = eppoKoderOgNavn) },
             behandler = behandler.toPerson(),
             behandletDato = behandletDato,
             bruksomraade = bruksomraade,
