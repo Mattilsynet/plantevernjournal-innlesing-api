@@ -60,11 +60,12 @@ data class FroeEllerFormeringsMatrialeDto(
 ) {
 
     fun toFroeEllerFormeringsMatriale(
+        eppoKoderOgNavn: List<Pair<String, String>>,
         innsender: String?,
         paaVegneAv: String?,
     ) =
         FroeEllerFormeringsMatriale(
-            behandledeVekster = behandledeVekster.map { it.toBehandletVekst() },
+            behandledeVekster = behandledeVekster.map { it.toBehandletVekst(eppoKoderOgNavn = eppoKoderOgNavn) },
             behandler = behandler.toPerson(),
             behandletDato = behandletDato,
             behandletMengde = behandletMengde.toMengde(),

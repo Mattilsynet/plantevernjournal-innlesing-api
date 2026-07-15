@@ -8,6 +8,8 @@ data class BehandletVekst(
 
     val eppoKode: String,
 
+    val eppoNavn: String,
+
     val partinummer: Int?,
 
     val sort: String?,

@@ -1,9 +1,8 @@
 package no.mattilsynet.plantevernjournal.api.nats.consumers
 
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import no.mattilsynet.plantevernjournal.api.nats.consumers.models.EppoNats
+import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
@@ -45,8 +44,7 @@ class EppoKvConsumer(
             ).get(key = eppoKode)
                 ?.let { eppoKode ->
                     runCatching {
-                        eppoKode.getValue()
-                            ?.let { String(it) }
+                        Json.decodeFromString<EppoNats>(String(eppoKode.getValue()!!)).eppoNavn
                     }.onFailure { throwable ->
                         logger.error(
                             "Kunne ikke parse $eppoKode som string",

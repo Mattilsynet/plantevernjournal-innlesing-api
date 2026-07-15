@@ -21,10 +21,11 @@ class InnlesingService(
         innsender: String?,
         paaVegneAv: String?,
     ) =
-        froeEllerFormeringsMatrialeDto.behandledeVekster.validateEppokoder()
-            .run {
+        froeEllerFormeringsMatrialeDto.behandledeVekster.getEppoKoderOgNavn()
+            .let { eppoKoderOgNavn ->
                 logger.info("postFroeEllerFormeringsMateriale for innsender orgnr: $innsender")
                 froeEllerFormeringsMatrialeDto.toFroeEllerFormeringsMatriale(
+                    eppoKoderOgNavn = eppoKoderOgNavn,
                     innsender = innsender,
                     paaVegneAv = paaVegneAv,
                 ).let { froeEllerFormeringsMatriale ->
@@ -32,8 +33,10 @@ class InnlesingService(
                         froeEllerFormeringsMatriale = froeEllerFormeringsMatriale,
                     )
 
-                    logger.info("postFroeEllerFormeringsMateriale ferdig for innsender orgnr: $innsender" +
-                            " og ${froeEllerFormeringsMatriale.id}")
+                    logger.info(
+                        "postFroeEllerFormeringsMateriale ferdig for innsender orgnr: $innsender" +
+                                " og ${froeEllerFormeringsMatriale.id}"
+                    )
 
                     froeEllerFormeringsMatriale.toFroeEllerFormeringsMatrialeResponsDto(
                         behandledeOmraader = froeEllerFormeringsMatrialeDto.behandlingssted,
@@ -48,10 +51,11 @@ class InnlesingService(
         innsender: String?,
         paaVegneAv: String?,
     ) =
-        innendoersBrukDto.behandledeVekster.validateEppokoder()
-            .run {
+        innendoersBrukDto.behandledeVekster.getEppoKoderOgNavn()
+            .let { eppoKoderOgNavn ->
                 logger.info("postInnendoersBruk for innsender orgnr: $innsender")
                 innendoersBrukDto.toInnendoersBruk(
+                    eppoKoderOgNavn = eppoKoderOgNavn,
                     innsender = innsender,
                     paaVegneAv = paaVegneAv,
                 ).let { innendoersBruk ->
@@ -59,8 +63,10 @@ class InnlesingService(
                         innendoersBruk = innendoersBruk,
                     )
 
-                    logger.info("postInnendoersBruk ferdig for innsender orgnr: $innsender" +
-                            " og ${innendoersBruk.id}")
+                    logger.info(
+                        "postInnendoersBruk ferdig for innsender orgnr: $innsender" +
+                                " og ${innendoersBruk.id}"
+                    )
 
                     innendoersBruk.toInnendoersBrukResponsDto(
                         behandledeOmraader = innendoersBrukDto.behandlingssted,
@@ -75,27 +81,29 @@ class InnlesingService(
         paaVegneAv: String?,
         utendoersBrukDto: UtendoersBrukDto,
     ) =
-        utendoersBrukDto.behandledeVekster.validateEppokoder()
-            .run {
+        utendoersBrukDto.behandledeVekster.getEppoKoderOgNavn()
+            .let { eppoKoderOgNavn ->
                 logger.info("postUtendoersBruk for innsender orgnr: $innsender")
                 utendoersBrukDto.toUtendoersBruk(
+                    eppoKoderOgNavn = eppoKoderOgNavn,
                     innsender = innsender,
                     paaVegneAv = paaVegneAv,
-                )
-                    .let { utendoersBruk ->
-                        natsService.publishJournalForUtendoersBruk(
-                            utendoersBruk = utendoersBruk,
-                        )
+                ).let { utendoersBruk ->
+                    natsService.publishJournalForUtendoersBruk(
+                        utendoersBruk = utendoersBruk,
+                    )
 
-                        logger.info("postUtendoersBruk ferdig for innsender orgnr: $innsender" +
-                                " og ${utendoersBruk.id}")
+                    logger.info(
+                        "postUtendoersBruk ferdig for innsender orgnr: $innsender" +
+                                " og ${utendoersBruk.id}"
+                    )
 
-                        utendoersBruk.toUtendoersBrukResponsDto(
-                            behandledeOmraader = utendoersBrukDto.behandledeOmraader,
-                            behandledeVekster = utendoersBrukDto.behandledeVekster,
-                            plantevernmiddel = utendoersBrukDto.plantevernmiddel,
-                        )
-                    }
+                    utendoersBruk.toUtendoersBrukResponsDto(
+                        behandledeOmraader = utendoersBrukDto.behandledeOmraader,
+                        behandledeVekster = utendoersBrukDto.behandledeVekster,
+                        plantevernmiddel = utendoersBrukDto.plantevernmiddel,
+                    )
+                }
             }
 
     fun deleteUtendoersBruk(
@@ -131,14 +139,17 @@ class InnlesingService(
         )
     }
 
-    private suspend fun List<BehandletVekstDto>.validateEppokoder() =
-         map { it.eppoKode }
-             .filter { eppoKode ->
-                 eppoService.getNavnFraEppoKode(eppoKode = eppoKode) == null
-             }.takeIf { it.isNotEmpty() }
-             ?.let { eppoKoder ->
-                 throw NoSuchElementException(
-                     eppoKoder.joinToString(", ") + " finnes ikke i eppodatabasen."
-                 )
-             }
+    private suspend fun List<BehandletVekstDto>.getEppoKoderOgNavn() =
+        map { it.eppoKode to eppoService.getNavnFraEppoKode(eppoKode = it.eppoKode) }
+            .also { eppoKoderOgNavn ->
+                eppoKoderOgNavn.filter { it.second == null }
+                    .takeIf { it.isNotEmpty() }
+                    ?.let { eppoKoder ->
+                        throw NoSuchElementException(
+                            eppoKoder.joinToString(", ") { it.first } + " finnes ikke i eppodatabasen."
+                        )
+                    }
+            }.mapNotNull { (first, second) ->
+                second?.let { first to it }
+            }
 }
