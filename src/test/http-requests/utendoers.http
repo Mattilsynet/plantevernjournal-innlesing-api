@@ -16,6 +16,12 @@ Content-Type: application/json
       "sort": "Magnolia"
     },
     {
+      "bbchFase": "05",
+      "eppoKode": "1PRUNG",
+      "partinummer": 2,
+      "sort": "Magnolia"
+    },
+    {
       "bbchFase": "01",
       "eppoKode": "PRULA",
       "partinummer": 27,
@@ -29,6 +35,31 @@ Content-Type: application/json
   "behandledeOmraader": {
     "type": "FeatureCollection",
     "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "MultiPolygon",
+          "coordinates":
+          [
+            [
+              [
+                [10.891963, 59.926597],
+                [10.902949, 59.921693],
+                [10.887328, 59.923414],
+                [10.891963, 59.926597]
+              ]
+            ],
+            [
+              [
+                [10.744249, 59.920790],
+                [10.742875, 59.921951],
+                [10.745708, 59.921521],
+                [10.744249, 59.920790]
+              ]
+            ]
+          ]
+        }
+      },
       {
         "type": "Feature",
         "geometry": {
