@@ -19,7 +19,7 @@ spring:
     import: "sm@"
 
   profiles:
-    active: local
+    active: staging
 
 eppo:
   api:
@@ -29,3 +29,6 @@ eppo:
 nats:
   url: tls://connect.nats.mattilsynet.io:4222
   creds: ${sm@nats-creds}
+
+# agrilogg, farmable, jordplan, skifteplan, mattilsynet
+fagsystemer: 924293438,821604702,996063631,878700562,985399077
