@@ -83,7 +83,7 @@ class PlantevernjournalInnlesingController(
 
             innlesingService.postInnendoersBruk(
                 innendoersBrukDto = innendoersBrukDto,
-                innsender = jwt?.getInnsenderFraTokenEllerNull(),
+                innsender = innsender,
                 paaVegneAv = jwt?.getPaaVegneAvFraToken(innsender = innsender),
             ).let { innendoersBrukResponsDto ->
                 return ResponseEntity.status(HttpStatus.CREATED).body(innendoersBrukResponsDto)
@@ -107,7 +107,7 @@ class PlantevernjournalInnlesingController(
             val innsender = jwt?.getInnsenderFraTokenEllerNull()
 
             innlesingService.postUtendoersBruk(
-                innsender = jwt?.getInnsenderFraTokenEllerNull(),
+                innsender = innsender,
                 paaVegneAv = jwt?.getPaaVegneAvFraToken(innsender = innsender),
                 utendoersBrukDto = utendoersBrukDto,
             ).let { utendoersBrukResponsDto ->
@@ -130,7 +130,7 @@ class PlantevernjournalInnlesingController(
 
         innlesingService.deleteUtendoersBruk(
             id = id,
-            innsender = jwt?.getInnsenderFraTokenEllerNull(),
+            innsender = innsender,
             paaVegneAv = jwt?.getPaaVegneAvFraToken(innsender = innsender),
         )
         return ResponseEntity.noContent().build()
@@ -151,7 +151,7 @@ class PlantevernjournalInnlesingController(
 
         innlesingService.deleteInnendoersBruk(
             id = id,
-            innsender = jwt?.getInnsenderFraTokenEllerNull(),
+            innsender = innsender,
             paaVegneAv = jwt?.getPaaVegneAvFraToken(innsender = innsender),
         )
         return ResponseEntity.noContent().build()
@@ -174,7 +174,7 @@ class PlantevernjournalInnlesingController(
 
         innlesingService.deleteFroeEllerFormeringsMatriale(
             id = id,
-            innsender = jwt?.getInnsenderFraTokenEllerNull(),
+            innsender = innsender,
             paaVegneAv = jwt?.getPaaVegneAvFraToken(innsender = innsender),
         )
         return ResponseEntity.noContent().build()
