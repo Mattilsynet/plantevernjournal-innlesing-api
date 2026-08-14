@@ -15,6 +15,7 @@ import no.mattilsynet.plantevernjournal.api.controllers.models.responses.Innendo
 import no.mattilsynet.plantevernjournal.api.controllers.models.responses.UtendoersBrukResponsDto
 import no.mattilsynet.plantevernjournal.api.services.InnlesingService
 import no.mattilsynet.plantevernjournal.api.validation.FeatureCollectionValidator
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -35,6 +36,7 @@ import java.util.UUID
     name = "Innlesing plantevernjournal",
 )
 class PlantevernjournalInnlesingController(
+    @Value("\${fagsystemer}") private val fagsystemer: List<String>,
     private val featureCollectionValidator: FeatureCollectionValidator,
     private val innlesingService: InnlesingService,
 ) {
@@ -53,10 +55,11 @@ class PlantevernjournalInnlesingController(
         froeEllerFormeringsMatrialeDto.behandlingssted.let { featureCollection ->
             featureCollectionValidator.validate(featureCollection)
         }.run {
+            val innsender = jwt?.getInnsenderFraTokenEllerNull()
             innlesingService.postFroeEllerFormeringsMateriale(
                 froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDto,
-                innsender = jwt?.getInnsenderFraTokenEllerNull(),
-                paaVegneAv = jwt?.getPaaVegneAvFraToken(),
+                innsender = innsender,
+                paaVegneAv = jwt?.getPaaVegneAvFraToken(innsender),
             ).let { froeEllerFormeringsMatrialeResponsDto ->
                 return ResponseEntity.status(HttpStatus.CREATED).body(froeEllerFormeringsMatrialeResponsDto)
             }
@@ -76,10 +79,12 @@ class PlantevernjournalInnlesingController(
         innendoersBrukDto.behandlingssted.let { featureCollection ->
             featureCollectionValidator.validate(featureCollection)
         }.run {
+            val innsender = jwt?.getInnsenderFraTokenEllerNull()
+
             innlesingService.postInnendoersBruk(
                 innendoersBrukDto = innendoersBrukDto,
-                innsender = jwt?.getInnsenderFraTokenEllerNull(),
-                paaVegneAv = jwt?.getPaaVegneAvFraToken(),
+                innsender = innsender,
+                paaVegneAv = jwt?.getPaaVegneAvFraToken(innsender = innsender),
             ).let { innendoersBrukResponsDto ->
                 return ResponseEntity.status(HttpStatus.CREATED).body(innendoersBrukResponsDto)
             }
@@ -99,9 +104,11 @@ class PlantevernjournalInnlesingController(
         featureCollectionValidator.validate(
             utendoersBrukDto.behandledeOmraader,
         ).run {
+            val innsender = jwt?.getInnsenderFraTokenEllerNull()
+
             innlesingService.postUtendoersBruk(
-                innsender = jwt?.getInnsenderFraTokenEllerNull(),
-                paaVegneAv = jwt?.getPaaVegneAvFraToken(),
+                innsender = innsender,
+                paaVegneAv = jwt?.getPaaVegneAvFraToken(innsender = innsender),
                 utendoersBrukDto = utendoersBrukDto,
             ).let { utendoersBrukResponsDto ->
                 return ResponseEntity.status(HttpStatus.CREATED).body(utendoersBrukResponsDto)
@@ -119,10 +126,12 @@ class PlantevernjournalInnlesingController(
             description = "Id til innlesingen som skal slettes"
         ) @PathVariable id: UUID,
     ): ResponseEntity<Unit> = runCatching {
+        val innsender = jwt?.getInnsenderFraTokenEllerNull()
+
         innlesingService.deleteUtendoersBruk(
             id = id,
-            innsender = jwt?.getInnsenderFraTokenEllerNull(),
-            paaVegneAv = jwt?.getPaaVegneAvFraToken(),
+            innsender = innsender,
+            paaVegneAv = jwt?.getPaaVegneAvFraToken(innsender = innsender),
         )
         return ResponseEntity.noContent().build()
     }.getOrThrow()
@@ -138,10 +147,12 @@ class PlantevernjournalInnlesingController(
             description = "Id til innlesingen som skal slettes"
         ) @PathVariable id: UUID,
     ): ResponseEntity<Unit> = runCatching {
+        val innsender = jwt?.getInnsenderFraTokenEllerNull()
+
         innlesingService.deleteInnendoersBruk(
             id = id,
-            innsender = jwt?.getInnsenderFraTokenEllerNull(),
-            paaVegneAv = jwt?.getPaaVegneAvFraToken(),
+            innsender = innsender,
+            paaVegneAv = jwt?.getPaaVegneAvFraToken(innsender = innsender),
         )
         return ResponseEntity.noContent().build()
     }.onFailure {
@@ -159,10 +170,12 @@ class PlantevernjournalInnlesingController(
             description = "Id til innlesingen som skal slettes"
         ) @PathVariable id: UUID,
     ): ResponseEntity<Unit> = runCatching {
+        val innsender = jwt?.getInnsenderFraTokenEllerNull()
+
         innlesingService.deleteFroeEllerFormeringsMatriale(
             id = id,
-            innsender = jwt?.getInnsenderFraTokenEllerNull(),
-            paaVegneAv = jwt?.getPaaVegneAvFraToken(),
+            innsender = innsender,
+            paaVegneAv = jwt?.getPaaVegneAvFraToken(innsender = innsender),
         )
         return ResponseEntity.noContent().build()
     }.onFailure {
@@ -179,7 +192,7 @@ class PlantevernjournalInnlesingController(
     private val objectMapper = jacksonObjectMapper()
 
     @Suppress("UNUSED")
-    private fun Jwt.getPaaVegneAvFraToken() =
+    private fun Jwt.getPaaVegneAvFraToken(innsender: String?) =
         (claims["authorization_details"]
             ?.let {
                 objectMapper.convertValue(it, object : TypeReference<List<AuthorizationDetail>>() {})
@@ -188,4 +201,13 @@ class PlantevernjournalInnlesingController(
             ?.systemOrgId
             ?.let { it as String })  // må ha cast
             ?.substring(5)
+
+        // Samtykke må sendes inn fra fagsystemene
+            ?: let {
+                require(innsender == null || fagsystemer.none { it == innsender }) {
+                    "$innsender må ha token med samtykke fra bruker"
+                }
+                null
+            }
+
 }
