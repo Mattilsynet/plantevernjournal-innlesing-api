@@ -1,12 +1,16 @@
 package no.mattilsynet.plantevernjournal.api.config
 
+import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.web.server.SecurityWebFilterChain
+import reactor.core.publisher.Mono
 
 
 @Configuration
@@ -30,6 +34,20 @@ class SecurityConfig {
                     .anyExchange().authenticated()
             }.oauth2ResourceServer { http ->
                 http.jwt(Customizer.withDefaults())
+            }.exceptionHandling { exceptionHandling ->
+                exceptionHandling.authenticationEntryPoint { exchange, exception ->
+                    logger.error("Autentisering feilet: ${exception.message}", exception)
+
+                    exchange.response.statusCode = HttpStatus.UNAUTHORIZED
+                    exchange.response.headers.contentType = MediaType.APPLICATION_JSON
+                    val body = """{"Autentisering feilet: ":"${exception.message}"}"""
+                    val buffer = exchange.response.bufferFactory().wrap(body.toByteArray())
+                    exchange.response.writeWith(Mono.just(buffer))
+                }
             }
             .build()
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(SecurityConfig::class.java)
+    }
 }
