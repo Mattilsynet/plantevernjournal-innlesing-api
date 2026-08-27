@@ -1,8 +1,10 @@
 package no.mattilsynet.plantevernjournal.api.config
 
+import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import org.springframework.http.HttpStatus
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
@@ -30,6 +32,17 @@ class SecurityConfig {
                     .anyExchange().authenticated()
             }.oauth2ResourceServer { http ->
                 http.jwt(Customizer.withDefaults())
+            }.exceptionHandling { exceptionHandling ->
+                exceptionHandling.authenticationEntryPoint { exchange, exception ->
+                    logger.error("Autentisering feilet: ${exception.message}", exception)
+
+                    exchange.response.statusCode = HttpStatus.UNAUTHORIZED
+                    exchange.response.setComplete()
+                }
             }
             .build()
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(SecurityConfig::class.java)
+    }
 }
