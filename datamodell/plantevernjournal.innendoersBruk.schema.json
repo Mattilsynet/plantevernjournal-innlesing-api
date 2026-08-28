@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Plantevernjournal, innendørs bruk av plantevernmidler",
+  "description": "Journalfelter for innendørs bruk av plantevernmidler.",
+  "type": "object",
+  "properties": {
+    "plantevernmiddel": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "autorisasjonsnummer": {
+            "type": "string"
+          },
+          "dosering": {
+            "type": "object",
+            "description": "kg eller l plantevernmiddel per kvadratmeter eller kubikkmeter",
+            "properties": {
+              "verdi": {
+                "type": "number"
+              },
+              "enhet": {
+                "type": "string",
+                "enum": ["kg/m2", "l/m2", "kg/m3", "l/m3"]
+              }
+            },
+            "required": ["verdi", "enhet"]
+          }
+        },
+        "required": ["autorisasjonsnummer", "dosering"]
+      }
+    },
+    "bruksomraade": {
+      "type": "string",
+      "enum": ["JORDBRUK"]
+    },
+    "bygningsnummer": {
+      "$comment": "Noen i et møte nevnte at alle bygninger i Norge har dette. Stemmer det?",
+      "type": "string"
+    },
+    "gaardsnummer": {
+      "type": "string"
+    },
+    "behandletDato": {
+      "type": "string",
+      "format": "date"
+    },
+    "behandletOmraade": {
+      "type": "object",
+      "$comment": "Kartdata på formatet som bestemmes"
+    },
+    "bygningsstoerrelse": {
+      "type": "object",
+      "description": "Størrelse på bygningen i kvadratmeter eller kubikkmeter",
+      "properties": {
+        "verdi": {
+          "type": "number"
+        },
+        "enhet": {
+          "type": "string",
+          "enum": ["m2", "m3"]
+        }
+      },
+      "required": ["verdi", "enhet"]
+    },
+    "behandledeVekster": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "eppoKode": {
+            "type": "string"
+          },
+          "bbchFase": {
+            "type": "string",
+            "description": "Fra BBCH-skalaen til den behandlede veksten. To siffer."
+          }
+        },
+        "required": ["eppoKode"]
+      }
+    }
+  },
+  "if": {
+    "properties": {
+      "bruksomraade": {
+        "const": "JORDBRUK"
+      }
+    }
+  },
+  "then": {
+    "required": ["gaardsnummer"]
+  },
+  "required": [
+    "plantevernmiddel",
+    "bruksomraade",
+    "dosering",
+    "behandletDato",
+    "behandletOmraade",
+    "behandledeVekster",
+    "bygningsstoerrelse",
+    "bygningsnummer"
+  ]
+}
