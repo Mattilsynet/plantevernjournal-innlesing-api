@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "2.4.10"
     kotlin("plugin.spring") version "2.4.10"
     kotlin("plugin.serialization") version "2.4.10"
-    id("org.springframework.boot") version "4.1.0"
+    id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -11,7 +11,7 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
-val mockitoAgent = configurations.create("mockitoAgent")
+val mockitoAgent: Configuration = configurations.create("mockitoAgent")
 
 repositories {
     gradlePluginPortal()
@@ -46,7 +46,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
     // Springdoc (Swagger)
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:3.1.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui")
 
     // gcp
     implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.1.0"))
@@ -60,7 +60,7 @@ dependencies {
     implementation("org.wololo:jts2geojson:0.18.1")
 
     // virtual-nats
-    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.06.23-12.08-423921d7d5d1"))
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.08.21-11.29-e5ea23474c76"))
     implementation("no.mattilsynet.virtualnats:virtual-nats-core")
     implementation("no.mattilsynet.virtualnats:virtual-nats-spring")
 
@@ -85,6 +85,12 @@ kotlin {
 
 dependencyLocking {
     lockAllConfigurations()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springdoc:springdoc-openapi-bom:3.1.0")
+    }
 }
 
 tasks {
