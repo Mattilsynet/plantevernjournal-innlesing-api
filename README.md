@@ -4,15 +4,17 @@ Mattilsynet skal samle inn data om bruk av plantevernmidler i landbruket i Norge
 
 Mattilsynet sin tolkning er at journalføring for bruk av beiset såvare ikke er inkludert i plantevernmiddelforordningen. I EUs forslag til forenklinger i forordning (EF) nr. 1007/2009, COM(2025)1030, er det foreslått at beising av såvarer med plantevernmidler, og bruk av beiset såvare, skal regnes som bruk av plantevernmiddel. Foreløpig skal det ikke føres journal ved bruk av beiset såvare, men dette kan bli endret på sikt.
 
-plantevernjournal-innlesing-api inneholder datamodellene som skal brukes når man sender inn data til Mattilsynet. Dette er en veldig tidlig versjon av disse modellene, som er under utvikling, og det vil bli endringer.
+plantevernjournal-innlesing-api inneholder datamodellene som skal brukes når man sender inn data til Mattilsynet.
 
 EU-kravet som skal implementeres er beskrevet her: https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R0564
 
-Dette er pågående arbeid, så det er fortsatt mye som ikke er avklart. Mer informasjon vil komme senere, som f.eks. identifisering av brukere, hvordan og hvor ofte data skal rapporteres til Mattilsynet.
+Det er ikke bestemt hvor ofte data skal rapporteres til Mattilsynet, men vår anbefaling er at det sendes inn fortløpende, eller uten unødvendig opphold.
 
-Input til rest-endepunktene vil ikke versjoneres i starten, og man må anta at det vil komme endringer som gjør at ting brekker.
+Input til rest-endepunktene vil ikke versjoneres i starten, men det vil de bli ved endringer som ikke er bakoverkompatible.
 
-Mange datafelter er frivillige til å begynne med, men vil bli obligatoriske etter hvert. Det er noen av datafeltene vi er litt usikre på hva som kreves, og det blir endringer utover i utviklingsløpet. Det gjelder særlig det med definisjon av steder uten kart. Det er ikke avgjort hva som skal ha presedens dersom man sender inn kartdata som ikke stemmer overens med areal.
+Noen datafelter er frivillige til å begynne med, men kan bli obligatoriske etter hvert. Vi anbefaler at det sendes inn så komplett datasett som mulig, også frivillige felter.
+
+Det gjøres i dag ikke noen validering av kartdata og behandletAreal. Det viktige er at sprøytingen er kartfestet så man vet hvor det er, og så kan arealet være mindre enn det kartfestede.
 
 Link til api-dokumentasjon i dev: https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html
 
@@ -31,6 +33,8 @@ Api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal-sta
 #### produksjon:
 For å få tilgang i produksjon, må man ha sendt inn data på korrekt måte i stagingmiljøet, og fått det godkjent av Mattilsynet. Mattilsynet vil så gi tilgang til å sende inn data i produksjonsmiljøet. Ta kontakt på epost _plantevernjournal@mattilsynet.no_
 
+De som har fått tilgang til produksjonsmiljøet blir publisert på Mattilsynet sin nettsider: https://www.mattilsynet.no/planter-og-dyrking/plantevernmidler/arbeid-med-ny-elektronisk-plantevernjournal
+
 Dette miljøet går mot maskinporten sitt produksjonsmiljø, og man må ha satt opp dette på korrekt måte før man kan sende inn data.
 
 Api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal.mattilsynet.io/swagger-ui/index.html
@@ -41,6 +45,8 @@ Maskinporten skal brukes til autentisering når man sender inn data. For å star
 For å sende inn data til digital plantevernjournal er scopet _mattilsynet:plantevern.journal.innlesing_.
 
 **Hvis du er en skifteleverandør, skal du innhente samtykke fra sluttbruker før du sender inn data. Mer informasjon om denne flyten finnes i [Autentisering via Maskinporten med Systembruker](maskinporten.md).**
+
+Det er eier at skriftet hvor det sprøytes som er ansvarlig for innrapportering av data, men det er lagt opp til at det også kan gjøres av entrepenør. Det er eier og sprøyter som må bli enige om hvem som sender inn til Mattilsynet. Det gjøres ikke noen validering på om sprøytinger sendes inn dobbelt.
 
 Ta kontakt på _plantevernjournal@mattilsynet.no_ hvis det er noe dere trenger hjelp med.
 
@@ -65,7 +71,7 @@ Informasjon om de [ulike rest-endepunktene](dokumentasjon/bilder/endepunkter.png
 
 
 ### Kartdata
-Kartdata er sentralt i bruk av digital journalføring av plantevermidler. Vi har valgt å bruke [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON). Det er obligatorisk å sende inn kartdata.
+Kartdata er sentralt i bruk av digital journalføring av plantevermidler. Vi har valgt å bruke [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON). Det er EPSG:4326 som skal brukes. Det er obligatorisk å sende inn kartdata.
 
 For sprøyting utendørs sendes kartdata inn i feltet ```behandledeOmraader```.
 
@@ -81,7 +87,7 @@ Validering av geometri er beskrevet [her](dokumentasjon/validering.md).
 ### BBCH/vekststadier
 Det skal angis vekststadium for vekstene som sprøytes, og til det skal det brukes BBCH-skala. [Her](https://en.wikipedia.org/wiki/BBCH-scale) kan man lese litt om hva dette betyr. Vi kommer tilbake til akkurat hvordan dette skal angis.
 
-Det vil bli obligatorisk å sende inn vekststadium på sikt.
+Det vil bli obligatorisk å sende inn vekststadium på sikt, så vi anbefaler at dere sender det med så fort dere er klare til det.
 
 Her er et eksempel på utviklingsstadier for [potet](https://potet.no/kunnskap/fagartikler/potet/potet/bbch-skala-for-potet) (fra Fagforum Potet).
 
