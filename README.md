@@ -30,6 +30,8 @@ Api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal-dev
 Brukes for testing av innsending av data, med autentisering. Dette er et testmiljø, og skal bare ha data for testformål. Dette miljøet kan brukes for å teste hele løpet, med autentisering med maskinporten, og innsending av data.
 Api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/swagger-ui/index.html
 
+Skifteleverandører må sende inn token med samtykke fra sluttbruker, så det kan verifiseres at det er på plass.
+
 #### produksjon:
 For å få tilgang i produksjon, må man ha sendt inn data på korrekt måte i stagingmiljøet, og fått det godkjent av Mattilsynet. Mattilsynet vil så gi tilgang til å sende inn data i produksjonsmiljøet. Ta kontakt på epost _plantevernjournal@mattilsynet.no_
 
