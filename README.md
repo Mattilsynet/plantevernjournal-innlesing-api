@@ -14,7 +14,7 @@ Input til rest-endepunktene vil ikke versjoneres i starten, men det vil de bli v
 
 Noen datafelter er frivillige til å begynne med, men kan bli obligatoriske etter hvert. Vi anbefaler at det sendes inn så komplett datasett som mulig, også frivillige felter.
 
-Det gjøres i dag ikke noen validering av kartdata og behandletAreal. Det viktige er at sprøytingen er kartfestet så man vet hvor det er, og så kan arealet være mindre enn det kartfestede.
+Det gjøres i dag ikke noen validering av størrelsen på kartdata og behandletAreal.
 
 Link til api-dokumentasjon i dev: https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html
 
@@ -27,7 +27,7 @@ Brukes for testing av innsending av data, uten autentisering. Data som sendes in
 Api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html
 
 #### staging:
-Brukes for testing av innsending av data, med autentisering. Dette er et testmiljø, og skal bare ha data for testformål. Dette miljøet kan brukes for å teste hele løpet, med autentisering med maskinporten, og innsending av data.
+Brukes for testing av innsending av data, med autentisering. Staging går mot maskinporten sitt testmiljø. Dette er et testmiljø, og skal bare ha data for testformål. Dette miljøet kan brukes for å teste hele løpet, med autentisering med maskinporten, og innsending av data.
 Api-dokumentasjon: https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/swagger-ui/index.html
 
 Skifteleverandører må sende inn token med samtykke fra sluttbruker, så det kan verifiseres at det er på plass.
@@ -48,14 +48,11 @@ For å sende inn data til digital plantevernjournal er scopet _mattilsynet:plant
 
 **Hvis du er en skifteleverandør, skal du innhente samtykke fra sluttbruker før du sender inn data. Mer informasjon om denne flyten finnes i [Autentisering via Maskinporten med Systembruker](maskinporten.md).**
 
-Det er eier at skriftet hvor det sprøytes som er ansvarlig for innrapportering av data, men det er lagt opp til at det også kan gjøres av entrepenør. Det er eier og sprøyter som må bli enige om hvem som sender inn til Mattilsynet. Det gjøres ikke noen validering på om sprøytinger sendes inn dobbelt.
+Det er eier av skriftet hvor det sprøytes som er ansvarlig for innrapportering av data, men det er lagt opp til at det også kan gjøres av entrepenør. Det er eier og sprøyter som må bli enige om hvem som sender inn til Mattilsynet. Det gjøres ikke noen validering på om sprøytinger sendes inn dobbelt.
+
+Næremere beskrivelse av oppsett i [Miljøer](#miljøer). 
 
 Ta kontakt på _plantevernjournal@mattilsynet.no_ hvis det er noe dere trenger hjelp med.
-
-Dev-miljøet ligger åpent, så her kan man teste innsending av data uten å sette opp maskinporten. Vi har laget et stagingmiljø som krever autentisering, for at man skal kunne teste at oppsettet med maskinporten er riktig.
-Link til api-dokumentasjon i staging: https://plantevernjournal-innlesing-api.plantevernjournal-staging.mattilsynet.io/swagger-ui/index.html
-
-Stagingmiljøet går mot maskinporten sitt testmiljø, mens produksjon går mot produksjonsmiljøet. Dev-miljøet ligger åpent, så her kan man sende inn data uten å autentisere seg.
 
 
 ### Datamodeller
