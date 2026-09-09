@@ -48,7 +48,7 @@ For å sende inn data til digital plantevernjournal er scopet _mattilsynet:plant
 
 **Hvis du er en skifteleverandør, skal du innhente samtykke fra sluttbruker før du sender inn data. Mer informasjon om denne flyten finnes i [Autentisering via Maskinporten med Systembruker](maskinporten.md).**
 
-Det er eier av skriftet hvor det sprøytes som er ansvarlig for innrapportering av data, men det er lagt opp til at det også kan gjøres av entrepenør. Det er eier og sprøyter som må bli enige om hvem som sender inn til Mattilsynet. Det gjøres ikke noen validering på om sprøytinger sendes inn dobbelt.
+Det er eier av skiftet hvor det sprøytes som er ansvarlig for innrapportering av data, men det er lagt opp til at det også kan gjøres av entrepenør. Det er eier og sprøyter som må bli enige om hvem som sender inn til Mattilsynet. Det gjøres ikke noen validering på om sprøytinger sendes inn dobbelt.
 
 Næremere beskrivelse av oppsett i [Miljøer](#miljøer). 
 
