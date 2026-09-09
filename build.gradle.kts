@@ -49,7 +49,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.1.0"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.1.1"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
 
     // Jackson:
