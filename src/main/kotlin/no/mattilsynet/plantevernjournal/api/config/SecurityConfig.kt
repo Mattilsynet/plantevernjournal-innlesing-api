@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpStatus
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException
+import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
@@ -34,7 +36,12 @@ class SecurityConfig {
                 http.jwt(Customizer.withDefaults())
             }.exceptionHandling { exceptionHandling ->
                 exceptionHandling.authenticationEntryPoint { exchange, exception ->
-                    logger.error("Autentisering feilet: ${exception.message}", exception)
+                    when (exception) {
+                        is AuthenticationCredentialsNotFoundException ->
+                            logger.info("Autentisering feilet: ${exception.message}", exception)
+                        is AuthenticationServiceException ->
+                            logger.error("Autentisering feilet, feil med maskinporten: ${exception.message}", exception)
+                    }
 
                     exchange.response.statusCode = HttpStatus.UNAUTHORIZED
                     exchange.response.setComplete()
