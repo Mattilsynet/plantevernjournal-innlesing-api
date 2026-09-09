@@ -14,7 +14,7 @@ Input til rest-endepunktene vil ikke versjoneres i starten, men det vil de bli v
 
 Noen datafelter er frivillige til å begynne med, men kan bli obligatoriske etter hvert. Vi anbefaler at det sendes inn så komplett datasett som mulig, også frivillige felter.
 
-Det gjøres i dag ikke noen validering av størrelsen på kartdata og behandletAreal.
+Det gjøres i dag ikke noen validering av størrelsen på kartdata og behandletAreal. Det viktige er at sprøytingen er kartfestet. Journalføreren og fagsystemet har ansvar for at kartdataen peker på riktig lokasjon der det er brukt plantevernmiddel.
 
 Link til api-dokumentasjon i dev: https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html
 
