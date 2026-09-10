@@ -89,7 +89,7 @@ dependencyLocking {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springdoc:springdoc-openapi-bom:3.1.0")
+        mavenBom("org.springdoc:springdoc-openapi-bom:3.1.1")
     }
 }
 
