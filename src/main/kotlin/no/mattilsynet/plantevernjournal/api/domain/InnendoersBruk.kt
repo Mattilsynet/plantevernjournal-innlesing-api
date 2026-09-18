@@ -16,6 +16,8 @@ import java.util.UUID
 
 @Serializable
 data class InnendoersBruk(
+    val arealBehandletOmraade: Mengde,
+
     val behandledeVekster: List<BehandletVekst>,
 
     val behandler: Person,

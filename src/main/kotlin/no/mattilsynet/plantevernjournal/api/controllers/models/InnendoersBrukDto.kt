@@ -13,6 +13,11 @@ import java.time.LocalDate
 )
 data class InnendoersBrukDto(
     @Schema(
+        description = "Arealet man behandlet med plantevernmidler i dekar", required = true,
+    )
+    val arealBehandletOmraade: MengdeDto,
+
+    @Schema(
         description = "Liste med vekster som ble behandlet av plantevernmidler", required = true,
     )
     val behandledeVekster: List<BehandletVekstDto>,
@@ -70,6 +75,7 @@ data class InnendoersBrukDto(
         paaVegneAv: String?,
     ) =
         InnendoersBruk(
+            arealBehandletOmraade = arealBehandletOmraade.toMengde(),
             behandledeOmraader = behandlingssted.toBehandledeOmraader(),
             behandledeVekster = behandledeVekster.map { it.toBehandletVekst(eppoKoderOgNavn = eppoKoderOgNavn) },
             behandler = behandler.toPerson(),

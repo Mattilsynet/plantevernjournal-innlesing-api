@@ -4,6 +4,10 @@ POST http://localhost:8080/plantevernjournal/innlesing/v1/innendoersbruk
 Content-Type: application/json
 
 {
+  "arealBehandletOmraade": {
+    "enhet": "KVADRATMETER",
+    "verdi": 450
+  },
   "behandledeVekster":  [
     {
       "bbchFase": "05",
