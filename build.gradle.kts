@@ -1,7 +1,7 @@
 plugins {
-    kotlin("jvm") version "2.4.10"
-    kotlin("plugin.spring") version "2.4.10"
-    kotlin("plugin.serialization") version "2.4.10"
+    kotlin("jvm") version "2.4.20"
+    kotlin("plugin.spring") version "2.4.20"
+    kotlin("plugin.serialization") version "2.4.20"
     id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -49,7 +49,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.1.1"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.2.1"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
 
     // Jackson:
@@ -79,7 +79,7 @@ dependencies {
 
 kotlin {
     compilerOptions {
-        compilerOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
+        compilerOptions.freeCompilerArgs = listOf("-Xjsr305=strict", "-Xannotation-default-target=param-property")
     }
 }
 
@@ -89,7 +89,7 @@ dependencyLocking {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springdoc:springdoc-openapi-bom:3.1.0")
+        mavenBom("org.springdoc:springdoc-openapi-bom:3.1.1")
     }
 }
 
