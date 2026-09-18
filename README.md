@@ -10,7 +10,7 @@ EU-kravet som skal implementeres er beskrevet her: https://eur-lex.europa.eu/leg
 
 Det er ikke bestemt hvor ofte data skal rapporteres til Mattilsynet, men vår anbefaling er at det sendes inn fortløpende, eller uten unødvendig opphold.
 
-Input til rest-endepunktene vil ikke versjoneres i starten, men det vil de bli ved endringer som ikke er bakoverkompatible.
+Input til rest-endepunktene vil ikke versjoneres i starten, men det vil de bli ved endringer som ikke er bakoverkompatible. Oversikt over [breaking changes](oversikt_breaking_changes.md).
 
 Noen datafelter er frivillige til å begynne med, men kan bli obligatoriske etter hvert. Vi anbefaler at det sendes inn så komplett datasett som mulig, også frivillige felter.
 

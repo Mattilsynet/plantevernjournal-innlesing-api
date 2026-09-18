@@ -6,6 +6,10 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
+  "arealBehandletOmraade": {
+    "enhet": "DEKAR",
+    "verdi": 1
+  },
   "behandledeVekster":  [
     {
       "bbchFase": "05",
