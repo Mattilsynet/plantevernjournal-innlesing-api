@@ -26,7 +26,7 @@ class EppoApiClient(
         runCatching {
             WebClient.create()
                 .get()
-                .uri("$eppoUri/taxons/taxon/${eppoKode}/names")
+                .uri("$eppoUri/taxons/taxon/${eppoKode}/taxonomy")
                 .header("X-Api-Key", eppoToken)
                 .header("Accept", MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()

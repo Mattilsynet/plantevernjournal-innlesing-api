@@ -40,7 +40,8 @@ class InnlesingService(
 
                     froeEllerFormeringsMatriale.toFroeEllerFormeringsMatrialeResponsDto(
                         behandledeOmraader = froeEllerFormeringsMatrialeDto.behandlingssted,
-                        behandledeVekster = froeEllerFormeringsMatrialeDto.behandledeVekster,
+                        behandledeVekster =
+                            froeEllerFormeringsMatrialeDto.behandledeVekster.behandledeVeksterMedSort(eppoKoderOgNavn),
                         plantevernmiddel = froeEllerFormeringsMatrialeDto.plantevernmiddel,
                     )
                 }
@@ -70,7 +71,7 @@ class InnlesingService(
 
                     innendoersBruk.toInnendoersBrukResponsDto(
                         behandledeOmraader = innendoersBrukDto.behandlingssted,
-                        behandledeVekster = innendoersBrukDto.behandledeVekster,
+                        behandledeVekster = innendoersBrukDto.behandledeVekster.behandledeVeksterMedSort(eppoKoderOgNavn),
                         plantevernmiddel = innendoersBrukDto.plantevernmiddel,
                     )
                 }
@@ -100,11 +101,23 @@ class InnlesingService(
 
                     utendoersBruk.toUtendoersBrukResponsDto(
                         behandledeOmraader = utendoersBrukDto.behandledeOmraader,
-                        behandledeVekster = utendoersBrukDto.behandledeVekster,
+                        behandledeVekster = utendoersBrukDto.behandledeVekster.behandledeVeksterMedSort(eppoKoderOgNavn),
                         plantevernmiddel = utendoersBrukDto.plantevernmiddel,
                     )
                 }
             }
+
+    private fun List<BehandletVekstDto>.behandledeVeksterMedSort(eppoKoderOgNavn: List<Pair<String, String>>) =
+        map { behandletVekstDto ->
+            with(behandletVekstDto) {
+                BehandletVekstDto(
+                    bbchFase = bbchFase,
+                    eppoKode = eppoKode,
+                    partinummer = partinummer,
+                    sort = sort ?: eppoKoderOgNavn.first { it.first == eppoKode }.second
+                )
+            }
+        }
 
     fun deleteUtendoersBruk(
         id: UUID,

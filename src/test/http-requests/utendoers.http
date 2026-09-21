@@ -11,15 +11,13 @@ Content-Type: application/json
   "behandledeVekster": [
     {
       "bbchFase": "05",
-      "eppoKode": "1PRUNG",
-      "partinummer": 2,
-      "sort": "Magnolia"
+      "eppoKode": "ALMFI",
+      "partinummer": 2
     },
     {
       "bbchFase": "01",
-      "eppoKode": "PRULA",
-      "partinummer": 27,
-      "sort": "tja"
+      "eppoKode": "ALMSS",
+      "partinummer": 27
     }
   ],
   "behandler": {
