@@ -1,7 +1,6 @@
 package no.mattilsynet.plantevernjournal.api.services
 
 import no.mattilsynet.plantevernjournal.api.clients.EppoApiClient
-import no.mattilsynet.plantevernjournal.api.clients.models.EppoTaxon
 import no.mattilsynet.plantevernjournal.api.nats.consumers.EppoKvConsumer
 import no.mattilsynet.plantevernjournal.api.nats.consumers.models.EppoNats
 import org.springframework.stereotype.Service
@@ -14,11 +13,8 @@ class EppoService(
     suspend fun getNavnFraEppoKode(eppoKode: String) =
         eppoKvConsumer.getEppoFraNats(eppoKode = eppoKode)
             ?: eppoApiClient.getNavnFraEppoKode(eppoKode = eppoKode)
-        ?.getPrioritertNavn()?.fullname
-        ?.also { eppoNavn ->
-            eppoKvConsumer.putEppoTilNats(eppoNats = EppoNats(eppoKode = eppoKode, eppoNavn = eppoNavn))
-        }
-
-    private fun List<EppoTaxon>.getPrioritertNavn() =
-        firstOrNull { it.preferred } ?: firstOrNull { it.landIso == "en" } ?: firstOrNull()
+                ?.maxByOrNull { it.level }?.prefname
+                ?.also { eppoNavn ->
+                    eppoKvConsumer.putEppoTilNats(eppoNats = EppoNats(eppoKode = eppoKode, eppoNavn = eppoNavn))
+                }
 }

@@ -70,7 +70,7 @@ data class InnendoersBrukDto(
 ) {
 
     fun toInnendoersBruk(
-        eppoKoderOgNavn: List<Pair<String, String>>,
+        eppoKoderOgNavn: Map<String, String>,
         innsender: String?,
         paaVegneAv: String?,
     ) =
