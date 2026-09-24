@@ -13,7 +13,7 @@ class EppoService(
     suspend fun getNavnFraEppoKode(eppoKode: String) =
         eppoKvConsumer.getEppoFraNats(eppoKode = eppoKode)
             ?: eppoApiClient.getNavnFraEppoKode(eppoKode = eppoKode)
-                ?.maxBy { it.level }?.prefname
+                ?.maxByOrNull { it.level }?.prefname
                 ?.also { eppoNavn ->
                     eppoKvConsumer.putEppoTilNats(eppoNats = EppoNats(eppoKode = eppoKode, eppoNavn = eppoNavn))
                 }

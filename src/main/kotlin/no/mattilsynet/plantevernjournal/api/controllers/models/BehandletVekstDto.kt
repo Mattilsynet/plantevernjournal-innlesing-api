@@ -33,11 +33,11 @@ data class BehandletVekstDto(
     )
     val sort: String?,
 ) {
-    fun toBehandletVekst(eppoKoderOgNavn: List<Pair<String, String>>,) =
+    fun toBehandletVekst(eppoKoderOgNavn: Map<String, String>,) =
         BehandletVekst(
             bbchFase = bbchFase,
-            eppoKode = eppoKode,
-            eppoNavn = eppoKoderOgNavn.first { it.first == eppoKode }.second,
+            eppoKode = eppoKode.uppercase(),
+            eppoNavn = eppoKoderOgNavn.getValue(eppoKode),
             partinummer = partinummer,
             sort = sort,
         )

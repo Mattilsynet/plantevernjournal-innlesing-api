@@ -60,7 +60,7 @@ data class FroeEllerFormeringsMatrialeDto(
 ) {
 
     fun toFroeEllerFormeringsMatriale(
-        eppoKoderOgNavn: List<Pair<String, String>>,
+        eppoKoderOgNavn: Map<String, String>,
         innsender: String?,
         paaVegneAv: String?,
     ) =

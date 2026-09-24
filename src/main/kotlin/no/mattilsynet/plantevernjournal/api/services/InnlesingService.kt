@@ -107,16 +107,11 @@ class InnlesingService(
                 }
             }
 
-    private fun List<BehandletVekstDto>.behandledeVeksterMedSort(eppoKoderOgNavn: List<Pair<String, String>>) =
+    private fun List<BehandletVekstDto>.behandledeVeksterMedSort(eppoKoderOgNavn: Map<String, String>) =
         map { behandletVekstDto ->
-            with(behandletVekstDto) {
-                BehandletVekstDto(
-                    bbchFase = bbchFase,
-                    eppoKode = eppoKode,
-                    partinummer = partinummer,
-                    sort = sort ?: eppoKoderOgNavn.first { it.first == eppoKode }.second
-                )
-            }
+            behandletVekstDto.copy(
+                sort = behandletVekstDto.sort ?: eppoKoderOgNavn.getValue(behandletVekstDto.eppoKode)
+            )
         }
 
     fun deleteUtendoersBruk(
@@ -164,5 +159,5 @@ class InnlesingService(
                     }
             }.mapNotNull { (first, second) ->
                 second?.let { first to it }
-            }
+            }.toMap()
 }
