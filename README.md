@@ -64,6 +64,8 @@ Det er laget tre ulike rest-endepunkter for å sende inn data, ett for utendørs
 
 Det er også tre tilsvarende endepunkter for å slette innlesinger basert på id. Dersom det er en innlesing som skal endres, så må den slettes og sendes inn på nytt. Det er ikke mulig å hente data man har sendt inn, så det må man ha oversikt over selv.
 
+Det er innsenders ansvar at dataene som sendes inn er korrekte. Det gjøres ingen validering av om det sendes inn dubletter, og innsender må sørge for at dette ikke skjer. Det er et delete-endepunkt som skal brukes dersom data som er sendt inn er feil. Om man sender inn ny journalføring med korrekte data før den tidligere innsendingen slettes, eller om man sletter før man sender inn korrekt data, spiller ingen rolle. Begge deler fungerer.
+
 Det finnes også rest-endepunkter for å hente ut kodeverk.
 
 Informasjon om de [ulike rest-endepunktene](dokumentasjon/bilder/endepunkter.png) finnes i [github](src/main/kotlin/no/mattilsynet/plantevernjournal/api/controllers/PlantevernjournalInnlesingController.kt) og i [swagger](https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html).
@@ -80,7 +82,7 @@ Gyldige geometrityper er gitt [her](src/main/kotlin/no/mattilsynet/plantevernjou
 
 I GeoJSON er det mulig å sende inn properties, det bruker vi ikke per i dag, men det som eventuelt sendes inn i properties blir tatt vare på.
 
-Validering av geometri er beskrevet [her](dokumentasjon/validering.md).
+Validering av geometri er beskrevet [her](dokumentasjon/validering_geometri.md).
 
 
 ### BBCH/vekststadier
