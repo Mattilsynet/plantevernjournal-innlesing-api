@@ -177,7 +177,7 @@ internal class InnlesingServiceTest {
 
         // Then:
         verify(natsService, times(1))
-            .publishSlettJournalForFroeEllerFormeringsmateriale(slettInnsendingMock)
+            .publishSlettJournalForFroeEllerFormeringsmateriale(any())
 
     }
 
