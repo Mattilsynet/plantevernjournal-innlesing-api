@@ -1,9 +1,12 @@
 package no.mattilsynet.plantevernjournal.api.services
 
+import kotlinx.coroutines.runBlocking
 import no.mattilsynet.plantevernjournal.api.mocks.domain.SlettInnsendingMocker.createSlettInnsendingMock
 import no.mattilsynet.plantevernjournal.api.mocks.dto.FroeEllerFormeringsMatrialeDtoMocker.createFroeEllerFormeringsMaterialeDtoMock
 import no.mattilsynet.plantevernjournal.api.mocks.dto.InnendoersBrukDtoMocker.createInnendoersBrukDtoMock
 import no.mattilsynet.plantevernjournal.api.mocks.dto.UtendoersBrukDtoMocker.createUtendoersBrukDtoMock
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
@@ -68,6 +71,37 @@ internal class InnlesingServiceTest {
 
         // Then:
         verify(natsService, times(1))
+            .publishJournalForInnendoersBruk(any())
+
+    }
+
+    @Test
+    fun `postInnendoersBruk `() {
+        // Given:
+        val innendoersBrukDtoMock = createInnendoersBrukDtoMock()
+        runBlocking {
+            doReturn(null).`when`(eppoService)
+                .getNavnFraEppoKode(eppoKode = innendoersBrukDtoMock.behandledeVekster[0].eppoKode)
+        }
+
+        // When:
+        assertThrows(NoSuchElementException::class.java) {
+            runBlocking {
+                innlesingService.postInnendoersBruk(
+                    innendoersBrukDto = innendoersBrukDtoMock,
+                    innsender = "innsender",
+                    paaVegneAv = "paaVegneAv",
+                )
+            }
+        }.message!!.let { message ->
+            assertEquals(
+                "${innendoersBrukDtoMock.behandledeVekster[0].eppoKode} finnes ikke i eppodatabasen",
+                message
+            )
+        }
+
+        // Then:
+        verify(natsService, times(0))
             .publishJournalForInnendoersBruk(any())
 
     }

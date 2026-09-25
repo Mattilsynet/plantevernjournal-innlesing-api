@@ -11,10 +11,23 @@ class EppoService(
     private val eppoKvConsumer: EppoKvConsumer,
 ) {
     suspend fun getNavnFraEppoKode(eppoKode: String) =
-        eppoKvConsumer.getEppoFraNats(eppoKode = eppoKode)
-            ?: eppoApiClient.getNavnFraEppoKode(eppoKode = eppoKode)
-                ?.maxByOrNull { it.level }?.prefname
-                ?.also { eppoNavn ->
-                    eppoKvConsumer.putEppoTilNats(eppoNats = EppoNats(eppoKode = eppoKode, eppoNavn = eppoNavn))
+        eppoKvConsumer.getEppoNavnFraNats(eppoKode = eppoKode)
+            ?: hentGyldigEppokodeFraEppo(eppoKode)
+
+    private suspend fun hentGyldigEppokodeFraEppo(eppoKode: String): String? =
+        eppoApiClient.getNavnFraEppoKode(eppoKode = eppoKode)
+            ?.maxByOrNull { it.level }
+            ?.also { eppoTaxon ->
+                require(eppoTaxon.level >= GENUS_LEVEL) {
+                    "Eppokoden $eppoKode har nivå ${eppoTaxon.level} (${eppoTaxon.type}), som er lavere enn 7 (Genus)"
                 }
+            }
+            ?.prefname
+            ?.also { eppoNavn ->
+                eppoKvConsumer.putEppoTilNats(eppoNats = EppoNats(eppoKode = eppoKode, eppoNavn = eppoNavn))
+            }
+
+    companion object {
+        const val GENUS_LEVEL = 7
+    }
 }
