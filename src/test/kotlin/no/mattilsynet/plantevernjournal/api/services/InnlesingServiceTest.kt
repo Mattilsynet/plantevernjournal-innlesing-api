@@ -76,7 +76,7 @@ internal class InnlesingServiceTest {
     }
 
     @Test
-    fun `postInnendoersBruk `() {
+    fun `postInnendoersBruk kaster feil naar eppokode ikke finnes i eppodatabasen`() {
         // Given:
         val innendoersBrukDtoMock = createInnendoersBrukDtoMock()
         runBlocking {
@@ -177,7 +177,7 @@ internal class InnlesingServiceTest {
 
         // Then:
         verify(natsService, times(1))
-            .publishSlettJournalForFroeEllerFormeringsmateriale(any())
+            .publishSlettJournalForFroeEllerFormeringsmateriale(slettInnsendingMock)
 
     }
 
