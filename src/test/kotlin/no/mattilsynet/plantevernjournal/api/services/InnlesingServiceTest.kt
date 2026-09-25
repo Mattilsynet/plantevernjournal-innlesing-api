@@ -24,26 +24,30 @@ internal class InnlesingServiceTest {
     private val eppoService = mock(EppoService::class.java)
 
     @BeforeEach
-    suspend fun setUp() {
+    fun setUp() {
         innlesingService = InnlesingService(
             eppoService = eppoService,
             natsService = natsService,
         )
-
-        doReturn("Plantenavn").`when`(eppoService).getNavnFraEppoKode(any())
     }
 
     @Test
-    suspend fun `postFroeEllerFormeringsMateriale poster til nats og returnerer opprettet og id`() {
+    fun `postFroeEllerFormeringsMateriale poster til nats og returnerer opprettet og id`() {
         // Given:
         val froeEllerFormeringsMatrialeDtoMock = createFroeEllerFormeringsMaterialeDtoMock()
 
+        runBlocking {
+            doReturn("Plantenavn").`when`(eppoService).getNavnFraEppoKode(any())
+        }
+
         // When:
-        innlesingService.postFroeEllerFormeringsMateriale(
-            froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDtoMock,
-            innsender = "innsender",
-            paaVegneAv = "paaVegneAv",
-        ).also { froeEllerFormeringsMatrialeResponsDto ->
+        runBlocking {
+            innlesingService.postFroeEllerFormeringsMateriale(
+                froeEllerFormeringsMatrialeDto = froeEllerFormeringsMatrialeDtoMock,
+                innsender = "innsender",
+                paaVegneAv = "paaVegneAv",
+            )
+        }.also { froeEllerFormeringsMatrialeResponsDto ->
             assertNotNull(froeEllerFormeringsMatrialeResponsDto.id)
             assertNotNull(froeEllerFormeringsMatrialeResponsDto.opprettet)
         }
@@ -55,16 +59,22 @@ internal class InnlesingServiceTest {
     }
 
     @Test
-    suspend fun `postInnendoersBruk poster til nats og returnerer opprettet og id`() {
+    fun `postInnendoersBruk poster til nats og returnerer opprettet og id`() {
         // Given:
         val innendoersBrukDtoMock = createInnendoersBrukDtoMock()
 
+        runBlocking {
+            doReturn("Plantenavn").`when`(eppoService).getNavnFraEppoKode(any())
+        }
+
         // When:
-        innlesingService.postInnendoersBruk(
-            innendoersBrukDto = innendoersBrukDtoMock,
-            innsender = "innsender",
-            paaVegneAv = "paaVegneAv",
-        ).also { innendoersBrukResponsDto ->
+        runBlocking {
+            innlesingService.postInnendoersBruk(
+                innendoersBrukDto = innendoersBrukDtoMock,
+                innsender = "innsender",
+                paaVegneAv = "paaVegneAv",
+            )
+        }.also { innendoersBrukResponsDto ->
             assertNotNull(innendoersBrukResponsDto.id)
             assertNotNull(innendoersBrukResponsDto.opprettet)
         }
@@ -79,6 +89,7 @@ internal class InnlesingServiceTest {
     fun `postInnendoersBruk kaster feil naar eppokode ikke finnes i eppodatabasen`() {
         // Given:
         val innendoersBrukDtoMock = createInnendoersBrukDtoMock()
+
         runBlocking {
             doReturn(null).`when`(eppoService)
                 .getNavnFraEppoKode(eppoKode = innendoersBrukDtoMock.behandledeVekster[0].eppoKode)
@@ -107,16 +118,22 @@ internal class InnlesingServiceTest {
     }
 
     @Test
-    suspend fun `postUtendoersBruk poster til nats og returnerer opprettet og id`() {
+    fun `postUtendoersBruk poster til nats og returnerer opprettet og id`() {
         // Given:
         val utendoersBrukDto = createUtendoersBrukDtoMock()
 
+        runBlocking {
+            doReturn("Plantenavn").`when`(eppoService).getNavnFraEppoKode(any())
+        }
+
         // When:
-        innlesingService.postUtendoersBruk(
-            innsender = "innsender",
-            paaVegneAv = "paaVegneAv",
-            utendoersBrukDto = utendoersBrukDto,
-        ).also { utendoersBrukResponsDto ->
+        runBlocking {
+            innlesingService.postUtendoersBruk(
+                innsender = "innsender",
+                paaVegneAv = "paaVegneAv",
+                utendoersBrukDto = utendoersBrukDto,
+            )
+        }.also { utendoersBrukResponsDto ->
             assertNotNull(utendoersBrukResponsDto.id)
             assertNotNull(utendoersBrukResponsDto.opprettet)
         }

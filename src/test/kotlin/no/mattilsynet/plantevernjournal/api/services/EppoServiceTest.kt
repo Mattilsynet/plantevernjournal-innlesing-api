@@ -33,55 +33,62 @@ internal class EppoServiceTest {
             eppoApiClient = eppoApiClient,
             eppoKvConsumer = eppoKvConsumer,
         )
-
     }
 
     @Test
-    suspend fun `getNavnFraEppoKode returnerer plantenavn fra kvBucket`() {
+    fun `getNavnFraEppoKode returnerer plantenavn fra kvBucket`() {
         // Given:
         doReturn("Plantenavn").`when`(eppoKvConsumer).getEppoNavnFraNats(eppoKode = eppoKode)
 
         // When & then:
-        assertEquals(
-            "Plantenavn",
-            eppoService.getNavnFraEppoKode(eppoKode = eppoKode)
-        )
+        runBlocking {
+            assertEquals(
+                "Plantenavn",
+                eppoService.getNavnFraEppoKode(eppoKode = eppoKode)
+            )
 
-        verify(eppoApiClient, times(0)).getNavnFraEppoKode(any())
+            verify(eppoApiClient, times(0)).getNavnFraEppoKode(any())
+        }
     }
 
     @Test
-    suspend fun `getNavnFraEppoKode returnerer plantenavn fra eppoApiClient`() {
+    fun `getNavnFraEppoKode returnerer plantenavn fra eppoApiClient`() {
         // Given:
         doReturn(null).`when`(eppoKvConsumer).getEppoNavnFraNats(eppoKode = eppoKode)
-        doReturn(
-            listOf(createEppoTaxonMock())
-        ).`when`(eppoApiClient).getNavnFraEppoKode(eppoKode = eppoKode)
+        runBlocking {
+            doReturn(
+                listOf(createEppoTaxonMock())
+            ).`when`(eppoApiClient).getNavnFraEppoKode(eppoKode = eppoKode)
+        }
 
         // When & then:
-        assertEquals(
-            "Plantenavnet",
-            eppoService.getNavnFraEppoKode(eppoKode = eppoKode)
-        )
+        runBlocking {
+            assertEquals(
+                "Plantenavnet",
+                eppoService.getNavnFraEppoKode(eppoKode = eppoKode)
+            )
 
-        verify(eppoApiClient, times(1)).getNavnFraEppoKode(eppoKode = eppoKode)
-        verify(eppoKvConsumer, times(1)).getEppoNavnFraNats(eppoKode = eppoKode)
-        verify(eppoKvConsumer, times(1))
-            .putEppoTilNats(EppoNats(eppoKode = eppoKode, eppoNavn = "Plantenavnet"))
+            verify(eppoApiClient, times(1)).getNavnFraEppoKode(eppoKode = eppoKode)
+            verify(eppoKvConsumer, times(1)).getEppoNavnFraNats(eppoKode = eppoKode)
+            verify(eppoKvConsumer, times(1))
+                .putEppoTilNats(EppoNats(eppoKode = eppoKode, eppoNavn = "Plantenavnet"))
+        }
     }
 
     @Test
-    suspend fun `getNavnFraEppoKode kaster feil naar level er for lav`() {
+    fun `getNavnFraEppoKode kaster feil naar level er for lav`() {
         // Given:
         doReturn(null).`when`(eppoKvConsumer).getEppoNavnFraNats(eppoKode = eppoKode)
-        doReturn(
-            listOf(
-                createEppoTaxonMock(
-                    level = 2,
-                    type = "Class",
+        runBlocking {
+            doReturn(
+                listOf(
+                    createEppoTaxonMock(
+                        level = 2,
+                        type = "Class",
+                    )
                 )
-            )
-        ).`when`(eppoApiClient).getNavnFraEppoKode(eppoKode = eppoKode)
+            ).`when`(eppoApiClient).getNavnFraEppoKode(eppoKode = eppoKode)
+        }
 
         // When & then:
         assertThrows(IllegalArgumentException::class.java) {
@@ -93,23 +100,29 @@ internal class EppoServiceTest {
                 "Eppokoden $eppoKode har nivå 2 (Class), som er lavere enn 7 (Genus)",
                 message
             )
-        }
 
-        verify(eppoApiClient, times(1)).getNavnFraEppoKode(eppoKode = eppoKode)
-        verify(eppoKvConsumer, times(1)).getEppoNavnFraNats(eppoKode = eppoKode)
+            runBlocking {
+                verify(eppoApiClient, times(1)).getNavnFraEppoKode(eppoKode = eppoKode)
+                verify(eppoKvConsumer, times(1)).getEppoNavnFraNats(eppoKode = eppoKode)
+            }
+        }
     }
 
     @Test
-    suspend fun `getNavnFraEppoKode returnerer null naar navn ikke finnes`() {
+    fun `getNavnFraEppoKode returnerer null naar navn ikke finnes`() {
         // Given:
         doReturn(null).`when`(eppoKvConsumer).getEppoNavnFraNats(eppoKode = eppoKode)
-        doReturn(emptyList<EppoTaxon>()).`when`(eppoApiClient).getNavnFraEppoKode(eppoKode = eppoKode)
+        runBlocking {
+            doReturn(emptyList<EppoTaxon>()).`when`(eppoApiClient).getNavnFraEppoKode(eppoKode = eppoKode)
+        }
 
         // When & then:
-        assertNull(eppoService.getNavnFraEppoKode(eppoKode = eppoKode))
+        runBlocking {
+            assertNull(eppoService.getNavnFraEppoKode(eppoKode = eppoKode))
 
-        verify(eppoApiClient, times(1)).getNavnFraEppoKode(eppoKode = eppoKode)
-        verify(eppoKvConsumer, times(1))
+            verify(eppoApiClient, times(1)).getNavnFraEppoKode(eppoKode = eppoKode)
+            verify(eppoKvConsumer, times(1)).getEppoNavnFraNats(eppoKode = eppoKode)
+        }
     }
 
 }
