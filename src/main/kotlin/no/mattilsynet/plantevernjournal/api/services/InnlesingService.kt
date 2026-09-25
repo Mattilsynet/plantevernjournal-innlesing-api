@@ -150,14 +150,18 @@ class InnlesingService(
     private suspend fun List<BehandletVekstDto>.getEppoKoderOgNavn() =
         map { it.eppoKode to eppoService.getNavnFraEppoKode(eppoKode = it.eppoKode) }
             .also { eppoKoderOgNavn ->
-                eppoKoderOgNavn.filter { it.second == null }
-                    .takeIf { it.isNotEmpty() }
-                    ?.let { eppoKoder ->
-                        throw NoSuchElementException(
-                            eppoKoder.joinToString(", ") { it.first } + " finnes ikke i eppodatabasen."
-                        )
-                    }
+                eppoKoderOgNavn.sjekkOmAlleEppokoderFinnesHosEppo()
             }.mapNotNull { (first, second) ->
                 second?.let { first to it }
             }.toMap()
+
+    private fun List<Pair<String, String?>>.sjekkOmAlleEppokoderFinnesHosEppo() {
+        filter { it.second == null }
+            .takeIf { it.isNotEmpty() }
+            ?.let { eppoKoder ->
+                throw NoSuchElementException(
+                    eppoKoder.joinToString(", ") { it.first } + " finnes ikke i eppodatabasen"
+                )
+            }
+    }
 }

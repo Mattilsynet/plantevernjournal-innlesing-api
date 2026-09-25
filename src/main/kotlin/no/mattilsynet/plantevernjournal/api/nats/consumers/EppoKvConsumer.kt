@@ -35,9 +35,9 @@ class EppoKvConsumer(
     /**
      * Henter eppokode med beskrivelse fra nats
      * @param eppoKode som sendes inn sammen med journaldata
-     * @return String
+     * @return String Navn
      */
-    fun getEppoFraNats(eppoKode: String): String? =
+    fun getEppoNavnFraNats(eppoKode: String): String? =
         runCatching {
             nats.keyValue(
                 "eppo_kode_v1",

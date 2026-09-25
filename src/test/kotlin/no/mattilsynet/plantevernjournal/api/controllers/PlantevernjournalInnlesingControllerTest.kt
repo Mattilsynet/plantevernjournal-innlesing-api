@@ -1,5 +1,6 @@
 package no.mattilsynet.plantevernjournal.api.controllers
 
+import kotlinx.coroutines.runBlocking
 import no.mattilsynet.plantevernjournal.api.mocks.dto.FroeEllerFormeringsMatrialeDtoMocker.createFroeEllerFormeringsMaterialeDtoMock
 import no.mattilsynet.plantevernjournal.api.mocks.dto.InnendoersBrukDtoMocker.createInnendoersBrukDtoMock
 import no.mattilsynet.plantevernjournal.api.mocks.dto.UtendoersBrukDtoMocker.createUtendoersBrukDtoMock
@@ -48,7 +49,7 @@ internal class PlantevernjournalInnlesingControllerTest {
     private lateinit var innlesingService: InnlesingService
 
     @Test
-    suspend fun `postUtendoersBruk kaller videre paa innsendingService`() {
+    fun `postUtendoersBruk kaller videre paa innsendingService`() {
         // Given:
         val utendoersBrukDtoMock = createUtendoersBrukDtoMock()
 
@@ -61,15 +62,17 @@ internal class PlantevernjournalInnlesingControllerTest {
             .expectStatus().isCreated
 
         // Then:
-        verify(innlesingService).postUtendoersBruk(
-            innsender = anyOrNull(),
-            paaVegneAv = anyOrNull(),
-            utendoersBrukDto = any(),
-        )
+        runBlocking {
+            verify(innlesingService).postUtendoersBruk(
+                innsender = anyOrNull(),
+                paaVegneAv = anyOrNull(),
+                utendoersBrukDto = any(),
+            )
+        }
     }
 
     @Test
-    suspend fun `postInnendoersBruk kaller videre paa innsendingService`() {
+    fun `postInnendoersBruk kaller videre paa innsendingService`() {
         // Given:
         val innendoersBrukDtoMock = createInnendoersBrukDtoMock()
 
@@ -82,15 +85,17 @@ internal class PlantevernjournalInnlesingControllerTest {
             .expectStatus().isCreated
 
         // Then:
-        verify(innlesingService, times(1)).postInnendoersBruk(
-            innendoersBrukDto = any(),
-            innsender = anyOrNull(),
-            paaVegneAv = anyOrNull(),
-        )
+        runBlocking {
+            verify(innlesingService, times(1)).postInnendoersBruk(
+                innendoersBrukDto = any(),
+                innsender = anyOrNull(),
+                paaVegneAv = anyOrNull(),
+            )
+        }
     }
 
     @Test
-    suspend fun `postFroeEllerFormeringsMateriale kaller videre paa innsendingService`() {
+    fun `postFroeEllerFormeringsMateriale kaller videre paa innsendingService`() {
         // Given:
         val froeEllerFormeringsMatrialeDtoMock = createFroeEllerFormeringsMaterialeDtoMock()
 
@@ -103,11 +108,13 @@ internal class PlantevernjournalInnlesingControllerTest {
             .expectStatus().isCreated
 
         // Then:
-        verify(innlesingService).postFroeEllerFormeringsMateriale(
-            froeEllerFormeringsMatrialeDto = any(),
-            innsender = anyOrNull(),
-            paaVegneAv = anyOrNull(),
-        )
+        runBlocking {
+            verify(innlesingService).postFroeEllerFormeringsMateriale(
+                froeEllerFormeringsMatrialeDto = any(),
+                innsender = anyOrNull(),
+                paaVegneAv = anyOrNull(),
+            )
+        }
     }
 
     @Test
