@@ -85,6 +85,11 @@ I GeoJSON er det mulig å sende inn properties, det bruker vi ikke per i dag, me
 Validering av geometri er beskrevet [her](dokumentasjon/validering_geometri.md).
 
 
+### Bruksområder
+Det skal angis hvilket bruksområde det blir sprøytet på. Gyldige bruksområder er angitt i [Bruksomraade.kt](src/main/kotlin/no/mattilsynet/plantevernjournal/api/shared/kodeverk/Bruksomraade.kt)
+Dersom bruksområdet det skal sprøytes på ikke finnes, ta kontakt på epost _plantevernjournal@mattilsynet.no_
+
+
 ### BBCH/vekststadier
 Det skal angis vekststadium for vekstene som sprøytes, og til det skal det brukes BBCH-skala. [Her](https://en.wikipedia.org/wiki/BBCH-scale) kan man lese litt om hva dette betyr. Vi kommer tilbake til akkurat hvordan dette skal angis.
 
