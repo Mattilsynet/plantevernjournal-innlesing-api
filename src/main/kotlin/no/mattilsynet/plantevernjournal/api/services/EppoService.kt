@@ -18,8 +18,15 @@ class EppoService(
         eppoApiClient.getNavnFraEppoKode(eppoKode = eppoKode)
             ?.maxByOrNull { it.level }
             ?.also { eppoTaxon ->
-                require(eppoTaxon.level >= GENUS_LEVEL) {
+                require(eppoTaxon.type != "Not Specified" && eppoTaxon.level >= GENUS_LEVEL) {
                     "Eppokoden $eppoKode har nivå ${eppoTaxon.level} (${eppoTaxon.type}), som er lavere enn 7 (Genus)"
+                }
+                // Man skal kunne melde inn gressavlinger, fx 3GRAC. Disse har type Not Specified
+                require(
+                    eppoTaxon.type != "Not Specified" ||
+                            eppoTaxon.eppocode.startsWith("3")
+                ) {
+                    "Eppokoden $eppoKode er ikke gyldig for innmelding. Må starte med 3"
                 }
             }
             ?.prefname

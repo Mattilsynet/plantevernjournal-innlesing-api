@@ -76,6 +76,30 @@ internal class EppoServiceTest {
     }
 
     @Test
+    fun `getNavnFraEppoKode godtar koden 3GRAC`() {
+        // Given:
+        doReturn(null).`when`(eppoKvConsumer).getEppoNavnFraNats(eppoKode = eppoKode)
+        runBlocking {
+            doReturn(
+                listOf(createEppoTaxonMock(eppoKode = "3GRAC", type = "Not specified"))
+            ).`when`(eppoApiClient).getNavnFraEppoKode(eppoKode = eppoKode)
+        }
+
+        // When & then:
+        runBlocking {
+            assertEquals(
+                "Plantenavnet",
+                eppoService.getNavnFraEppoKode(eppoKode = eppoKode)
+            )
+
+            verify(eppoApiClient, times(1)).getNavnFraEppoKode(eppoKode = eppoKode)
+            verify(eppoKvConsumer, times(1)).getEppoNavnFraNats(eppoKode = eppoKode)
+            verify(eppoKvConsumer, times(1))
+                .putEppoTilNats(EppoNats(eppoKode = eppoKode, eppoNavn = "Plantenavnet"))
+        }
+    }
+
+    @Test
     fun `getNavnFraEppoKode kaster feil naar level er for lav`() {
         // Given:
         doReturn(null).`when`(eppoKvConsumer).getEppoNavnFraNats(eppoKode = eppoKode)
