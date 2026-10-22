@@ -81,7 +81,11 @@ internal class EppoServiceTest {
         doReturn(null).`when`(eppoKvConsumer).getEppoNavnFraNats(eppoKode = "3GRAC")
         runBlocking {
             doReturn(
-                listOf(createEppoTaxonMock(eppoKode = "3GRAC", type = "Not Specified"))
+                listOf(createEppoTaxonMock(
+                    eppoKode = "3GRAC",
+                    level = 3,
+                    type = "Not Specified",
+                    ))
             ).`when`(eppoApiClient).getNavnFraEppoKode(eppoKode = "3GRAC")
         }
 
