@@ -18,15 +18,17 @@ class EppoService(
         eppoApiClient.getNavnFraEppoKode(eppoKode = eppoKode)
             ?.maxByOrNull { it.level }
             ?.also { eppoTaxon ->
-                require(eppoTaxon.type != "Not Specified" && eppoTaxon.level >= GENUS_LEVEL) {
-                    "Eppokoden $eppoKode har nivå ${eppoTaxon.level} (${eppoTaxon.type}), som er lavere enn 7 (Genus)"
+                require(eppoTaxon.type == "Not Specified" || eppoTaxon.level >= GENUS_LEVEL) {
+                    "Koden $eppoKode har nivå ${eppoTaxon.level} (${eppoTaxon.type}), som er lavere enn 7 (Genus)"
                 }
-                // Man skal kunne melde inn gressavlinger, fx 3GRAC. Disse har type Not Specified
+                // Man skal kunne melde inn avlinger, dvs alt under koden 3CRGK.
+                // Disse har type Not Specified, starter med 3 og slutter på C
                 require(
                     eppoTaxon.type != "Not Specified" ||
-                            eppoTaxon.eppocode.startsWith("3")
+                            (eppoTaxon.eppocode.startsWith("3") &&
+                                    eppoTaxon.eppocode.endsWith("C"))
                 ) {
-                    "Eppokoden $eppoKode er ikke gyldig for innmelding. Må starte med 3"
+                    "Koden $eppoKode er ikke gyldig for innmelding. Det er kun koder for Crop groups som kan sendes inn"
                 }
             }
             ?.prefname

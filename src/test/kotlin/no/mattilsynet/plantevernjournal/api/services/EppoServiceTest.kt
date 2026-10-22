@@ -78,24 +78,53 @@ internal class EppoServiceTest {
     @Test
     fun `getNavnFraEppoKode godtar koden 3GRAC`() {
         // Given:
-        doReturn(null).`when`(eppoKvConsumer).getEppoNavnFraNats(eppoKode = eppoKode)
+        doReturn(null).`when`(eppoKvConsumer).getEppoNavnFraNats(eppoKode = "3GRAC")
         runBlocking {
             doReturn(
-                listOf(createEppoTaxonMock(eppoKode = "3GRAC", type = "Not specified"))
-            ).`when`(eppoApiClient).getNavnFraEppoKode(eppoKode = eppoKode)
+                listOf(createEppoTaxonMock(eppoKode = "3GRAC", type = "Not Specified"))
+            ).`when`(eppoApiClient).getNavnFraEppoKode(eppoKode = "3GRAC")
         }
 
         // When & then:
         runBlocking {
             assertEquals(
                 "Plantenavnet",
-                eppoService.getNavnFraEppoKode(eppoKode = eppoKode)
+                eppoService.getNavnFraEppoKode(eppoKode = "3GRAC")
             )
 
-            verify(eppoApiClient, times(1)).getNavnFraEppoKode(eppoKode = eppoKode)
-            verify(eppoKvConsumer, times(1)).getEppoNavnFraNats(eppoKode = eppoKode)
+            verify(eppoApiClient, times(1)).getNavnFraEppoKode(eppoKode = "3GRAC")
+            verify(eppoKvConsumer, times(1)).getEppoNavnFraNats(eppoKode = "3GRAC")
             verify(eppoKvConsumer, times(1))
-                .putEppoTilNats(EppoNats(eppoKode = eppoKode, eppoNavn = "Plantenavnet"))
+                .putEppoTilNats(EppoNats(eppoKode = "3GRAC", eppoNavn = "Plantenavnet"))
+        }
+    }
+
+    @Test
+    fun `getNavnFraEppoKode godtar ikke koden 3GRALL`() {
+        // Given:
+        doReturn(null).`when`(eppoKvConsumer).getEppoNavnFraNats(eppoKode = "3GRALL")
+        runBlocking {
+            doReturn(
+                listOf(createEppoTaxonMock(eppoKode = "3GRALL", type = "Not Specified"))
+            ).`when`(eppoApiClient).getNavnFraEppoKode(eppoKode = "3GRALL")
+        }
+
+        // When & then:
+        assertThrows(IllegalArgumentException::class.java) {
+            runBlocking {
+                eppoService.getNavnFraEppoKode(eppoKode = "3GRALL")
+            }
+        }.message!!.let { message ->
+            Assertions.assertEquals(
+                "Koden 3GRALL er ikke gyldig for innmelding. Det er kun koder for Crop groups som kan " +
+                        "sendes inn",
+                message
+            )
+
+            runBlocking {
+                verify(eppoApiClient, times(1)).getNavnFraEppoKode(eppoKode = "3GRALL")
+                verify(eppoKvConsumer, times(1)).getEppoNavnFraNats(eppoKode = "3GRALL")
+            }
         }
     }
 
@@ -121,7 +150,7 @@ internal class EppoServiceTest {
             }
         }.message!!.let { message ->
             Assertions.assertEquals(
-                "Eppokoden $eppoKode har nivå 2 (Class), som er lavere enn 7 (Genus)",
+                "Koden $eppoKode har nivå 2 (Class), som er lavere enn 7 (Genus)",
                 message
             )
 
