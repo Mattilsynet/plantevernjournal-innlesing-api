@@ -19,6 +19,10 @@ Det gjøres i dag ikke noen validering av størrelsen på kartdata og behandletA
 Link til api-dokumentasjon i dev: https://plantevernjournal-innlesing-api.plantevernjournal-dev.mattilsynet.io/swagger-ui/index.html
 
 
+### Hvem kan sende inn
+Det er lagt opp til en løsning hvor man kan sende inn data via en skifteleverandør, eller journalene kan sendes direkte til Mattilsynet fra en egen teknisk løsning. Det er samme framgangsmåte, uavhengig av om man er en skifteleverandør eller ønsker å sende inn direkte, bortsett fra at delen om samtykke faller bort dersom man sender inn direkte.
+
+
 ### Miljøer
 [Det er tre ulike miljøer:](dokumentasjon/bilder/miljoeoversikt.png)
 
@@ -105,7 +109,7 @@ I Eppodatabasen er det laget et kodeverk for klassifisering av planter, og det s
 
 Det finnes flere måter å hente eppokoder for planter på, dokumentasjon til rest-api'et til eppo finnes her: https://data.eppo.int/documentation/rest Det er også mulig å manuelt søke på planter på nettsiden: https://gd.eppo.int/
 
-Det valideres om det er gyldige eppokoder som sendes inn, og det returneres feil dersom en eller flere koder ikke finnes i eppo-databasen. Kodene som sendes inn må være på _Species_ (8) eller _Genus_ (7) nivå. Koder fra andre deler av hierarkiet vil gi feil.
+Det valideres om det er gyldige eppokoder som sendes inn, og det returneres feil dersom en eller flere koder ikke finnes i eppo-databasen. Kodene som sendes inn må være på _Species_ (8) eller _Genus_ (7) nivå. Det er også mulig å sende inn koden for gressavling (3GRAC).Koder fra andre deler av hierarkiet vil gi feil.
 
 Det finnes ikke eppokoder for alle plantearter, så det kan være tilfeller hvor man ikke klarer å angi eksakt hva som er sprøytet på. Da skal den nærmeste eppokoden i hierarkiet sendes inn, og så angis sort i feltet for 'sort'.
 
