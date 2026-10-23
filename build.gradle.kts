@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "2.4.20"
-    kotlin("plugin.spring") version "2.4.20"
+    kotlin("jvm") version "2.4.21"
+    kotlin("plugin.spring") version "2.4.21"
     kotlin("plugin.serialization") version "2.4.21"
     id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
@@ -49,7 +49,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.2.1"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.2.4"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
 
     // Jackson:
@@ -71,7 +71,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:6.3.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:6.4.0")
     mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
 
     testImplementation("org.springframework.boot:spring-boot-webtestclient")
