@@ -42,7 +42,7 @@ Content-Type: application/json
       }
     ]
   },
-  "bruksomraade": "JORDBRUK",
+  "bruksomraade": "GOLFBANE",
   "bygningsnummer": "512",
   "bygningsstoerrelse": {
     "enhet": "KVADRATMETER",
