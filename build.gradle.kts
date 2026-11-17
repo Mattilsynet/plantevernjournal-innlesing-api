@@ -17,7 +17,7 @@ repositories {
     gradlePluginPortal()
     mavenCentral()
     maven {
-        url = uri("https://maven.pkg.github.com/Mattilsynet/fisk/")
+        url = uri("https://maven.pkg.github.com/Mattilsynet/virtual-nats/")
         credentials {
             username = "token"
             password = System.getenv("READ_SOURCE_AND_PACKAGES")
@@ -43,13 +43,13 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     // Serialisering:
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.12.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.13.0")
 
     // Springdoc (Swagger)
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.2.4"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.3.1"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
 
     // Jackson:
@@ -79,7 +79,7 @@ dependencies {
 
 kotlin {
     compilerOptions {
-        compilerOptions.freeCompilerArgs = listOf("-Xjsr305=strict", "-Xannotation-default-target=param-property")
+        compilerOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
     }
 }
 
@@ -89,7 +89,7 @@ dependencyLocking {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springdoc:springdoc-openapi-bom:3.1.1")
+        mavenBom("org.springdoc:springdoc-openapi-bom:3.2.0")
     }
 }
 
